@@ -1,0 +1,104 @@
+% This file contains the LaTeX code for logarithmic paper (Bode Diagram). It was created by Hendrik Hanff. Feel free to improve or change it. Have fun. Hendrik.
+
+\documentclass[a4paper,pagesize, 12pt, final]{scrreprt}
+%\usepackage[isolatin]{inputenc}
+\usepackage{scrpage2}
+\usepackage{pdflscape} % to put the paper in landscape view
+
+\usepackage[
+ pdftex, 
+ pdfmenubar=true, 
+ bookmarksopen=false, 
+ bookmarks=false, 
+ pdfstartview=FitH]{hyperref}
+ 
+\hypersetup{
+ pdftitle           = {Logarithmic paper for Bode diagrams},
+ pdfauthor          = {\textcopyright\ by Hendrik Hanff},
+ pdfcreator         = {\LaTeX\ with MiKTex},
+ pdfproducer        = {TexnicCenter 1 beta 6.31},
+ pdfkeywords        = {Logarithmic paper. Maybe distributed freely as long as my name keeps being mentioned. No warranty is maintained.}
+ }
+\setlength{\textheight}{25cm} % height of main text
+\setlength{\textwidth}{18cm}  % width of text
+
+\begin{document}
+\pagestyle{empty} %no page numbers
+
+\unitlength 1.00mm
+\begin{landscape}
+\begin{picture}(0,0)
+
+%Horizontal lines (only thin)
+\linethickness{.5pt}
+\multiput(0,15)(0,-2){41}{\line(1,0){260.0}}
+\multiput(0,-80)(0,-2){41}{\line(1,0){260.0}}
+
+%Now the thick vertical lines
+\linethickness{1pt}
+\multiput(0,-65)(65.0,0){5}{\line(0,1){80}}
+\multiput(19.567,-65)(65.0,0){4}{\line(0,1){80}}
+\multiput(31.013,-65)(65.0,0){4}{\line(0,1){80}}
+\multiput(39.134,-65)(65.0,0){4}{\line(0,1){80}}
+\multiput(45.433,-65)(65.0,0){4}{\line(0,1){80}}
+\multiput(50.58,-65)(65.0,0){4}{\line(0,1){80}}
+\multiput(54.931,-65)(65.0,0){4}{\line(0,1){80}}
+\multiput(58.701,-65)(65.0,0){4}{\line(0,1){80}}
+\multiput(62.026,-65)(65.0,0){4}{\line(0,1){80}}
+
+\multiput(0,-160)(65.0,0){5}{\line(0,1){80}}
+\multiput(19.567,-160)(65.0,0){4}{\line(0,1){80}}
+\multiput(31.013,-160)(65.0,0){4}{\line(0,1){80}}
+\multiput(39.134,-160)(65.0,0){4}{\line(0,1){80}}
+\multiput(45.433,-160)(65.0,0){4}{\line(0,1){80}}
+\multiput(50.58,-160)(65.0,0){4}{\line(0,1){80}}
+\multiput(54.931,-160)(65.0,0){4}{\line(0,1){80}}
+\multiput(58.701,-160)(65.0,0){4}{\line(0,1){80}}
+\multiput(62.026,-160)(65.0,0){4}{\line(0,1){80}}
+
+%Now  the thin vertical lines
+\linethickness{0.5pt}
+\multiput(11.446,-65)(65.0,0){4}{\line(0,1){80}}
+\multiput(25.866,-65)(65.0,0){4}{\line(0,1){80}}
+\multiput(35.364,-65)(65.0,0){4}{\line(0,1){80}}
+\multiput(42.459,-65)(65.0,0){4}{\line(0,1){80}}
+\multiput(48.124,-65)(65.0,0){4}{\line(0,1){80}}
+\multiput(52.839,-65)(65.0,0){4}{\line(0,1){80}}
+\multiput(56.879,-65)(65.0,0){4}{\line(0,1){80}}
+\multiput(60.412,-65)(65.0,0){4}{\line(0,1){80}}
+\multiput(63.552,-65)(65.0,0){4}{\line(0,1){80}}
+
+\multiput(11.446,-160)(65.0,0){4}{\line(0,1){80}}
+\multiput(25.866,-160)(65.0,0){4}{\line(0,1){80}}
+\multiput(35.364,-160)(65.0,0){4}{\line(0,1){80}}
+\multiput(42.459,-160)(65.0,0){4}{\line(0,1){80}}
+\multiput(48.124,-160)(65.0,0){4}{\line(0,1){80}}
+\multiput(52.839,-160)(65.0,0){4}{\line(0,1){80}}
+\multiput(56.879,-160)(65.0,0){4}{\line(0,1){80}}
+\multiput(60.412,-160)(65.0,0){4}{\line(0,1){80}}
+\multiput(63.552,-160)(65.0,0){4}{\line(0,1){80}}
+
+%Last but not least: the boxes with the numbers
+\multiput(-0.5,-68)(65.0,0){5}{\makebox(1,1){\footnotesize{\sffamily{10}}}}
+\multiput(19.067,-68)(65.0,0){4}{\makebox(1,1){\footnotesize{\sffamily{2}}}}
+\multiput(30.513,-68)(65.0,0){4}{\makebox(1,1){\footnotesize{\sffamily{3}}}}
+\multiput(38.634,-68)(65.0,0){4}{\makebox(1,1){\footnotesize{\sffamily{4}}}}
+\multiput(44.933,-68)(65.0,0){4}{\makebox(1,1){\footnotesize{\sffamily{5}}}}
+\multiput(50.08,-68)(65.0,0){4}{\makebox(1,1){\footnotesize{\sffamily{6}}}}
+\multiput(54.431,-68)(65.0,0){4}{\makebox(1,1){\footnotesize{\sffamily{7}}}}
+\multiput(58.201,-68)(65.0,0){4}{\makebox(1,1){\footnotesize{\sffamily{8}}}}
+\multiput(61.526,-68)(65.0,0){4}{\makebox(1,1){\footnotesize{\sffamily{9}}}}
+
+\multiput(-0.5,-163)(65.0,0){5}{\makebox(1,1){\footnotesize{\sffamily{10}}}}
+\multiput(19.067,-163)(65.0,0){4}{\makebox(1,1){\footnotesize{\sffamily{2}}}}
+\multiput(30.513,-163)(65.0,0){4}{\makebox(1,1){\footnotesize{\sffamily{3}}}}
+\multiput(38.634,-163)(65.0,0){4}{\makebox(1,1){\footnotesize{\sffamily{4}}}}
+\multiput(44.933,-163)(65.0,0){4}{\makebox(1,1){\footnotesize{\sffamily{5}}}}
+\multiput(50.08,-163)(65.0,0){4}{\makebox(1,1){\footnotesize{\sffamily{6}}}}
+\multiput(54.431,-163)(65.0,0){4}{\makebox(1,1){\footnotesize{\sffamily{7}}}}
+\multiput(58.201,-163)(65.0,0){4}{\makebox(1,1){\footnotesize{\sffamily{8}}}}
+\multiput(61.526,-163)(65.0,0){4}{\makebox(1,1){\footnotesize{\sffamily{9}}}}
+\end{picture}
+
+\end{landscape}
+\end{document}
