@@ -1,0 +1,117 @@
+\documentclass[a4paper,pagesize 12pt]{scrartcl}
+%\usepackage[isolatin]{inputenc}
+\usepackage{scrpage2}
+%\usepackage{array}
+\usepackage{tabularx}   % Erweiterte Tabellen Optionen
+%\usepackage{multirow} 
+
+
+\setlength{\textheight}{24cm} % height of main text
+\setlength{\textwidth}{12.5cm}    % width of text
+
+%Neuen Befehl definieren fuer 1.5 Zeilenabstand
+%Anfang Befehl Zeilenabstand
+\newlength{\defbaselineskip}
+\setlength{\defbaselineskip}{\baselineskip}
+\newcommand{\setlinespacing}[1]%
+{\setlength{\baselineskip}{#1 \defbaselineskip}}
+\newcommand{\singlespacing}{\setlength{\baselineskip}{\defbaselineskip}}
+\newcommand{\Zeilenabstand}{\setlength{\baselineskip}{1.5\defbaselineskip}} % Der Befehl lautet \Zeilenabstand
+\newcommand{\litabstand}{\setlength{\baselineskip}{1.0\defbaselineskip}} % Der Befehl lautet \Zeilenabstand
+\newcommand{\erkabstand}{\setlength{\baselineskip}{0.2\defbaselineskip}} % Der Befehl lautet \Zeilenabstand
+\newcommand{\tst}{\setlength{\baselineskip}{2.0\defbaselineskip}} % Der Befehl lautet \Zeilenabstand
+%Ende Befehl Zeilenabstand
+\newcommand{\tocka}{\textbullet}
+\newcommand{\nz}{~\\[\medskipamount]}
+\newcommand{\nzb}{~\\[\bigskipamount]}
+\newcommand{\zeile}[2]{\hspace*{1.5cm}\parbox[t]{4cm}{#1}\hspace*{0.5cm}\parbox[t]{8cm}{#2}}
+\newcommand{\shortzeile}[2]{\hspace*{1.5cm}\parbox[t]{10cm}{#1}{#2}}
+\newcommand{\todo}{\rule{0.5em}{1ex}} 
+
+\begin{document}
+\pagestyle{empty} %keine Seitenzahlen
+
+\normalfont
+
+
+\linethickness{1pt}
+\unitlength 2.54mm
+\begin{picture}(5,5)
+
+% Vertikale Linien
+\put(0,-40)  {\line(0,1){45}}
+\put(1,-40)  {\line(0,1){45}}
+\put(2,-40)  {\line(0,1){45}}
+\put(3,-40)  {\line(0,1){45}}
+\put(4,-40)  {\line(0,1){45}}
+\put(5,-40)  {\line(0,1){45}}
+\put(6,-40)  {\line(0,1){45}}
+\put(7,-40)  {\line(0,1){45}}
+\put(8,-40)  {\line(0,1){45}}
+\put(9,-40)  {\line(0,1){45}}
+\put(10,-40)  {\line(0,1){45}}
+\put(11,-40)  {\line(0,1){45}}
+\put(12,-40)  {\line(0,1){45}}
+\put(13,-40)  {\line(0,1){45}}
+\put(14,-40)  {\line(0,1){45}}
+\put(15,-40)  {\line(0,1){45}}
+\put(16,-40)  {\line(0,1){45}}
+\put(17,-40)  {\line(0,1){45}}
+\put(18,-40)  {\line(0,1){45}}
+\put(19,-40)  {\line(0,1){45}}
+\put(20,-40)  {\line(0,1){45}}
+\put(21,-40)  {\line(0,1){45}}
+\put(22,-40)  {\line(0,1){45}}
+\put(23,-40)  {\line(0,1){45}}
+\put(24,-40)  {\line(0,1){45}}
+
+%Horizontale Linien
+\put(0,5)  {\line(1,0){24}}
+\put(0,4)  {\line(1,0){24}}
+\put(0,3)  {\line(1,0){24}}
+\put(0,2)  {\line(1,0){24}}
+\put(0,1)  {\line(1,0){24}}
+\put(0,-0)  {\line(1,0){24}}
+\put(0,-1)  {\line(1,0){24}}
+\put(0,-2)  {\line(1,0){24}}
+\put(0,-3)  {\line(1,0){24}}
+\put(0,-4)  {\line(1,0){24}}
+\put(0,-5)  {\line(1,0){24}}
+\put(0,-6)  {\line(1,0){24}}
+\put(0,-7)  {\line(1,0){24}}
+\put(0,-8)  {\line(1,0){24}}
+\put(0,-9)  {\line(1,0){24}}
+\put(0,-10)  {\line(1,0){24}}
+\put(0,-11)  {\line(1,0){24}}
+\put(0,-12)  {\line(1,0){24}}
+\put(0,-13)  {\line(1,0){24}}
+\put(0,-14)  {\line(1,0){24}}
+\put(0,-15)  {\line(1,0){24}}
+\put(0,-16)  {\line(1,0){24}}
+\put(0,-17)  {\line(1,0){24}}
+\put(0,-18)  {\line(1,0){24}}
+\put(0,-19)  {\line(1,0){24}}
+\put(0,-20)  {\line(1,0){24}}
+\put(0,-21)  {\line(1,0){24}}
+\put(0,-22)  {\line(1,0){24}}
+\put(0,-23)  {\line(1,0){24}}
+\put(0,-24)  {\line(1,0){24}}
+\put(0,-25)  {\line(1,0){24}}
+\put(0,-26)  {\line(1,0){24}}
+\put(0,-27)  {\line(1,0){24}}
+\put(0,-28)  {\line(1,0){24}}
+\put(0,-29)  {\line(1,0){24}}
+\put(0,-30)  {\line(1,0){24}}
+\put(0,-31)  {\line(1,0){24}}
+\put(0,-32)  {\line(1,0){24}}
+\put(0,-33)  {\line(1,0){24}}
+\put(0,-34)  {\line(1,0){24}}
+\put(0,-35)  {\line(1,0){24}}
+\put(0,-36)  {\line(1,0){24}}
+\put(0,-37)  {\line(1,0){24}}
+\put(0,-38)  {\line(1,0){24}}
+\put(0,-39)  {\line(1,0){24}}
+\put(0,-40)  {\line(1,0){24}}
+\end{picture}
+
+\end{document}
