@@ -124,9 +124,9 @@ NC='\e[0m'              # No Color
     HILIT2=${CYAN}  # local machine: prompt will be partly cyan
 #fi
 
-    PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
-    #PROMPT_COMMAND='echo -ne "\033]0;${PWD/$HOME/~}\007"
-    #export PROMPT_COMMAND="history -a;history -r;$PROMPT_COMMAND"'
+#PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
+#PROMPT_COMMAND='echo -ne "\033]0;${PWD/$HOME/~}\007"
+#export PROMPT_COMMAND="history -a;history -r;$PROMPT_COMMAND"'
 
 #  --> Replace instances of \W with \w in prompt functions below
 #+ --> to get display of full path name.
@@ -149,7 +149,6 @@ function fastprompt() {
 
 }
 fastprompt
-export PROMPT_COMMAND=""
 
 
 
