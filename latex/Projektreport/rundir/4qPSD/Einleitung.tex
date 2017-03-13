@@ -1,0 +1,103 @@
+
+%In Römischen Buchstaben nummerieren (i, ii, iii)
+\pagenumbering{roman}
+
+\newpage
+\tableofcontents
+
+% --- Hauptteil ------------------
+
+
+%===============================================
+%================Preface======================
+%================================================
+\setcounter{secnumdepth}{-1} % setzt keine 1 vor Einleitung
+\chapter{Einleitung}
+\setcounter{page}{1}
+%Das Praxissemester ist ein von meiner Fachhochschule
+Die kontinuierliche Entwicklung der IC Technologie während der letzten Jahrzehnte erlaubt es uns mittlerweile IC's herstellen zu können auf denen die Transistorgröße den Sub-$\mu$\textit{m} Bereich weit unterschritten hat. Die Grenzen für weitere Verkleinerungen müssen aufgrund hartnäckiger Forschung und der Entwicklung neuer Technologien jährlich weiter nach unten korrigiert werden. Die modernsten Prozesse erreichen mittlerweile 90\textit{nm}. 65\textit{nm} wird in Kürze folgen. 
+%Die Entwicklung der Web Service-Technologie ist ein weiterer Meilenstein in der Evolution
+%des World Wide Web bzw. des Internet zu einem riesigen verteilten System. Aus
+%dem Wunsch global Informationen zu teilen und verteilen entstanden, erlauben nun Web
+%Services, unter Nutzung der bew¨ahrten Internetinfrastruktur, den Aufbau von komplexen
+%verteilte Anwendungen öber das Internet. E-Commerce-Applikationen, umfangreiche
+%Buisness-to-Buisness-Anwendungen und Applikationen för das (wissenschaftliche) verteilte
+%Rechnen sind nur einige Anwendungsbeispiele, die eine solche Umgebung nutzen und
+%die enormen Potentiale aussch¨opfen k¨onnen.
+%In den vergangenen zwei Jahren haben die Initiativen und/oder Produkte Microsoft .NET,
+%Sun ONE und die Java-Implementierung Apache Axis, sowie die Technologien im Web
+%Service-Umfeld SOAP, WSDL und UDDI, bereits eine sehr großen Bekanntheitsgrad erfahren.
+%Viele Unternehmen setzen die neue Web Service-Technologie bereits erfolgreich
+%ein und ziehen sie teilweise den klassischen Middlewareans¨atzen, wie z. B. CORBA, vor.
+%Neben den traditionellen Serversystemen und Desktoprechnern werden jedoch mehr und
+%mehr mobile drahtlose Ger¨ate mit dem Internet verbunden. Der weiter fortschreitende
+%Trend zu einer allgegenw¨artigen Informationsverarbeitung (Ubiquitous Computing) wird
+%die Web Service-Technologie öber kurz oder lang auf einem Großteil dieser Ger¨aten verf
+%ögbar machen.
+%Gerade die beschr¨ankten Ressourcen der mobilen Ger¨aten wird die Entwicklung von Web
+%Service-Umgebungen för diese Ger¨ate beschleunigen, denn durch das Teilen von Ressourcen
+%mit anderen Systemen im Internet, k¨onnen u. a. die Kosten gesenkt und die Mobilit¨at
+%dieser Ger¨ate erh¨oht werden. Aber auch neben den wirtschaftlichen Aspekten, wird die
+%Erschließung neuer Einsatzm¨oglichkeiten (vgl. Kapitel 4, Seite 39 ff.) die Entwicklung
+%vorantreiben.
+
+%\section{Motivation}
+
+%eutige Web Service-Lösungen konzentrieren sich auf die Nutzung des HTTP-Protokolls
+%för die öbertragung der Daten. Die Verwendung des HTTP-Protokolls mit Web Services
+%und Ger¨aten ohne dauerhafte Netzverbindung gestaltet sich jedoch schwierig. Der öberwiegende
+%Teil der momentan verfögbaren drahtlosen Netze ist weder fl¨achendeckend noch
+%unabh¨angig von Interferenzen, so dass die Verwendung des synchronen HTTP-Protokolls
+%problematisch ist. Bei Verbindungsabbröchen oder ¨ahnlichen Störungen bietet das Protokoll
+%keinerlei Möglichkeiten einen Datentransfer zu einem sp¨ateren Zeitpunkt, an dem der
+%Kommunikationspartner evtl. wieder erreichbar ist, fortzuföhren.
+%Als Alternative bietet die Verwendung eines asynchrones Kommunikationsprotokoll wie
+%SMTP an. SMTP ist neben HTTP ein ebenfalls bew¨ahrtes Internetprotokoll und bietet
+%eine asynchrone Kommunikation mittels E-Mail. Die Begleitprotokolle POP und IMAP
+%komplettieren die heute im Internet verwendete E-Mial-Protokollfamilie. Die asynchrone
+%Kommunikation öber SMTP wörde das tempor¨are Zwischenspeichern von Nachrichten
+%in einer Art Warteschlange und damit die Nutzung von Web Services mit Ger¨aten ohne
+%permanente Netzverbindung ermöglichen. Ein Ger¨at, dass kurzweilig keine Netverbindung
+%h¨atte, könnte nach der erneuten Etablierung einer Netzverbindung mit der Verarbeitung
+%der (zwischengespeicherten) Nachrichten fortfahren. Der Kommunikationspartner wörde
+%von diesem Vorgang, außer der zeitlichen Verzögerung, nichts bemerken.\section{Ziel dieser %Arbeit}
+%Im Rahmen dieser Arbeit soll eine möglichst leichtgewichtige Infrastruktur för Web Services
+%auf Basis des asynchronen Protokolls SMTP entworfen und realisiert werden. Als
+%Grundlage för die Realisierung soll eine bestehende, möglichst ressourcenschonende, Web
+%Service-Lösung dienen. Um einen öberblick öber die bestehendenWeb Service-Implementierungen
+%zu bekommen, sollen unterschiedliche Lösungen betrachtet und bewertet werden.
+%Im Anschluss an die Auswahl einer geeigneten Implementierung soll die entwickelte Infrastruktur
+%prototypisch realisiert werden und die Funktionsweise anhand einer Beispielanwendung
+%verdeutlicht werden.
+\section{Gliederung der Arbeit}
+Nachdem dieses 1. Kapitel grundsätzliches der Arbeit beschreibt wird im folgenden 2. Kapitel ein kurzer Überblick über meinen Arbeitplatz in Frankreich/Sophia~Antipolis gegeben. Beginnend mit dem Technologiepark Sophia Antipolis wird später die Firma Philips Sophia Antipolis vorgestellt. Kapitel 3 beschreibt die mir übertragenen Aufgaben. Dabei wird das Design eines Ringoszilators von der Spezifikation über Codierung (VHDL, RTL), Place and Route bis zur Simulation mit Parasitics beschrieben. Im zweiten Teil des 3. Kapitels wird auf das Erstellen eines Bonding Diagramms mit Hilfe der Philips eigenen Software PCM (Package Constraints Manager) eingegangen. Im Anhang findet man alle wichtigen Datenblätter sowie Skripte die zum Erstellen des Bonding Diagramms von mir verwendet wurden.
+
+
+%Nachdem dieses Kapitel die Entwicklung und Realisierung einer leichtgewichtigen Web
+%Service Infrastruktur auf Basis von SMTP motiviert, föhrt das folgende 2. Kapitel in die
+%Grundlagen der Web Service-Technologien ein. Dazu werden im Vorfeld die Basistechnologien
+%sowie die fundamentalen Grundbegriffe erl¨autert. Darauf aufbauend werden im
+%Anschluss die drei Basistechnologien SOAP, WSDL und UDDI im Detail vorgestellt und
+%die protokollspezifischen Eigenarten aufgezeigt.
+%Kapitel 3 beschreibt E-Mail-Protokolle, welche als Alternative zu HTTP, för die öbertragung
+%von Web Service-Informationen in Betracht kommen. Dies sind im Einzelnen
+%SMTP, POP und IMAP. Daröber hinaus werden die Grundlagen und Begriffe eines EMail-
+%Systems definiert.
+%In Kapitel 4 wird dann, nach dem Aufzeigen potentieller Einsatzgebiete, eine Web Service-
+%Infrastruktur auf Basis von SMTP entworfen. För die auf diese Infrastruktur aufsetzende
+%Web Service-Lösung bzw. SOAP-Implementierung werden daraufhin Auswahl- und Funktionalit
+%¨atskriterien aufgestellt, die dann als Grundlage för die Auswahl einer Implementierung
+%dienen. Anschließend werden vier besonders leichtgewichtige Implementierungen
+%
+%vorgestellt und u.a. anhand von Performancetests und Auswahlkriterien verglichen und
+%dann eine Auswahl getroffen.
+%Kapitel 5 befasst sich schließlich mit der Umsetzung des Entwurfs der Infrastruktur mit
+%dem im vorangegangenen Kapitel ausgew¨ahlten SOAP-Toolkit. Es wird ein Einblick in die
+%Klassenstruktur und in die Implementierung gegebnen. Ebenfalls wird im Zuge der Implementierung
+%eine Testumgebung aufgebaut und die Implementierung dann im praktischen
+%Einsatz getestet.
+%Das abschließende Kapitel 6 fasst die gewonnen Erkenntnisse zusammen und gibt einen
+%Ausblick auf Arbeiten, die die erstellte Infrastruktur erweitern oder erg¨anzen könnten.
+\section{Danksagungen}
+Ich möchte Prof. Dr. Ing. Bernhard Lang von der University of Applied Sciences Osnabrück für die Betreuung sowie Dipl. Ing. Torsten Krause-Dukart und Dipl.~Ing.~Pascal~Prenveille von Philips Sophia Antipolis für die Betreuung, fachliche Unterstützung und die Möglichkeit danken, das Praxissemester in Frankreich zu verbringen. 
+Des Weiteren danke ich Frau Ingeborg Hanff und Jutta Wissing für das Korrekturlesen dieser Arbeit.

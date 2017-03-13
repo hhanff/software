@@ -1,0 +1,374 @@
+
+% ------------------------------------------------------------------------
+% Latex - Einstellungen ***************************************************
+% ------------------------------------------------------------------------
+% von: Matthias Pospiech
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% kein Inhalt, nur technisches...
+% ========================================================================
+
+%% Dokumenten Klasse ===========================================================================
+%
+% --[ KOMA ] -----------------------------------------------------------------------------------
+% Klassen: scrartcl, scrreprt, scrbook, scrletter
+%  
+\documentclass[%
+ 10Spt,%           Schriftgröße
+ a4paper,%	      Papier
+ DIV9,%           Seitengröße (siehe Koma Skript Dokumentation !)
+ SBCOR5mm,%        Zusätzlicher Rand auf der Innenseite 
+ german,%		      Sprache
+ %twoside,%	      Seitenränder werden an doppelseitig angepasst
+ fleqn,%          Formeln werden linksbündig (und nicht zentriert) angezeigt 
+ openleft,%       (openright) Ein neues Kapitel beginnt immer auf einer rechten/linken Seite
+ titlepage,%      Titel wird in einer 'titlepage' Umgebung gesetzt
+ bigheadings,%    Große Überschriften (normal, small- headings)
+ %parskip,%   Absatz wird nicht eingerückt, dafür aber um eine  Zeile nach unten gerückt halfparskip- würde um eine halbe Zeile nach unten einrücken
+ liststotoc,%     Tabellen & Abbildungsverzeichnis ins Inhaltsverzeichnis
+ idxtotoc,%       Index ins Inhaltsverzeichnis
+ tablecaptionsbelow, %	Caption wird bei table unter die Tabelle gesetzt
+ headinclude,
+ %nochapterprefix% Kein 'Kapitel' vor einem neuen Kapitel
+ ]{scrreprt}%     Klassen: scrartcl, scrreprt, scrbook, scrletter 
+% ----------------------------------------------------------------------------------------------
+
+%% Alles was vor alles andere gehört.... =======================================================
+%
+% - Ändern von Schriftschnitten - (Muss ganz am Anfang stehen !) -----
+\usepackage{fix-cm}
+% Siehe auch Dokumentation: http://home.vr-web.de/was/x/fix-cm.pdf
+%---------------------------------------------------------------------
+%
+\usepackage{calc} % Zum Rechnen innerhalb von Latex
+%
+% ----------------------------------------------------------------------------------------------
+
+%% Schriften ===================================================================================
+%
+% -- Andere Schriftpakete -----
+%
+% - Times, Helvetica, Courier (Word Standard...)
+%\usepackage{ptmx}
+%\usepackage[scaled=.90]{helvet}
+%\usepackage{courier} 
+% statt courier man kann auch die Standardschrift cmtt beibehalten
+% -------------------
+%
+% - Palantino , Helvetica, Courier 
+%\usepackage{pazo}
+%\usepackage[scaled=.95]{helvet}
+%\usepackage{courier} 
+% -------------------
+
+% Weitere Times Schriften
+%\usepackage{utopia}
+%\usepackage{charter}
+% Serifenlose Schrift
+%\usepackage{avant}
+% -----------------------------
+%
+% -- Koma Schriften --
+\renewcommand*{\headfont}{\small\sffamily\slshape}        % Kopfzeile
+\renewcommand*{\pnumfont}{\bfseries\sffamily}             % Seitenzahl
+\setkomafont{chapter}{\sffamily\huge\bf}                     % Chapter
+\renewcommand*{\sectfont}{\sffamily\bf} %\rmfamily\bfseries  % Titelzeilen
+\renewcommand*{\capfont}{\small}                          % Schrift für Caption
+\renewcommand*{\caplabelfont}{\sffamily\bfseries\small}   % Schrift für 'Abbildung' usw.
+%
+% -- Schriften für Caption's von _nicht_- Koma kompatiblen Paketen
+%
+% Bei verwendung von Caption2 treten Komplikationen mit Koma auf. 
+% Diese Korrekturren sind hier noch nicht implementiert !
+%
+\usepackage{caption2}
+\renewcommand{\captionfont}{\small}
+\renewcommand{\captionlabelfont}{\sffamily\bfseries\small}
+\captionstyle{flushleft}
+%
+% -- Setzen der Titelzeile --
+\renewcommand*{\raggedsection}{\raggedright} % linksbündig, hängend
+%\renewcommand*{\raggedsection}{} % Blocksatz (Latex-Standart)
+%
+% ----------------------------------------------------------------------------------------------
+
+% *** Sprache *****************************
+\usepackage[german]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+%------------------------------------------
+
+%% Seitenlayout ================================================================================
+%
+% Layout laden um im Dokument den Befehl \layout nutzen zu können
+\usepackage[verbose]{layout} 
+%
+% Optischer Randausgleich (geht nur mit pdflatex, ansonsten hat es keine Auswirkung)
+\usepackage[activate=normal]{pdfcprot} 
+
+% 1. Layout mit 'typearea'
+% hier werden die Optionen aus \documentclass[] angewandt !
+\usepackage{typearea}
+
+% 2. Alternative: Layout mit 'geometry'
+%\usepackage{geometry}
+%\geometry{a4paper}
+%\geometry{twoside}
+%\geometry{marginparwidth=85pt}
+%\geometry{textheight=55\baselineskip}
+%\geometry{textwidth=418pt} % Standard
+%\geometry{bindingoffset=5mm}
+%
+% - Anzeigen des Layouts -
+%\geometry{showframe}
+
+% -- Zeilenabstand --
+%\usepackage{setspace}
+%\doublespace	        % 2-facher Abstand
+%\onehalfspace        % 1,5-facher Abstand
+
+% -- Kopfzeilen ---
+\usepackage[automark, nouppercase]{scrpage2}
+% Seite mit Headern
+\pagestyle{scrheadings}
+%
+% löscht voreingestellte Stile
+\clearscrheadings 
+\clearscrplain
+%
+% Was steht wo...
+\ohead{\pagemark} % Oben außen: Seitenzahlen
+\ihead{\headmark} % Oben innen: Setzt Kapitel und Section automatisch
+%\rehead{\leftmark} %Oben links: Kapitel
+%\lohead{\rightmark} %Oben rechts: Section
+\cfoot[\pagemark]{} % Mitte unten: Seitenzahlen bei plain
+%\cfoot[]{\pagemark} % Mitte unten: Seitenzahlen bei headings
+% Angezeigte Abschnitte im Header
+\automark[section]{chapter} %[rechts]{links}
+%\automark[subsection]{section} %[rechts]{links}
+%\automark[subsubsection]{subsubsection}
+% 
+% Linien
+\setheadsepline{.4pt} % Linie unter dem Header
+%\setheadtopline{.4pt} % Ganzoben
+
+%\setfootbotline{.4pt} % Ganzunten
+%
+% Wie weit geht die Kopfzeile...
+%\setheadwidth[0pt]{textwithmarginpar}
+\setheadwidth[0pt]{text} % standard
+%------------------------------------------
+%
+% ----------------------------------------------------------------------------------------------
+
+%% sonstige Einstellungen ======================================================================
+%
+%-- Alternativer Absatz --
+\setlength{\parindent}{0pt} % Einzug = 0
+% Siehe auch KOMA Skript zu den dortigen Möglichkeiten !!
+
+% -- Setzen von Abbildungsbeschreibungen --
+%\setcapindent*{1em} % siehe Komadokumentation Abschnitt 3.5
+%\setcapindent{1em} 
+%
+% *** Inhaltsverzeichnis ******************
+\setcounter{secnumdepth}{3}  % Abbildungsnummerierung mit größerer Tiefe
+\setcounter{tocdepth}{2}		 % Inhaltsverzeichnis mit größerer Tiefe
+%------------------------------------------
+%
+% -- Ändern von Titeln --
+\usepackage{titlesec}
+\titlelabel{\thetitle.\quad} % Einen Punkt an alle Nummerierungen anfügen
+%
+% ----------------------------------------------------------------------------------------------
+
+%% Bilder und Graphiken ======================================================================
+
+% *** Bilder ******************************
+% Grundlegendes
+\usepackage[final]{graphicx}  % enthält \includegraphics !!
+%\usepackage[draft]{graphicx} % Option: 'draft' für das _nicht_ Einbinden von Bildern
+\usepackage{subfigure}        % Bilder nebeneinander 
+%
+% Erweiterungen
+\usepackage{picinpar}         % Befehl: 'window' zum Setzen von Bildern neben Text
+%
+\usepackage{float}            % Stellt die Option [H] für Floats zur Verfügung 
+\usepackage[rflt]{floatflt}   % Stellt Befehlt 'floatingfigure' zur Verfügung
+                              % [rflt] - Standard float auf der rechten Seite
+\usepackage{graphicx, color}  % ermöglicht das Einbinden von .eps Dateien
+%-------------------------------------------
+%
+% - Color Paket für farbigen Text --> _VOR_ pstricks/pst-plot !! ---
+\usepackage{color} 
+% Beispiel für neue Farbe: \definecolor{meingrau}{gray}{0.90}
+% ------------------------------------------------------------------
+
+% *** Graphen ******************************
+\usepackage{pst-plot}
+\usepackage{psfrag}
+%-------------------------------------------
+%
+% ----------------------------------------------------------------------------------------------
+
+
+%% Mathe =======================================================================================
+
+% *** Mathematik **************************************
+%
+% Neue Mathebefehle 
+\usepackage{amsmath} % der QUASI-STANDARD 
+% den Befehl: eqnarray hiernach _nicht_ mehr verwenden
+%------------------------------------------------------
+
+% -- Symbole ---------
+\usepackage{amssymb}
+\usepackage{latexsym} 
+\usepackage{wasysym} % (für \varangle)
+%---------------------
+%
+% Tauschen von Epsilon und andere:
+\DeclareMathSymbol{\epsilon}{\mathord}{letters}{"22}
+\DeclareMathSymbol{\theta}{\mathord}{letters}{"23}
+\DeclareMathSymbol{\rho}{\mathord}{letters}{"25}
+\DeclareMathSymbol{\phi}{\mathord}{letters}{"27}
+\DeclareMathSymbol{\varepsilon}{\mathord}{letters}{"0F}
+\DeclareMathSymbol{\vartheta}{\mathord}{letters}{"12}
+\DeclareMathSymbol{\varphi}{\mathord}{letters}{"1E}
+\DeclareMathSymbol{\varrho}{\mathord}{letters}{"1A}
+%
+% ----------------------------------------------------------------------------------------------
+
+%% sonstige Pakete =============================================================================
+%
+\usepackage{makeidx}		% Index
+\usepackage{minitoc}    % Mini TOC's vor jedem Kapitel
+%
+\usepackage{enumerate}  % Optionen [a)], [i)] usw. 
+%
+\usepackage{array}
+\usepackage{tabularx}   % Erweiterte Tabellen Optionen
+\usepackage{multirow} 
+%
+\usepackage{fancybox}   % für shadowbox, ovalbox
+\usepackage{ulem}       % Zum Unterstreichen (z.B. Tensor)
+\usepackage{textcomp}   % Symbole - z.B. \copyright
+\usepackage{xspace}
+% ----------------------------------------------------------------------------------------------
+
+%% Hackz !!!!!!!!! =============================================================================
+% @ zu einem TeX Zeichen machen --
+\makeatletter %%%%%%%%%%%%%%%%%%%%
+% --------------------------------
+
+% Caption für nicht-fließenden Figure Umgebung:
+\newcommand\figcaption{\def\@captype{figure}\caption} 
+% wird benötigt für Bilder im margin
+
+% -- Section Aussehen verändern --
+%\renewcommand{\subsubsection}{\@startsection
+%	{subsubsection}% 		% Name
+%	{3}%								% ebene
+%	{0mm}%							% einzug
+%	{1.0\baselineskip}% % Abstand nach oben
+%	{0.5\baselineskip}% % Abstand nach unten
+%	{\sffamily\large}}%				% Stil						
+% --------------------------------
+
+% -- Chapter Aussehen verändern --
+%\titleformat{\chapter}[display]
+%  {\usekomafont{chapter}\filcenter}
+%  {   
+%  \fcolorbox{black}{grauchapter}{  
+%  {\Huge\bfseries\thechapter}  
+%  }}
+%  {1pc}
+%  {\vspace{1pc}}
+% --------------------------------
+
+% @ zu einem LaTeX Zeichen machen --
+\makeatother %%%%%%%%%%%%%%%%%%%%%%%	
+% ----------------------------------
+% ----------------------------------------------------------------------------------------------
+
+%% Eigene Definitionen =========================================================================
+%
+\newcommand\leereZeile{\smallskip \\} %Neue Zeile
+\newcommand\newpar{\smallskip \par} %Neue Zeile
+%
+\newcommand\fett{\textbf} %Fette Schrift
+\newcommand\kursiv{\textit} % nur Kursiv
+\newcommand\titel{\minisec}
+%
+\newcommand\wichtig[1]{{\sffamily#1}\normalfont} 
+\newcommand\indx[1]{#1\index{#1}} % Index Eintrag direkt anzeigen
+\newcommand\glref[1]{(\ref{#1})} %Referenz für Gleichungen mit Klammer:
+\newcommand{\klein}[1]{\small #1 \normalsize} % Kleinere Schrift
+%
+\newcommand{\marginlabel}[1]{\mbox{}\marginline{\hspace{0pt}\footnotesize #1}}
+%
+% -- Mathematische Neudefinitionen ---------
+\newcommand{\abs}[1]{\vert#1\vert}
+\newcommand{\Abs}[1]{\left\vert#1\right\vert}
+\newcommand{\norm}[1]{\left\Vert#1\right\Vert}
+%
+\newcommand{\Z}{\mathbb{Z}}       % Reell
+\newcommand{\real}{\mathbb{R}}    % Reell
+\newcommand{\complex}{\mathbb{C}} % Complex
+\newcommand{\Lom}{\mathcal{L}}
+\newcommand{\Ham}{\mathcal{H}}    % Hamilton
+%
+% -- Vektor ---------------------------------
+\let\oldvec\vec
+\def\vec#1{{\boldsymbol{#1}}} %Fetter Vektor
+% -------------------------------------------
+
+%Von Hendrik hinzugefügt
+%========================
+
+%pdfLaTeX unterstützt eine Reihe interessanter Features für PDF-Dateien. Das
+%folgende Beispiel schaltet die Generierung von Hyperlinks ein, gestaltet
+%diese farbig und erzeugt Rückverweise aus dem Literaturverzeichnis auf die
+%Seiten, auf denen die jeweiligen \cite{}-Befehle stehen.
+
+
+\usepackage{pdflscape} % um Seiten ins Querformat zu bringen
+\usepackage[pdftex,colorlinks,backref,pagebackref]{hyperref}
+
+%========= Fuer Code Listings etc...==================
+
+\usepackage{listings}
+\lstset{basicstyle=\footnotesize ,%\small, 
+				showspaces=false, 		%zeigt Leerzeichen als Unerline an bzw nicht an
+				numbers=left, 				%nummeriert das Listing
+				numberstyle=\tiny, 		%Groesse der Nummerierung
+				stepnumber=5, 				%Schrittweite der Nummerierung
+				numbersep=5pt, 
+				breaklines=true,			%automatischer Yeilenumbruch wenn die Zeile nicht mehr aufs Blatt passt
+%				language=perl, 
+				}
+\definecolor{lightgrey}{rgb}{.935,.938,.95} % fuer die Backgroundcolor [.935,.938,.95] = [R,G,B]
+\definecolor{lightblue}{rgb}{.935,.958,.97}
+\definecolor{lightred}{rgb}{.96,.93,.92}
+\definecolor{lightgreen}{rgb}{.925,.962,.96}
+\lstdefinestyle{withbackgroundcolor}
+%				{backgroundcolor=\color{lightgrey}}	%probier mal yellow aus...}
+				{backgroundcolor=\color{lightblue}}
+%				{backgroundcolor=\color{lightred}}
+%				{backgroundcolor=\color{lightgreen}}
+% Style withbackgroundcolor folgendermassen benutzen:
+%\begin{lstlisting}[style=withbackgroundcolor]
+%%%%LISTING
+%\end{lstlisting}
+
+%%%%oder ganz einfach:
+%%%%\lstinputlisting[style=withbackgroundcolor]{G:/Praxissemester/Praxissemesterarbeit/Latex_Projekt/rundir/input.log}
+%===============================================
+%================ To Do Liste ==================
+%library/libraries oder Bibliothek/en?
+%File oder Datei
+%Was soll kursiv hervorgehoben werden und was nicht?
+%Was soll im shell Stil erscheinen?
+%
+% -- Auszuführende Befehle (vor Dokument Beginn) ----
+\makeindex
+\dominitoc

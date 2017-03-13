@@ -1,0 +1,348 @@
+%===============================================
+%================KAPITEL 3======================
+%================================================
+
+\chapter{Übertragene Aufgaben}
+%\section{Einleitung}
+
+
+\section{Designen eines Ringoszillators}
+\label{DesignenEinesRingoszillators}
+\subsection{Spezifikation}
+
+Das Design eines IC beginnt in der Regel mit der Spezifikation. Die Spezifikation gibt Auskunft über die Funktionen die das IC später erfüllen, sowie die Umgebung in der das IC seinen Anforderungen gerecht werden muss.
+Meine Aufgabe war es einen Ringoszillator zu designen.
+
+Ein Ringoszillator besteht aus einer ungeraden Anzahl von Invertern die als Ring zusammengeschaltet sind. Die ungerade Anzahl von Invertern (Schaltgliedern) ist aus folgendem Grund notwendig: jeder Inverter hat eine Verzögerung die sich über die Anzahl der Inverter und aufaddiert. Ist das Signal am Ende der Inverterkette angekommen, so hat es wegen der internen Verzögerungszeit jedes einzelnen Inverters eine Zeit \textit{t} gebraucht. Durch die ungerade Anzahl von Invertern steht am Ausgang des letzten Inverters jedes mal das negierte Eingangssignal des ersten Inverters. Das Ausgangssignal des letzten Inverters stellt jedoch den Input des ersten Inverters da (dessen Information ja negiert wurde). Das Signal wird wieder über alle Inverter geschickt, wodurch eine andauernde Oszillation entsteht.
+
+Der Ringoszillator wird gerne verwendet um die Schaltgeschwindigkeit des verwendeten Prozesses (in diesem Fall CMOS12) zu bestimmen, oder um Fehlersuche bei IC Prototypen betreiben zu können. 
+\newpage
+
+Folgende Spezifikationen waren dabei zu beachten:
+ 
+\begin{itemize}
+	\item Frequenz: \textit{f}=500 \textit{kHz}
+	\item abschaltbar
+	\item low power
+	\item Schwingfähig von -40°C/1.3V bis 125°C/1.1V
+	\item Technologie: CMOS12
+\end{itemize}
+
+Die Schaltfrequenz des Ringoszillators ist von der Gatterlaufzeit abhängig.
+
+\begin{equation}
+T=\frac{1}f=2\cdot t_p\cdot N
+\label{Schaltfrequenz}
+\end{equation}
+
+Die Verzögerungszeit (Propagation Delay, $t_p$) eines Gatters konnte indirekt aus dem zum Inverter ivx2 gehörenden Philips Datenblatt (CMOS12 Bibliothek) bestimmt werden. 
+Aus dem Datenblatt (s. Anhang, Seite \pageref{ivx2 Seite 1}) kann für mehrere kapazitive Belastungsfälle  die Risetime $t_r$ und Falltime $t_f$ entnommen werden. Ein Inverter des Typs ivx2 belastet den Ausgang eines Vorgeschalteten Inverters mit 11.6 \textit{fF}. Dies liegt zwischen  0\textit{fF} und 84.4\textit{fF}. Der genaue Wert für Rise und Fall Time konnte dem Datenblatt also nicht entnommen werden. Für diesen Zweck wurde von mir die Diagramme \ref{fig:ivx21 Risetime und Falltime} und \ref{fig:ivx22 Risetime und Falltime} erstellt, aus denen die zu 11.6\textit{fF} gehörende Rise und Fall Time abgelesen werden konnte. 
+Die zweite Abbildung zeigt die Vergrößerung des interessanten Ausschnitts bei 11.6\textit{fF}  
+
+{\footskip=9.3pc
+\begin{landscape}
+\begin{figure*}[t]
+  \centering%
+  \begin{tabular}{@{}cc@{}}
+  \hspace{-2.0in}
+    \includegraphics*[scale = 0.75]{../../Bilder/ivx2_Risetime_Falltime_1.jpg}
+  \end{tabular}
+  \caption{ivx2 Risetime und Falltime}
+  \label{fig:ivx21 Risetime und Falltime}
+\end{figure*}
+\end{landscape}
+}
+
+{\footskip=9.3pc
+\begin{landscape}
+
+\begin{figure*}[t]
+  \centering%
+  \begin{tabular}{@{}cc@{}}
+  \hspace{-2.0in}
+    \includegraphics*[scale = 0.75]{../../Bilder/ivx2_Risetime_Falltime_2.jpg}
+  \end{tabular}
+  \caption{ivx2 Risetime und Falltime}
+  \label{fig:ivx22 Risetime und Falltime}
+\end{figure*}
+\end{landscape}
+
+Für die rise time kann ein Wert von 87\textit{ps} und für die Fall Time 67\textit{ps} abgelesen werden.
+
+
+Die \textit{$t_p$} \footnote{propagation delay, Verzögerungszeit} kann dann näherungsweise nach folgender Formel berechnet werden: 
+
+\begin{equation}
+t_p=\frac{t_r+t_f} 2 = \frac{87\textit{ps}+67\textit{ps}} 2 = \underline{75\textit{ps}}
+\label{Verzögerungszeit}
+\end{equation}
+
+Eingesetzt in Formel \ref{Schaltfrequenz} ergibt sich eine Anzahl von 13000 Invertern.
+Diese hohe Anzahl würde relativ viel Fläche auf dem Die beanspruchen und zu einem erhöhten Stromverbrauch führen. Würde eine geringere Anzahl von Invertern verwendet werden, so würde sich die Schaltfrequenz des Oszillators nach Formel \ref{Schaltfrequenz} erhöhen. Ein einfacher Teiler, der auch Teil der Standardbibliothek CMOS12 ist könnte die Schaltfrequenz der Inverterkette halbieren. N Inverter in Serie hinter den Ausgang der Inverterkette geschaltet würden die Schaltfreqeunz durch $2^{N}$ teilen. Somit kann eine quasi beliebige Anzahl von Invertern gewählt werden. Die Schaltfrequenz des Ringoszillators sollte aber, wenn sie durch $2^{N}$ geteilt wird, einen Wert von möglichst genau $500kHz$ ergeben.
+Von mir wurde ein Anzahl von 15 Invertern und 10 Teilern gewählt. 15 Inverter führen nach Formel \ref{Schaltfrequenz} zu einer Schaltfrequenz von 432.9 \textit{MHz}. \label{BerechnungSchaltfrequenz} Durch die 10 Teiler wird diese Frequenz auf 422.8\textit{kHz} runtergeteilt. Dies trifft für meine Zwecke mit ausreichender Genauigkeit (-18.3\%) die Vorgabe von 500\textit{kHz}.
+
+
+\subsection{Erstellen der Hardware Beschreibung}
+Nachdem die theoretischen Überlegungen abgeschlossen waren habe ich die Codierung der VHDL RTL Verhaltensbeschreibung begonnen, die hier allerdings recht strukturell ausgefallen ist.
+
+\subsubsection{Erstellen des VHDL Codes}
+Dazu wurde der Ringoszillator zunächst in VHDL auf RTL Level (Register Transfer Level) modelliert. Folgendes Listing gibt einen Überblick über den von mir erstellten Code:
+
+
+\label{VHDL Code}
+\lstinputlisting[basicstyle=\small, % print whole listing small
+								 style=withbackgroundcolor,
+								 keywordstyle=\color{blue}\bfseries,%\underbar,	% underlined bold black keywords
+								 identifierstyle=, % nothing happens
+								 commentstyle=\color{black}\itshape, %white comments %grey,gold,red,blue,green,
+								 %stringstyle=\ttfamily, % typewriter type for strings
+								 %showstringspaces=false % no special string spaces
+								 language=vhdl]
+								 {../transfer/RINGOSZILLATOR/Synopsys_rundir/RingOsc_v3a.vhd}
+%\newpage
+
+
+Das Signal \textit{Enable} wird zum Ein- und Ausschalten des Ringoszillators auf Port A eines and Gatters des Typs an2x1 gegeben. Auf Port B des and Gatters führt das Signal \textit{oscValInv} des letzten Inverters in der Inverterkette. Damit wird der in der Spezifikation enthaltenen Vorgabe dass der Ringoszillator abschaltbar sein muss Rechnung getragen. 
+
+\textit{Reset} wird zum Initialisieren der Dividerkette benötigt. Die Dividerkette wird vom Ausgang des And Gatters angesteuert. Ausgang der Dividerkette \textit{(loopBack(anzDiv -1))} ist gleichzeitig Ausgang des Ringoszillators.
+
+Mit den beiden Konstanten \textit{anzInv} und \textit{anzDiv} wird die Anzahl der verwendeten Inverter bzw. Teiler vorgegeben.
+
+Am Anfang wurde überlegt für alle Inverter einen Typ aus der Standardbibliothek auszuwählen der einen Treiberausgang der Stärke 0.5 besitzt. Nur für den Inverter der als Treiber für das Nachgeschaltete And Gatter arbeitet wäre ein Typ ausgewählt worden der einen Treiberausgang der Stärke 2 enthält. Damit wäre Strom gespart worden. Dieser Gedanke wurde aber verworfen, da es Probleme mit den Invertern der Stärke 0.5 und 1.0 gibt. Die Vorgabe low power konnte somit nur bedingt erfüllt werden. Die Wahl einer low power Zell-Bibliothek hätte noch helfen können Energie einzusparen.
+
+Der Code wurde von mir generisch gehalten und ist somit schnell an eine veränderte Spezifikation anpassbar. Für eine Änderung der Ausgangsfrequenz müssen nur die Konstanten \textit{anzInv} und \textit{anzDiv} verändert werden.
+
+Um zu überprüfen ob der von mir erzeugt Code auch den Spezifikationen gerecht wird wurde er von mir mit dem Softwaretool ModelSim compiliert und anschließen simuliert.
+Im Wave Fenster von Modelsim konnte dann optisch überprüft werden ob der Ringoszillator funktioniert oder nicht.
+%Die folgenden Bilder zeigen anschaulich, dass der Ringoszillator funktioniert.
+
+Anschließend konnte der korrekte Code mit dem Softwaretool Synopsys Design Compiler geladen werden.
+Es ergab sich dann folgendes Bild \ref{fig:Synopsys Design Compiler}:
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=1.00\textwidth]{../../Bilder/Synopsis_Design_Analyzer_Full_View.jpg}
+	\end{center}
+	\caption{Synopsys Design Compiler}
+	\label{fig:Synopsys Design Compiler}
+\end{figure}
+
+Deutlich ist die zuvor in VHDL beschriebene Kette aus 15 Invertern, die Kette aus 10 Teilern sowie das zum Abschalten verwendete and-Gatter (links oben) zu erkennen.
+
+Mit Hilfe des Synopsys Design Compilers wurde eine Verilog Netzliste erzeugt die von dem Place and Route Tool Cadence First Encounter verwendet werden konnte. 
+
+\subsection{Place and Route}
+First Encounter ist in der Lage eine Netzliste zu laden, die einzelnen Zellen intelligent zu platzieren (Place) und die physische Vernetzung der Zellen (Route) vorzunehmen. Siehe Bild \ref{fig:First Encounter}. 
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=1.00\textwidth]{../../Bilder/Encounter_1.jpg}
+	\end{center}
+	\caption{First Encounter}
+	\label{fig:First Encounter}
+\end{figure}
+
+Mit Hilfe von First Encounter wurden die *.spf (Standard Parasitics Format) und *.sdef  Files sowie eine Verilog Netzliste erzeugt.
+\footnote{Die *.spf und *.sdef Files enthalten Informationen über die im Design vorhandenen Parasitics} 
+
+\subsection{Parasitics}
+
+Nachdem das Platzieren und das Routen der Zellen erfolgreich abgeschlossen wurde konnten mit Hilfe des Softwaretools Synopsys Design Analyzer drei *.sdf \footnote{Das *.sdf File enthält, wie auch die *.spf und *.sdef Files, Informationen über die im Design vorhandenen Parasitics. Es kann aber im Gegensatz zu den *.spf und *.sdef Files von ModelSim gelesen werden}(Standard Delay Format)  Files für die folgenden drei Szenarien erzeugt werden:
+
+\begin{itemize}
+	\item  Worst Case: Prozessparameter 	1.5, 110 Prozent Nominalspannung, 	105 Grad
+	\item  Best Case: Prozessparameter 	0.5, 100 Prozent Nominalspannung,		-40 Grad
+	\item  Typical Case: Prozessparameter 1.0, 120 Prozent Nominalspannung,		 25 Grad
+\end{itemize}
+ 
+\subsection{Simulation mit Parasitics}
+Um überprüfen zu können ob der Ringoszillator seiner Spezifikation gerecht wird konnte jeweils ein *.sdf File mit der von Cadence First Encounter erzeugten Verilog Netzliste in Model Sim geladen und der Ringosszillator somit unter \textit{Worst Case}, \textit{Best Case} und \textit{Typical Case} simuliert werden.
+Anhand der folgenden Bilder soll der der Best Case näher untersucht werden.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{../../Bilder/Ringoszillator_bc_pic1.jpg}
+	\end{center}
+	\caption{ModelSim 1}
+	\label{fig:ModelSim 1}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{../../Bilder/Ringoszillator_bc_pic2.jpg}
+	\end{center}
+	\caption{ModelSim 2}
+	\label{fig:ModelSim 2}
+\end{figure}
+
+Aus den Abbildungen \ref{fig:ModelSim 1} und \ref{fig:ModelSim 2} läßt sich die Dauer einer Periode berechnen:
+
+\begin{equation}
+t=1232340\textit{ps} - 413140\textit{ps} = \underline{819.2\textit{ns}}
+\label{CalculationPeriodeBestCase}
+\end{equation}
+
+Damit ergibt sich für den \textit{Best Case} des Ringoszillator eine Frequenz von:
+
+
+\begin{equation}
+f_{bc}=\frac{1} {1232340\textit{ps} - 413140\textit{ps}} = \frac{1} {819.2\textit{ns}} = \underline{1.221\textit{MHz}}
+\label{CalculationFrequencyBestCase}
+\end{equation}
+
+Für Worst Case und Typical Case ergeben sich die folgenden Werte:
+\begin{enumerate}
+	\item Worst Case	:	$f_{wc}$=820.6\textit{kHz}
+	\item Typical Case:	$f_{tc}$=516.7\textit{kHz}
+\end{enumerate}
+
+Der Ringoszillator ist somit im Vorgegebenen temperaturbereich schwingungsfähig.
+
+\subsection{Diskussion der Ergebnisse}
+Die  berechnete Frequenz für den \textit{Best Case} liegt mit 1.221\textit{MHz} um das 2.88 fache höher als der Wert der auf Seite \pageref{BerechnungSchaltfrequenz} berechnet wurde (422.8\textit{kHz}). Mit abnehmender Temperatur nimmt zwar die Schaltgeschwindigkeit eines Inverters auf  Siliziumbasis zu; fragwürdig bleibt aber ob dies einen so großen Anstieg der Frequenz erklären kann. Falsch erscheint das Ergebnis für den \textit{Worst Case}. Da hier die Temperatur ansteigt ist eine Abnahme der Frequenz unter den \textit{Typical Case} zu erwarten und nicht ein ansteigen auf 820.6\textit{kHz}. Richtig scheint der Wert für den \textit{Typical Case}, der mit 516.7\textit{kHz} nahe an der Vorgabe der Spezifikation und dem auf Seite \pageref{BerechnungSchaltfrequenz} berechneten Wert liegt. 
+
+Eine mögliche Erklärung für das merkwürdige Ergebnisse beim \textit{Worst Case} wird von mir in einem falsch konfigurierten Softwaretool gesucht. Jedes Softwaretool benutzte eine eigene Bibliothek die manuell (meist durch Eingabe des Suchpfades) ausgewählt werden musste. Da ich bei dieser Auswahl große Probleme hatte kann ich mir vorstellen einem Tool die falsche Bibliothek gegeben zu haben. Vielleicht macht sich im Worst Case auch ein Effekt bemerkbar den ich nicht kenne. Mir ist bekannt, dass eine Erhöhung der Temperatur eine Verlangsamung der Schaltfrequenz zur Folge hat. Welche Auswirkung aber eine gleichzeitige Veränderung des Prozessparameters oder der Betriebsspannung hat kann ich nicht beurteilen.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%	Bonding Diagramm
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\index{Bonding Diagramm, erstellen eines}
+\label{ErstellenEinesBondingDiagramms}
+\section{Erstellen eines Bonding Diagrammes }
+
+\subsection{Einleitung}
+
+Um bei der Produktion eines \index{IC} IC's einen \index{Die} Die mit seinem Package \index{Package} elektrisch leitfähig verbinden zu können, wird ein so genanntes \textit{Bonding Diagramm} \index{Bonding Diagram} benötigt, mit Hilfe dessen die \textit{Die~Pads} den  \textit{Package Pins} eindeutig zugeordnet werden.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.85\textwidth]{../../Bilder/WiringDiagram_withcomments}
+	\end{center}
+	\caption{Bonding Diagram}
+	\label{fig:Bonding Diagram}
+\end{figure}
+
+\subsection{Verwendete Software - Package Constraints Manager (PCM)}
+Philips Semiconductors benutzt beim Erstellen eines 
+\index{Bonding Diagram, erstellen eines} 
+Bonding Diagramms die Software \index{PCM} \index{Package Constraints Manager}\textit{PCM (Package Constraints Manager)}, die noch zu Zeiten von \index{VLSI} VLSI entwickelt wurde, von Philips Semiconductors aber weiter gepflegt wird.
+Der folgende Abschnitt soll einen kleinen Einblick über das erstellen eines Bonding Diagramms geben.
+
+\subsubsection{PCM Flow}
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=1.00\textwidth]{../../Bilder/PCM_Flow.jpg}
+	\end{center}
+	\caption{PCM Flow}
+	\label{fig:PCM}
+\end{figure}
+
+Der \textit{Standard Flow} von PCM ist in Diagramm \ref{fig:PCM} dargestellt.\\ 
+
+
+Das \index{Pad Placement}Pad Placement kann PCM aus \index{GDS Files}GDS-, oder \index{TDF Files}TDF- Files beziehen.
+Weitere Informationen wie \textit{Top Level Signal Names}, \index{Top Level Signal Names}
+ sowie schon vorhandene Informationen über die Korrespondenz zwischen \index{Package Pin}Package Pin zu \index{Diepad}Die Pad können von PCM z.B. aus \index{VTDF Files}VTDF oder \index{EDTEXT Files}EDTEXT Files extrahiert werden. 
+Als \index{EingabeFile}Eingabefile für die von PCM benötigten Informationen wie \index{Die Größe}Die Größe oder \index{Die Pad Positionn}Die Pad Positionen können wahlweise~\textit{\mbox {TDF-,}} oder \textit{GDS-} Files verwendet werden.
+Alle Files können dabei über \\
+\verb|	File | $\rightarrow$ \verb| Open| \\
+geladen werden.
+
+
+\subsection{Erstellen eines Bonding Diagramms}
+Im Rahmen des Praxissemesters mussten von mir mehrere Bonding Diagramme angefertigt werden. Dieser Vorgang  (Flow) wird auf den folgenden Seiten näher beschrieben.\\
+Zuerst wird das entsprechende Package in PCM geladen. 
+Als Eingabedatei für PCM standen mir in den meisten Fällen TDF - Dateien zur Verfügung, so dass ich mich hier auch auf den PCM Flow beschränke, der TDF Dateien als Eingabeformat benutzt.
+
+Für PCM mussten zunächst einige für PCM überflüssige Zellen entfernt werden\footnote{Überflüssige Zellen sind für PCM Filler und Corner Cells, da diese nicht gebondet werden}. Dazu wurde das TDF File in den Texteditor Nedit geladen, die entsprechenden Zeilen mit Einträgen wie Filler oder Corner gesucht, gelöscht und das modifizierte File anschließend in PCM mit \verb|	File | $\rightarrow$ \verb| Open| geöffnet.
+Beim Laden eines TDF Files öffnet sich ein Fenster (Setup Technology) in dem mehrere Einstellungen vorgenommen werden müßen:
+\begin{itemize}
+	\item Technology: CMOS18
+	\item Library: PcCMOS18flviolib\_spm
+	\item Die Size: 2799.36um * 6318.72um
+\end{itemize}
+
+\newpage
+Das folgende Bild zeigt das nun geöffnete TDF File.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.6\textwidth]{../../Bilder/3.jpg}
+	\end{center}
+	\caption{Geöffnetes TDF File}
+	\label{fig:Geöffnetes TDF File}
+\end{figure}
+Der nächste Schritt erfordert das Öffnen eines geeigneten Packages. Bei der Auswahl des Packages muss unter anderem Rücksicht auf die Größe des Die, sowie die Anzahl der Top Level Signal Names Rücksicht genommen werden. Da die Top Level Signal Names Signale repräsentieren die an den Die Pads anliegen muss eine entsprechende Anzahl von Package Pins vorhanden sein um diese Signale nach außen zu führen. Als geeignetes Package hat sich das BGA 256 erwiesen. 
+
+\newpage
+Der Die mit dem geladenen Package:\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{../../Bilder/5.jpg}
+	\end{center}
+	\caption{Die mit geladenem Package}
+	\label{fig:Die mit geladenem Package}
+\end{figure} 
+
+\newpage
+Nun kann der Die mit dem Package gebondet werden. Dazu im GUI \verb|	Bonding | $\rightarrow$ \verb| From Scratch| ausführen.
+Wie im folgenden Bild zu erkennen ist, ist der Die nun gebondet.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{../../Bilder/6.jpg}
+	\end{center}
+	\caption{Gebondeter Die}
+	\label{fig:Gebondeter Die}
+\end{figure}
+
+\newpage
+PCM sucht beim Bonden die jeweils kürzeste Verbindung zwischen einem Bondpad und einem Package Pin. Weitere Regeln werden beim Bonden von PCM nicht beachtet. 
+Wird das Bonding Diagram nun über \verb|	Verify | $\rightarrow$ \verb| Verify Diagram| verifiziert und öffnet man anschließend den von PCM erstellten Violation Report so wird festgestellt, dass es eine Reihe von Violations gibt.\footnote{Violations sind Verstöße gegen Bonding Rules die mit einer Technologie mitgeliefert werden.}
+
+Im folgenden Bild ist zu erkennen, dass vorhandene Fehler in PCM nun farbig erscheinen.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{../../Bilder/7.jpg}
+	\end{center}
+	\caption{Gebondeter Die mit Violations}
+	\label{fig:Gebondeter Die mit Violations}
+\end{figure}
+Betrachtete man den Violation Report, so fiel sofort die hohe Anzahl an Max\_Wire\_Length Violations ins Auge. 
+Diese Violations konnten verringert werden, indem der Durchmesser des Bonding Wires von 20$\mu$\textit{m} auf 30$\mu$\textit{m} erhöht wurde.
+Der Wire Diameter von 30$\mu$\textit{m} konnte auch als Defaultwert eingestellt werden, so dass mit jedem neuen Aufruf von PCM der Wire Diameter von 30$\mu$\textit{m} voreingestellt war. Dazu musste im Arbeitsverzeichniss von PCM eine Datei mit dem Namen pcm.boo angelegt werden, die den Eintrag :
+define  Bonding\_Wire\_Diameter 30
+enthält.
+PCM suchte beim Start nach dieser Datei (PCM.boo) und ludt die enthaltenen Anweisungen in seine Datenbank, so dass bestimmte Einstellungen nicht bei jedem Neustart von PCM vorgenommen werden mussten.
+Ein erneutes Aufrufen des Rules Checker mit \verb|	Verify | $\rightarrow$ \verb| Verify Diagram| ergab nun nur noch 52 Violations. 
+%(s. Anhang, Seite \pageref{Violation Report 52 Violations})
+Diese konnten weiter reduziert werden, indem manuelle Veränderungen an dem Bonding Diagram vorgenommen wurden. So wurden von mir z.B. Bondingdrähte auf andere Package Pins gelegt um die \verb|MIN_DIE_WIRE_ANGLE| Violations zu verringern. \\Des weiteren wurde der Abstand zwischen einigen Bondpads vergrößert. Dadurch verringerten sich die Anzahl der MIN\_WIRE\_TO\_WIRE\_DIST Violations. Zu beachten war dabei jedes mal der minimale Abstand zwischen zwei Bondpads der bei der gewählten Techologie und Library 71.04$\mu$\textit{m} betrug (nicht unterschreiten). Wurden die Bond Pads in PCM neu platziert, musste jedes mal über \verb|	File | $\rightarrow$ \verb| Output| $\rightarrow$ \verb| MakePadPlacement| $\rightarrow$ \verb| FirstEncounter| eine Pad Placement Datei erzeugt werden, um dem Softwaretool First Encounter die neue Position der Bondpads mitzuteilen. \footnote {First Encounter ist ein mächtiges Software Tool mit dessen Hilfe ICs designt werden}
+Nachdem alle Möglichkeiten ausgenutzt wurden, um die Violations zu reduzieren, waren nur noch 11 vorhanden (im Gegensatz zu anfänglich 151 Violations). Dies war, insbesondere weil es sich um nur sehr kleine Violations handelt, ein durchaus akzeptabler Wert. 
+%(s. Anhang, Seite \pageref{Violation Report 11 Violations})
+
+Nun konnten folgende Output Dateien geschrieben werden:
+	
+\begin{itemize}
+	\item  Plot PS
+	\item  Make DXF
+	\item  Make VTDF
+\end{itemize}
+
+Das VTDF File enthielt leider nur Angaben über PackagePin und DiePad. Die wichtigen Angabe des Top Level Signal Names in der Ersten Spalte sowie der Macro Name fehlten. 
+Offensichtlich war PCM nicht in der Lage die im TDF-File (Eingangs File) vorhandenen Informationen über die Top Level Signal Names zu lesen und in das VTDF File auszugeben. Sie mussten somit manuell eingefügt werden. Dabei trat nun ein weiteres Problem auf. In einem TDF File ist die Reihenfolge der Die Pads und Top Level Signal Names anders als in einem VTDF File.
+Die Top Level Signal Names für die Pads oben (top oder north) und links (left oder west) konnten ohne weiteres mit \verb|	Copy | $\rightarrow$ \verb| Paste| vom TDF in das VTDF übernommen werden. Die Top Level Signal Names für die Pads rechts (right oder east) und unten (bottom oder south) mussten hingegen invertiert werden. D.h. der Name, der im TDF File als erstes für die rechte Seite des Die auftaucht, muss im VTDF File der Letzte sein. Da diese Arbeit sehr zeitaufwendig und mitunter auch fehleranfällig ist (da manuell) wurde von mir ein Skript geschrieben , (s. Anhang, Seite \pageref{Skript 1})dass die Top Level Signal Names aus einem TDF extrahiert und in der Reihenfolge in eine Datei ausgibt, wie sie im VTDF File erscheinen müssen.
+Diese Namen mussten nun nur noch mit Copy und Paste in das VTDF File kopiert werden. 
+Ebenfalls notwendig im VTDF File waren Angaben über den Macro Name, also den Typ des Pads. Um diese Spalte zu ergänzen wurde mir von einem anderen Mitarbeiter eine Excel Tabelle zur Verfügung gestellt, aus der die Namen übernommen werden konnten. Leider waren auch hier die Informationen in der TDF Reihenfolge vorhanden. Es wurde von mir erneut ein Skript geschrieben \pageref{Skript 2}) dass diesmal allgemeiner gehalten wurde. Es nimmt beliebige Ascii Files als Input Datei und kehrt dessen Inhalt um, so dass das erste Element nun am Ende steht und das letzte Element am Anfang. Dazu mussten nun natürlich die Seiten rechts und unten einzeln in ein Ascii File kopiert werden das nun mit Hilfe des Skriptes invertiert werden konnte. Aus dem Output File des Skripts konnten die Elemente in das VTDF kopiert werden.
+Das fertige File stand nun zur Verfügung. Eine der Hauptschwierigkeiten bestand darin, den gesamten Flow so zu gestalten, dass er so schnell wie möglich reproduziert werden konnte, denn beinahe täglich wurden noch Veränderungen am Chipdesign vorgenommen. Z.B. wurden Pads hinzugefügt, Signale vertauscht oder Pad Positionen verändert. Ungemein hilfreich waren dabei die beiden Skripte die von mir geschrieben wurden, da sich das umkopieren der Namen als Bottleneck im Flow herausstellte. 
+Der fertig gebondete Die ist auf Seite \pageref{fig:FertigGebondeterDie} zu erkennen.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{../../Bilder/FertigGebondeterDie.jpg}
+	\end{center}
+	\caption{FertigGebondeterDie.jpg}
+	\label{fig:FertigGebondeterDie}
+\end{figure}
