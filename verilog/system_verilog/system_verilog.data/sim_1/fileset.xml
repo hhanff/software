@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<DARoots Version="1" Minor="16">
+	<FileSet Name="sim_1" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/sim_1">
+		<Config>
+			<Option Name="DesignMode" Val="RTL"/>
+			<Option Name="TopModule" Val="arbiter_tb"/>
+			<Option Name="ConstrsType" Val="UCF"/>
+			<Option Name="SimulationRunTime" Val="0ns"/>
+			<Option Name="SrcSet" Val="sources_1"/>
+			<Option Name="FuseRangeCheck" Val="1"/>
+		</Config>
+	</FileSet>
+</DARoots>
+

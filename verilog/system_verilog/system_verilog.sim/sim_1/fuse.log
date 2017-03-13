@@ -1,0 +1,21 @@
+Running: /home/opt/Xilinx/13.2/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle pa -incremental --rangecheck -L unisims_ver -L unimacro_ver -L xilinxcorelib_ver -L secureip -o arbiter_tb.exe --prj /home/hhanff/Dropbox/src/verilog/system_verilog/system_verilog.sim/sim_1/arbiter_tb.prj -top work.arbiter_tb -top work.glbl 
+ISim O.61xd (signature 0xb4d1ced7)
+Number of CPUs detected in this system: 8
+Turning on mult-threading, number of parallel sub-compilation jobs: 16 
+Determining compilation order of HDL files
+Analyzing Verilog file \"/home/hhanff/Dropbox/src/verilog/arbiter.v\" into library work
+Analyzing Verilog file \"/opt/Xilinx/13.2/ISE_DS/PlanAhead/verilog/src/glbl.v\" into library work
+Starting static elaboration
+Completed static elaboration
+Fuse Memory Usage: 70264 KB
+Fuse CPU Usage: 110 ms
+Compiling module arbiter
+Compiling module arbiter_tb
+Compiling module glbl
+Time Resolution for simulation is 1ps.
+Waiting for 1 sub-compilation(s) to finish...
+Compiled 3 Verilog Units
+Built simulation executable arbiter_tb.exe
+Fuse Memory Usage: 169612 KB
+Fuse CPU Usage: 130 ms
+GCC CPU Usage: 270 ms

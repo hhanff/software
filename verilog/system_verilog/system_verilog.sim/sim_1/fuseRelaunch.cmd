@@ -1,0 +1,1 @@
+-intstyle "pa" -incremental --rangecheck -L "unisims_ver" -L "unimacro_ver" -L "xilinxcorelib_ver" -L "secureip" -o "arbiter_tb.exe" --prj "/home/hhanff/Dropbox/src/verilog/system_verilog/system_verilog.sim/sim_1/arbiter_tb.prj" -top "work.arbiter_tb" -top "work.glbl" 

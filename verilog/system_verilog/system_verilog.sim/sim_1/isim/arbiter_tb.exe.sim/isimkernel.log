@@ -1,0 +1,28 @@
+Command line:
+   arbiter_tb.exe
+     -simmode  gui
+     -simrunnum  0
+     -socket  54208
+
+Thu Nov  1 10:50:51 2012
+
+
+ Elaboration Time: 0.02 sec
+
+ Current Memory Usage: 165.097 Meg
+
+ Total Signals          : 18
+ Total Nets             : 18
+ Total Signal Drivers   : 11
+ Total Blocks           : 3
+ Total Primitive Blocks : 2
+ Total Processes        : 15
+ Total Traceable Variables  : 24
+ Total Scalar Nets and Variables : 104
+
+ Total Simulation Time: 3.11 sec
+
+ Current Memory Usage: 173.49 Meg
+
+Thu Nov  1 14:00:39 2012
+

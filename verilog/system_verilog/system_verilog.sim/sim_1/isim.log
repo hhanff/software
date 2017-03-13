@@ -1,0 +1,38 @@
+ISim log file
+Running: arbiter_tb.exe -intstyle pa -gui -tclbatch isim.cmd -wdb arbiter_tb.wdb 
+ISim O.61xd (signature 0xb4d1ced7)
+----------------------------------------------------------------------
+INFO:Security:50 - The XILINXD_LICENSE_FILE environment variable is set to '2100@rlb-lic.dfki.uni-bremen.de'.
+INFO:Security:53 - The LM_LICENSE_FILE environment variable is not set.
+WARNING:Security:43 - No license file was found in the standard Xilinx license directory.
+WARNING:Security:44 - No license file was found.
+       Please run the Xilinx License Configuration Manager
+       (xlcm or "Manage Xilinx Licenses")
+       to assist in obtaining a license.
+WARNING:Security:42 - Your software subscription period has lapsed. Your current version of Xilinx tools will continue to function, but you no longer qualify for Xilinx software updates or new releases.
+
+
+----------------------------------------------------------------------
+This is a Full version of ISim.
+Time resolution is 1 ps
+# onerror resume
+# wave add /
+# run 0ns
+Simulator is doing circuit initialization process.
+Finished circuit initialization process.
+req0=0,req1=0,gnt0=x,gnt1=x
+# run 1.00us
+req0=0,req1=0,gnt0=0,gnt1=0
+req0=1,req1=0,gnt0=0,gnt1=0
+req0=1,req1=0,gnt0=1,gnt1=0
+req0=0,req1=0,gnt0=1,gnt1=0
+req0=0,req1=1,gnt0=1,gnt1=0
+req0=0,req1=1,gnt0=0,gnt1=1
+req0=0,req1=0,gnt0=0,gnt1=1
+req0=1,req1=1,gnt0=0,gnt1=1
+req0=1,req1=1,gnt0=1,gnt1=0
+req0=0,req1=0,gnt0=1,gnt1=0
+Stopped at time : 90 ns : File "/home/hhanff/Dropbox/src/verilog/arbiter.v" Line 48
+# run all
+Stopped at time : 28340670 ns : File "/home/hhanff/Dropbox/src/verilog/arbiter.v" Line 52
+# exit 0
