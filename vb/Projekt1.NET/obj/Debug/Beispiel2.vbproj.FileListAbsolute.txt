@@ -1,0 +1,5 @@
+C:\Dokumente und Einstellungen\hhanff\Desktop\tmp\vb\Projekt1.NET\obj\Debug\Interop.DAO.dll
+C:\Dokumente und Einstellungen\hhanff\Desktop\tmp\vb\Projekt1.NET\obj\Debug\Interop.MSAdodcLib.dll
+C:\Dokumente und Einstellungen\hhanff\Desktop\tmp\vb\Projekt1.NET\obj\Debug\Interop.MSDataGridLib.dll
+C:\Dokumente und Einstellungen\hhanff\Desktop\tmp\vb\Projekt1.NET\obj\Debug\AxInterop.MSDataGridLib.dll
+C:\Dokumente und Einstellungen\hhanff\Desktop\tmp\vb\Projekt1.NET\obj\Debug\Beispiel2.vbproj.ResolveComReference.cache
