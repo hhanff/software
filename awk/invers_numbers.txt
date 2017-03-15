@@ -1,0 +1,1 @@
+nawk -f inverse_order.awk numbers.txt
