@@ -1,0 +1,13 @@
+# Zuerst das Programm youtube-dl mit der Adresse des Videos als Argument starten:
+> ./youtube-dl https://www.youtube.com/watch?v=xj3kTdx1QBw
+# Nun das entstandene Video dessen Namen sich aus der Zeichenkette hinter dem '=' ableitet nach mp3 wandeln:
+
+# Die direkte Wandlung nach mp3 hat auf hhanff-u zuletzt nicht geklappt... warum weiss ich nicht
+# Vorher muss ffmpeg und der codec installiert sein:
+# > sudo apt-get install ffmpeg libavcodec-extra-53
+ffmpeg -i xj3kTdx1QBw.flv -f mp3 -ab 192000 -vn Eagles_Of_Death_Metal-Wanna_Be_In_LA.mp3
+
+# Alter Version
+mplayer -vo null -ao pcm -af resample=44100:0:0,volume=+4db:sc xj3kTdx1QBw.flv
+twolame audiodump.wav Eagles_Of_Death_Metal-Wanna_Be_In_LA.mp3
+
