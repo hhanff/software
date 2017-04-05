@@ -476,6 +476,7 @@ function quickmail_home() {
 #-------------------
 # Personnal Aliases
 #---------------------
+alias TRANSTERRA='pushd /mnt/research/projects/ongoing/TransTerrA_15004/'
 alias DAEDALUS='pushd /mnt/research/projects/ongoing/DAEDALUS_15078/'
 alias LIMES='pushd /mnt/research/projects/ongoing/LIMES/'
 alias SDSO='pushd /mnt/research/projects/ongoing/EIT-SDSO_18883'
@@ -599,6 +600,10 @@ function my_tea_timer { sleep $1 && xmessage -center "Tea is ready!"; }
 
 function my_ccleaner { sudo sh -c "sync; echo 3 > /proc/sys/vm/drop_caches"; }
 
+function my_flash_pro_express {
+    /usr/local/microsemi/Program_DebugV11.8/Program_Debug/bin/FPExpress &
+}
+
 function my_actel { \
    # Prerequisites: ##
    # cd /etc/init.d
@@ -609,12 +614,12 @@ function my_actel { \
 
    # https://help.ubuntu.com/community/LiberoSOC
    # sudo apt-get install libmotif3 libmotif-dev libmotif4:i386 nspluginwrapper lib32z1 libc6-i386 rpcbind xfonts-100dpi xfonts-75dpi ksh lsb
-   
-   
+
+
    # Obtain a flelmx gold license from Microsemi
    # > mv ~/Downloads/License.dat /opt/Linux_Licensing_Daemon/flexlm/
    # Change the header of License.dat matching your system.
-   
+
    # For programming ensure that
    # > sudo cat /etc/udev/rules.d/70-microsemi.rules
    # SUBSYSTEM=="usb",ATTRS{idProduct}=="2008",ATTRS{idVendor}=="1514",MODE="0660 ",GROUP="plugdev",SYMLINK+="FlashPro5"
@@ -900,7 +905,7 @@ fi
 # Local Variables:
 PLATFORM=lin
 
-PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
+# PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
 #PROMPT_COMMAND='echo -ne "\033]0;${PWD/$HOME/~}\007"
 #export PROMPT_COMMAND="history -a;history -r;$PROMPT_COMMAND"'
 
