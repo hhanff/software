@@ -552,7 +552,7 @@ alias my_backup="~/Dropbox/src/scripts/my_backup.sh"
 
 alias top='htop'
 alias my_vpn='sudo openvpn ~/Dokumente/Privat/Certificates/hhanff@hhanff.spdns.org.opvn '
-
+alias my_vpn_work='sudo openconnect -b -u heha01 --authgroup=Anyconnect-MyDFKI --no-cert-check vpn.hb.dfki.de 
 
 # First test if we are in an interactive session to overcome bind errors
 iatest=$(expr index "$-" i)
