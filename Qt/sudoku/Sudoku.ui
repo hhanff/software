@@ -1,0 +1,1212 @@
+<ui version="4.0" >
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>789</width>
+    <height>740</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Dialog</string>
+  </property>
+  <widget class="QTextEdit" name="textEdit_2" >
+   <property name="geometry" >
+    <rect>
+     <x>130</x>
+     <y>20</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit" >
+   <property name="geometry" >
+    <rect>
+     <x>60</x>
+     <y>20</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="font" >
+    <font>
+     <family>Arial Black</family>
+     <pointsize>20</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_3" >
+   <property name="geometry" >
+    <rect>
+     <x>200</x>
+     <y>20</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_4" >
+   <property name="geometry" >
+    <rect>
+     <x>270</x>
+     <y>20</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_5" >
+   <property name="geometry" >
+    <rect>
+     <x>340</x>
+     <y>20</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_6" >
+   <property name="geometry" >
+    <rect>
+     <x>410</x>
+     <y>20</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_7" >
+   <property name="geometry" >
+    <rect>
+     <x>480</x>
+     <y>20</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_8" >
+   <property name="geometry" >
+    <rect>
+     <x>550</x>
+     <y>20</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_9" >
+   <property name="geometry" >
+    <rect>
+     <x>620</x>
+     <y>20</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_12" >
+   <property name="geometry" >
+    <rect>
+     <x>60</x>
+     <y>90</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_16" >
+   <property name="geometry" >
+    <rect>
+     <x>130</x>
+     <y>90</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_17" >
+   <property name="geometry" >
+    <rect>
+     <x>200</x>
+     <y>90</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_11" >
+   <property name="geometry" >
+    <rect>
+     <x>270</x>
+     <y>90</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_10" >
+   <property name="geometry" >
+    <rect>
+     <x>340</x>
+     <y>90</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_15" >
+   <property name="geometry" >
+    <rect>
+     <x>410</x>
+     <y>90</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_13" >
+   <property name="geometry" >
+    <rect>
+     <x>480</x>
+     <y>90</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_14" >
+   <property name="geometry" >
+    <rect>
+     <x>550</x>
+     <y>90</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_18" >
+   <property name="geometry" >
+    <rect>
+     <x>620</x>
+     <y>90</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_25" >
+   <property name="geometry" >
+    <rect>
+     <x>60</x>
+     <y>160</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_21" >
+   <property name="geometry" >
+    <rect>
+     <x>130</x>
+     <y>160</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_20" >
+   <property name="geometry" >
+    <rect>
+     <x>200</x>
+     <y>160</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_26" >
+   <property name="geometry" >
+    <rect>
+     <x>270</x>
+     <y>160</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_27" >
+   <property name="geometry" >
+    <rect>
+     <x>340</x>
+     <y>160</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_24" >
+   <property name="geometry" >
+    <rect>
+     <x>410</x>
+     <y>160</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_19" >
+   <property name="geometry" >
+    <rect>
+     <x>480</x>
+     <y>160</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_23" >
+   <property name="geometry" >
+    <rect>
+     <x>550</x>
+     <y>160</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_22" >
+   <property name="geometry" >
+    <rect>
+     <x>620</x>
+     <y>160</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_33" >
+   <property name="geometry" >
+    <rect>
+     <x>60</x>
+     <y>230</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_28" >
+   <property name="geometry" >
+    <rect>
+     <x>130</x>
+     <y>230</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_34" >
+   <property name="geometry" >
+    <rect>
+     <x>200</x>
+     <y>230</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_29" >
+   <property name="geometry" >
+    <rect>
+     <x>270</x>
+     <y>230</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_30" >
+   <property name="geometry" >
+    <rect>
+     <x>340</x>
+     <y>230</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_35" >
+   <property name="geometry" >
+    <rect>
+     <x>410</x>
+     <y>230</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_31" >
+   <property name="geometry" >
+    <rect>
+     <x>480</x>
+     <y>230</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_36" >
+   <property name="geometry" >
+    <rect>
+     <x>550</x>
+     <y>230</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_32" >
+   <property name="geometry" >
+    <rect>
+     <x>620</x>
+     <y>230</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_38" >
+   <property name="geometry" >
+    <rect>
+     <x>60</x>
+     <y>300</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_39" >
+   <property name="geometry" >
+    <rect>
+     <x>130</x>
+     <y>300</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_41" >
+   <property name="geometry" >
+    <rect>
+     <x>200</x>
+     <y>300</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_37" >
+   <property name="geometry" >
+    <rect>
+     <x>270</x>
+     <y>300</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_40" >
+   <property name="geometry" >
+    <rect>
+     <x>340</x>
+     <y>300</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_43" >
+   <property name="geometry" >
+    <rect>
+     <x>410</x>
+     <y>300</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_45" >
+   <property name="geometry" >
+    <rect>
+     <x>480</x>
+     <y>300</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_44" >
+   <property name="geometry" >
+    <rect>
+     <x>550</x>
+     <y>300</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_42" >
+   <property name="geometry" >
+    <rect>
+     <x>620</x>
+     <y>300</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_46" >
+   <property name="geometry" >
+    <rect>
+     <x>60</x>
+     <y>370</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_48" >
+   <property name="geometry" >
+    <rect>
+     <x>130</x>
+     <y>370</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_54" >
+   <property name="geometry" >
+    <rect>
+     <x>200</x>
+     <y>370</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_52" >
+   <property name="geometry" >
+    <rect>
+     <x>270</x>
+     <y>370</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_49" >
+   <property name="geometry" >
+    <rect>
+     <x>340</x>
+     <y>370</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_53" >
+   <property name="geometry" >
+    <rect>
+     <x>410</x>
+     <y>370</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_50" >
+   <property name="geometry" >
+    <rect>
+     <x>480</x>
+     <y>370</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_51" >
+   <property name="geometry" >
+    <rect>
+     <x>550</x>
+     <y>370</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_47" >
+   <property name="geometry" >
+    <rect>
+     <x>620</x>
+     <y>370</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_55" >
+   <property name="geometry" >
+    <rect>
+     <x>60</x>
+     <y>440</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_59" >
+   <property name="geometry" >
+    <rect>
+     <x>130</x>
+     <y>440</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_61" >
+   <property name="geometry" >
+    <rect>
+     <x>200</x>
+     <y>440</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_58" >
+   <property name="geometry" >
+    <rect>
+     <x>270</x>
+     <y>440</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_56" >
+   <property name="geometry" >
+    <rect>
+     <x>340</x>
+     <y>440</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_57" >
+   <property name="geometry" >
+    <rect>
+     <x>410</x>
+     <y>440</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_60" >
+   <property name="geometry" >
+    <rect>
+     <x>480</x>
+     <y>440</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_62" >
+   <property name="geometry" >
+    <rect>
+     <x>550</x>
+     <y>440</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_63" >
+   <property name="geometry" >
+    <rect>
+     <x>620</x>
+     <y>440</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_67" >
+   <property name="geometry" >
+    <rect>
+     <x>60</x>
+     <y>510</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_70" >
+   <property name="geometry" >
+    <rect>
+     <x>130</x>
+     <y>510</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_71" >
+   <property name="geometry" >
+    <rect>
+     <x>200</x>
+     <y>510</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_64" >
+   <property name="geometry" >
+    <rect>
+     <x>270</x>
+     <y>510</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_68" >
+   <property name="geometry" >
+    <rect>
+     <x>340</x>
+     <y>510</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_69" >
+   <property name="geometry" >
+    <rect>
+     <x>410</x>
+     <y>510</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_66" >
+   <property name="geometry" >
+    <rect>
+     <x>480</x>
+     <y>510</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_72" >
+   <property name="geometry" >
+    <rect>
+     <x>550</x>
+     <y>510</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_65" >
+   <property name="geometry" >
+    <rect>
+     <x>620</x>
+     <y>510</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_74" >
+   <property name="geometry" >
+    <rect>
+     <x>60</x>
+     <y>580</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_76" >
+   <property name="geometry" >
+    <rect>
+     <x>130</x>
+     <y>580</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_80" >
+   <property name="geometry" >
+    <rect>
+     <x>200</x>
+     <y>580</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_73" >
+   <property name="geometry" >
+    <rect>
+     <x>270</x>
+     <y>580</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_78" >
+   <property name="geometry" >
+    <rect>
+     <x>340</x>
+     <y>580</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_79" >
+   <property name="geometry" >
+    <rect>
+     <x>410</x>
+     <y>580</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_77" >
+   <property name="geometry" >
+    <rect>
+     <x>480</x>
+     <y>580</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_75" >
+   <property name="geometry" >
+    <rect>
+     <x>550</x>
+     <y>580</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_81" >
+   <property name="geometry" >
+    <rect>
+     <x>620</x>
+     <y>580</y>
+     <width>62</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="tabChangesFocus" >
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QDialogButtonBox" name="buttonBox" >
+   <property name="geometry" >
+    <rect>
+     <x>340</x>
+     <y>670</y>
+     <width>341</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="orientation" >
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="standardButtons" >
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::NoButton|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>textEdit</tabstop>
+  <tabstop>textEdit_2</tabstop>
+  <tabstop>textEdit_3</tabstop>
+  <tabstop>textEdit_4</tabstop>
+  <tabstop>textEdit_5</tabstop>
+  <tabstop>textEdit_6</tabstop>
+  <tabstop>textEdit_7</tabstop>
+  <tabstop>textEdit_8</tabstop>
+  <tabstop>textEdit_9</tabstop>
+  <tabstop>textEdit_12</tabstop>
+  <tabstop>textEdit_16</tabstop>
+  <tabstop>textEdit_17</tabstop>
+  <tabstop>textEdit_11</tabstop>
+  <tabstop>textEdit_10</tabstop>
+  <tabstop>textEdit_15</tabstop>
+  <tabstop>textEdit_13</tabstop>
+  <tabstop>textEdit_14</tabstop>
+  <tabstop>textEdit_18</tabstop>
+  <tabstop>textEdit_25</tabstop>
+  <tabstop>textEdit_21</tabstop>
+  <tabstop>textEdit_20</tabstop>
+  <tabstop>textEdit_26</tabstop>
+  <tabstop>textEdit_27</tabstop>
+  <tabstop>textEdit_24</tabstop>
+  <tabstop>textEdit_19</tabstop>
+  <tabstop>textEdit_23</tabstop>
+  <tabstop>textEdit_22</tabstop>
+  <tabstop>textEdit_33</tabstop>
+  <tabstop>textEdit_28</tabstop>
+  <tabstop>textEdit_34</tabstop>
+  <tabstop>textEdit_29</tabstop>
+  <tabstop>textEdit_30</tabstop>
+  <tabstop>textEdit_35</tabstop>
+  <tabstop>textEdit_31</tabstop>
+  <tabstop>textEdit_36</tabstop>
+  <tabstop>textEdit_32</tabstop>
+  <tabstop>textEdit_38</tabstop>
+  <tabstop>textEdit_39</tabstop>
+  <tabstop>textEdit_41</tabstop>
+  <tabstop>textEdit_37</tabstop>
+  <tabstop>textEdit_40</tabstop>
+  <tabstop>textEdit_43</tabstop>
+  <tabstop>textEdit_45</tabstop>
+  <tabstop>textEdit_44</tabstop>
+  <tabstop>textEdit_42</tabstop>
+  <tabstop>textEdit_46</tabstop>
+  <tabstop>textEdit_48</tabstop>
+  <tabstop>textEdit_54</tabstop>
+  <tabstop>textEdit_52</tabstop>
+  <tabstop>textEdit_49</tabstop>
+  <tabstop>textEdit_53</tabstop>
+  <tabstop>textEdit_50</tabstop>
+  <tabstop>textEdit_51</tabstop>
+  <tabstop>textEdit_47</tabstop>
+  <tabstop>textEdit_55</tabstop>
+  <tabstop>textEdit_59</tabstop>
+  <tabstop>textEdit_61</tabstop>
+  <tabstop>textEdit_58</tabstop>
+  <tabstop>textEdit_56</tabstop>
+  <tabstop>textEdit_57</tabstop>
+  <tabstop>textEdit_60</tabstop>
+  <tabstop>textEdit_62</tabstop>
+  <tabstop>textEdit_63</tabstop>
+  <tabstop>textEdit_67</tabstop>
+  <tabstop>textEdit_70</tabstop>
+  <tabstop>textEdit_71</tabstop>
+  <tabstop>textEdit_64</tabstop>
+  <tabstop>textEdit_68</tabstop>
+  <tabstop>textEdit_69</tabstop>
+  <tabstop>textEdit_66</tabstop>
+  <tabstop>textEdit_72</tabstop>
+  <tabstop>textEdit_65</tabstop>
+  <tabstop>textEdit_74</tabstop>
+  <tabstop>textEdit_76</tabstop>
+  <tabstop>textEdit_80</tabstop>
+  <tabstop>textEdit_73</tabstop>
+  <tabstop>textEdit_78</tabstop>
+  <tabstop>textEdit_79</tabstop>
+  <tabstop>textEdit_77</tabstop>
+  <tabstop>textEdit_75</tabstop>
+  <tabstop>textEdit_81</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>Dialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>578</x>
+     <y>720</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>Dialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>646</x>
+     <y>720</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
