@@ -1,5 +1,5 @@
 #! /bin/bash
-export PASSPHRASE="io89IO()"
+export PASSPHRASE="*******"
 SOURCE=/home/$USER/.emacs.d/
 DESTINATION=file:////mnt/temp/HendrikH/
 

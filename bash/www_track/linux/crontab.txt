@@ -1,0 +1,4 @@
+# m h  dom mon dow   command
+* *  *   *   *     /home/hhanff/www_track/www_track.sh
+
+

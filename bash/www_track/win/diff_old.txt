@@ -1,0 +1,80 @@
+225,252d224
+< 									<tr class="liste" >				<td headers="t1"><a href="http://www.schwarzesbrett.bremen.de/sixcms/detail.php?template=01_markteintrag_d&amp;id=57257&amp;host=bremen">BÜROSTUHL, HÖHENVERSTELLBAR, 8 €</a></td>
+< 				<td headers="t2" >21.10.08</td>
+< 			</tr>
+< 	
+< 									<tr class="liste" >				<td headers="t1"><a href="http://www.schwarzesbrett.bremen.de/sixcms/detail.php?template=01_markteintrag_d&amp;id=57256&amp;host=bremen">Polsterbett</a></td>
+< 				<td headers="t2" >21.10.08</td>
+< 			</tr>
+< 	
+< 									<tr class="liste" >				<td headers="t1"><a href="http://www.schwarzesbrett.bremen.de/sixcms/detail.php?template=01_markteintrag_d&amp;id=57252&amp;host=bremen">+++++Eckbankgruppe mit Tisch und 2 Stühlen+++++</a></td>
+< 				<td headers="t2" >21.10.08</td>
+< 			</tr>
+< 	
+< 									<tr class="liste" >				<td headers="t1"><a href="http://www.schwarzesbrett.bremen.de/sixcms/detail.php?template=01_markteintrag_d&amp;id=57217&amp;host=bremen">IKEA Rollcontainer weißtransparent für 5 €</a></td>
+< 				<td headers="t2" >21.10.08</td>
+< 			</tr>
+< 	
+< 									<tr class="liste" >				<td headers="t1"><a href="http://www.schwarzesbrett.bremen.de/sixcms/detail.php?template=01_markteintrag_d&amp;id=57185&amp;host=bremen">12- teiliges Kochtopfset "Waltmann und Sohn"</a></td>
+< 				<td headers="t2" >21.10.08</td>
+< 			</tr>
+< 	
+< 									<tr class="liste" >				<td headers="t1"><a href="http://www.schwarzesbrett.bremen.de/sixcms/detail.php?template=01_markteintrag_d&amp;id=57177&amp;host=bremen">Alles muss raus... (BILDER)</a></td>
+< 				<td headers="t2" >21.10.08</td>
+< 			</tr>
+< 	
+< 									<tr class="liste" >				<td headers="t1"><a href="http://www.schwarzesbrett.bremen.de/sixcms/detail.php?template=01_markteintrag_d&amp;id=57170&amp;host=bremen">Bett an Selbstabholer günstig abzugeben!!</a></td>
+< 				<td headers="t2" >21.10.08</td>
+< 			</tr>
+< 	
+373,376d344
+< 									<tr class="liste" >				<td headers="t1"><a href="http://www.schwarzesbrett.bremen.de/sixcms/detail.php?template=01_markteintrag_d&amp;id=56805&amp;host=bremen">Schlafcouch/Glasesstisch 4 Stühle</a></td>
+< 				<td headers="t2" >21.10.08</td>
+< 			</tr>
+< 	
+509c477,481
+< </div></td></tr><tr class="liste" >				<td headers="t1"><a href="http://www.schwarzesbrett.bremen.de/sixcms/detail.php?template=01_markteintrag_d&amp;id=56578&amp;host=bremen">Bett 140x200 + Lattenrost und Matraze zu verkaufen</a></td>
+---
+> </div></td></tr><tr class="liste" >				<td headers="t1"><a href="http://www.schwarzesbrett.bremen.de/sixcms/detail.php?template=01_markteintrag_d&amp;id=56594&amp;host=bremen">JÄGERMEISTER 0,7 LITER FÜR 5 EURO</a></td>
+> 				<td headers="t2" >20.10.08</td>
+> 			</tr>
+> 	
+> 									<tr class="liste" >				<td headers="t1"><a href="http://www.schwarzesbrett.bremen.de/sixcms/detail.php?template=01_markteintrag_d&amp;id=56578&amp;host=bremen">Bett 140x200 + Lattenrost und Matraze zu verkaufen</a></td>
+572a545,548
+> 									<tr class="liste" >				<td headers="t1"><a href="http://www.schwarzesbrett.bremen.de/sixcms/detail.php?template=01_markteintrag_d&amp;id=56475&amp;host=bremen">HAUSHALTSAUFLÖSUNGEN und ENTRÜMPELUNGEN IN BREMEN</a></td>
+> 				<td headers="t2" >20.10.08</td>
+> 			</tr>
+> 	
+696a673,680
+> 									<tr class="liste" >				<td headers="t1"><a href="http://www.schwarzesbrett.bremen.de/sixcms/detail.php?template=01_markteintrag_d&amp;id=56269&amp;host=bremen">Kühlschrank</a></td>
+> 				<td headers="t2" >20.10.08</td>
+> 			</tr>
+> 	
+> 									<tr class="liste" >				<td headers="t1"><a href="http://www.schwarzesbrett.bremen.de/sixcms/detail.php?template=01_markteintrag_d&amp;id=56266&amp;host=bremen">Kühlschrank</a></td>
+> 				<td headers="t2" >20.10.08</td>
+> 			</tr>
+> 	
+748a733,736
+> 									<tr class="liste" >				<td headers="t1"><a href="http://www.schwarzesbrett.bremen.de/sixcms/detail.php?template=01_markteintrag_d&amp;id=56126&amp;host=bremen">Viertüriger Kleiderschrank Tip Top mit Foto</a></td>
+> 				<td headers="t2" >20.10.08</td>
+> 			</tr>
+> 	
+2900a2889,2892
+> 									<tr class="liste" >				<td headers="t1"><a href="http://www.schwarzesbrett.bremen.de/sixcms/detail.php?template=01_markteintrag_d&amp;id=52356&amp;host=bremen">Bürostuhl für kleines Büro</a></td>
+> 				<td headers="t2" >17.10.08</td>
+> 			</tr>
+> 	
+2904a2897,2904
+> 									<tr class="liste" >				<td headers="t1"><a href="http://www.schwarzesbrett.bremen.de/sixcms/detail.php?template=01_markteintrag_d&amp;id=52340&amp;host=bremen">Microwelle</a></td>
+> 				<td headers="t2" >17.10.08</td>
+> 			</tr>
+> 	
+> 									<tr class="liste" >				<td headers="t1"><a href="http://www.schwarzesbrett.bremen.de/sixcms/detail.php?template=01_markteintrag_d&amp;id=52337&amp;host=bremen">Einbaukühlschrank</a></td>
+> 				<td headers="t2" >17.10.08</td>
+> 			</tr>
+> 	
+2912a2913,2916
+> 									<tr class="liste" >				<td headers="t1"><a href="http://www.schwarzesbrett.bremen.de/sixcms/detail.php?template=01_markteintrag_d&amp;id=52324&amp;host=bremen">Geschirrspüler Bosch 1 Jahr m.Rechng.</a></td>
+> 				<td headers="t2" >17.10.08</td>
+> 			</tr>
+> 	
