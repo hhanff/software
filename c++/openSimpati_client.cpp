@@ -12,11 +12,17 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
+#include <iostream>
+#include <fstream>
 
+
+#define SLEEP_FOR_MICROSECONDS 500000
 /* special characters */
 #define STX 2 /* start of text */
 #define ETX 3 /* end of text */
 #define DLIM 182 /* delimiter */
+#define ACK 6 /* Acknowledge */
+#define NCK 15 /* not Acknowledge */
 
 void error(const char *msg)
 {
@@ -56,13 +62,25 @@ int send_command (int *sockfd, char *cmd)
     n = write(*sockfd,cmd,strlen(cmd));
     if (n < 0)
         error("ERROR writing to socket");
-    sleep(1);
+    usleep(SLEEP_FOR_MICROSECONDS);
 
     return 0;
 }
 
-/* function: receive answer
-   reads characters from socket
+int printArray(char * array, int MAX_CHAR)
+{
+    int i;
+    FILE* fout = fopen("file.txt","a+");      /* open the file in append mode */
+    for (i=0; i<MAX_CHAR; i++)
+    fprintf(fout,"%c",*(array+i)); /* write */
+    fclose(fout);                       /* close the file pointer */
+
+    return 0;
+}
+
+/*
+  function: receive answer
+  reads characters from socket
 */
 int receive_answer (int *sockfd)
 {
@@ -79,11 +97,39 @@ int receive_answer (int *sockfd)
 
     buffer[n] = '\n'; /* terminate string" */
     printf ("\nAnswer from server: %s\n", buffer);
+    printArray(buffer, sizeof(buffer));
 
     return 0;
 
 }
 
+char *Pruefsumme (char *buffer)
+{
+    const char ASCII[]="0123456789ABCDEF";
+    static char Hex[10];
+    static int a1, a2;
+    register unsigned int i;
+    int sum;
+
+    sum = 256;
+    for (i=0; i<strlen(buffer); i++)
+    {
+        sum -= buffer[i];
+        if (sum<0)
+            sum +=256;
+
+
+    }
+    a1 = (sum & 0xf0) >> 4;
+    a2 = sum & 0x0f;
+    Hex[0] = ASCII[a1];
+    Hex[1] = ASCII[a2];
+    Hex[2] = 0;
+
+    printf("\na1: %u, a2: %u, Hex String: %s",a1, a2, Hex);
+    return(Hex);
+
+}
 
 int main(int argc, char *argv[])
 {
@@ -96,18 +142,21 @@ int main(int argc, char *argv[])
     }
     portno = atoi(argv[2]);
 
-    /* Send ASCII-1 protocol command */
+    // /* Send ASCII-1 protocol command */
+    // sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    // open_socket(portno, &sockfd, argv);
+    // printf("\nASCII-1 protocol");
+    // printf ("\n----------");
+    // sprintf(Command , "%c1?", STX);
+    // sprintf(Command , "%c1?%s%c", STX, Pruefsumme(Command), ETX);
+    // printf("\nCommand: %s", Command);
+    // send_command(&sockfd, Command);
+    // receive_answer(&sockfd);
+    // close(sockfd);
+    // usleep(SLEEP_FOR_MICROSECONDS);
 
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    open_socket(portno, &sockfd, argv);
-    printf("\nASCII-1 protocol");
-    printf ("\n----------");
-    sprintf(Command , "%c1?8E%c", STX, ETX);
-    send_command(&sockfd, Command);
-    receive_answer(&sockfd);
-    close(sockfd);
-    sleep(1);
-
+    while(1)
+    {
     // /* Send ASCII-2 protocol command */
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     open_socket(portno, &sockfd, argv);
@@ -117,17 +166,18 @@ int main(int argc, char *argv[])
     send_command(&sockfd, Command);
     receive_answer(&sockfd);
     close(sockfd);
-    sleep(1);
+    usleep(SLEEP_FOR_MICROSECONDS);
+    }
 
-    /*  Send SimServ command */
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    open_socket(portno, &sockfd, argv);
-    printf("\nSend SimServ command");
-    printf("\n----------------");
-    sprintf (Command, "11004%c1%c%d\r", DLIM, DLIM, 1);
-    send_command(&sockfd, Command);
-    receive_answer(&sockfd);
-    close(sockfd);
+    // /*  Send SimServ command */
+    // sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    // open_socket(portno, &sockfd, argv);
+    // printf("\nSend SimServ command");
+    // printf("\n----------------");
+    // sprintf (Command, "11004%c1%c%d\r", DLIM, DLIM, 1);
+    // send_command(&sockfd, Command);
+    // receive_answer(&sockfd);
+    // close(sockfd);
 
     return 0;
 }
