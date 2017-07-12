@@ -16,7 +16,7 @@
 #include <fstream>
 
 
-#define SLEEP_FOR_MICROSECONDS 500000
+#define SLEEP_FOR_MICROSECONDS 1000000
 /* special characters */
 #define STX 2 /* start of text */
 #define ETX 3 /* end of text */
@@ -70,7 +70,9 @@ int send_command (int *sockfd, char *cmd)
 int printArray(char * array, int MAX_CHAR)
 {
     int i;
-    FILE* fout = fopen("file.txt","a+");      /* open the file in append mode */
+    FILE* fout = fopen("openSimpati_client.log","a+");      /* open the file in append mode */
+
+    fprintf(fout , "%lu ", (unsigned long)time(NULL));
     for (i=0; i<MAX_CHAR; i++)
     fprintf(fout,"%c",*(array+i)); /* write */
     fclose(fout);                       /* close the file pointer */
