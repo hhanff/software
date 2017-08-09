@@ -291,6 +291,9 @@ function ec
 # /usr/bin/ecns
 function eco { emacsclient  -nw -c  -a "ecns" $1; }
 
+function eccl { emacs  -nw -Q $1; }
+
+
 function _exit()	# function to run upon exit of shell
 {
     echo -e "${RED}Hasta la vista, baby!!!${NC}"
@@ -493,7 +496,7 @@ buzd ()
     mv /tmp/$TARGET*.tar.gz .
 }
 
-alias rsync="rsync -rv --progress"
+alias rsync="rsync -rva --progress --partial --stats"
 alias my_stat="export LC_CTYPE=en_US.UTF-8; svn status -u | grep -v "\?""
 
 function my_commit {
@@ -605,7 +608,7 @@ function my_actel { \
    # FPExpress &
 
    export LOCALE=C
-   #export LD_LIBRARY_PATH=/opt/Actel/Libero_v11.7/
+   export LD_LIBRARY_PATH=/opt/Actel/Libero_v11.7/
    LIBERO_INSTALLED_DIR=/opt/Actel/Libero_v11.7/; export LIBERO_INSTALLED_DIR
 
    PATH=$LIBERO_INSTALLED_DIR/Libero/bin:$PATH;
@@ -628,8 +631,12 @@ function my_actel { \
        echo "License daemons already running."
    fi
 
-   libero &
+   # Start Libero
+   /opt/Actel/Libero_v11.8/Libero/bin/libero &
 
+   # Start Flash Pro express
+   /opt/Actel/Program_DebugV11.7/FlashPro/bin/FPExpress &
+   # killall mgcld actlmgrd snpslmd
 }
 
 function my_ise { \
@@ -904,19 +911,50 @@ export SYSTEMC="/usr/local/systemc-2.2"
 # sudo  mkdir -p /opt/ccache/bin
 # sudo  ln -s /usr/bin/ccache /opt/ccache/bin/g++
 # sudo  ln -s /usr/bin/ccache /opt/ccache/bin/gcc
+# chown -R hhanff:hhanff /opt/ccache
 # Den folgenden Befehl ausführen wenn bei icemon keine Jobs rausgehen.
 # cd; icecc --build-native
 # Die Datei noch in icemon-build-native.tar.gz umbenennen.
 
- export CXX='/usr/lib/ccache/g++'
- export CC='/usr/lib/ccache/gcc'
- export CCACHE_PREFIX=icecc
- # # If the following archive is missing:
+my_icecc_ccache_enable ()
+{
+
+ # If the following archive is missing:
  # sudo icecc --build-native
- # mv ~/9f91d6f187bd1ffeb1b6f7965a37c14f.tar.gz ~/icemon-build-native.tar.gz
- export ICECC_VERSION=~/icemon-build-native.tar.gz
+ # mv *.tar.gz ~/icemon-build-native.tar.gz; sudo chown hhanff:hhanff ~/icemon-build-native.tar.gz
+ export ICECC_VERSION='~/c0f03a758aad72cd4be82955744463cd.tar.gz'
  export PATH=/usr/lib/icecc/bin:$PATH
+ export CXX='/usr/bin/g++'
+ export CC='/usr/bin/gcc'
+
+ export PATH=/opt/ccache/bin:$PATH
  #iceccd -d
+ #sudo service icecc-scheduler start
+ export CCACHE_PREFIX=icecc
+}
+
+my_icecc_ccache_disable ()
+{
+    #\rm -rf ~/.ccache
+    export CXX='/usr/bin/g++'
+    export CC='/usr/bin/gcc'
+    export CCACHE_PREFIX=
+    export ICECC_VERSION=
+
+    export PATH=$(echo $PATH | sed -e 's;:\?/usr/bin/ccache;;' -e 's;/usr/bin/ccache:\?;;')
+    export PATH=$(echo $PATH | sed -e 's;:\?/usr/lib/ccache;;' -e 's;/usr/lib/ccache:\?;;')
+    export PATH=$(echo $PATH | sed -e 's;:\?/usr/bin/icecc;;' -e 's;/usr/bin/icecc:\?;;')
+    export PATH=$(echo $PATH | sed -e 's;:\?/usr/lib/icecc/bin/bin;;' -e 's;/usr/lib/icecc/bin/bin:\?;;')
+    export PATH=$(echo $PATH | sed -e 's;:\?/usr/lib/icecc/bin;;' -e 's;/usr/lib/icecc/bin:\?;;')
+    export PATH=$(echo $PATH | sed -e 's;:\?/opt/ccache/bin;;' -e 's;/opt/ccache/bin:\?;;')
+
+    #sudo service iceccd stop
+    #<udo service icecc-scheduler stop
+ #iceccd -d
+}
+my_icecc_ccache_enable
+
+
 
 QWT_ROOT=/usr/local/qwt-6.1.0/
 QT_PLUGIN_PATH="${QWT_ROOT}/plugins:$QT_PLUGIN_PATH"
