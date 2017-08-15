@@ -635,7 +635,7 @@ function my_actel { \
    /opt/Actel/Libero_v11.8/Libero/bin/libero &
 
    # Start Flash Pro express
-   /opt/Actel/Program_DebugV11.7/FlashPro/bin/FPExpress &
+   export LD_LIBRARY_PATH=/usr/lib/i386-linux-gnu/; /opt/Actel/Program_DebugV11.7/FlashPro/bin/FPExpress &
    # killall mgcld actlmgrd snpslmd
 }
 
