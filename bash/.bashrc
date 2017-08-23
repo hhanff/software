@@ -423,15 +423,21 @@ function my_info()   # get current host related info
 }
 
 
-function my_wlan_off()
+function my_wlan_restart()
 {
     sudo iwconfig wlan0 txpower off
+    sudo iwconfig wlan0 txpower on
+
+    sleep 1
+    sudo ifconfig wlan0 down
+
+    sudo service networking stop
+    sudo service network-manager restart
+    sudo service networking start
+    
+    sudo ifconfig wlan0 up
 }
 
-function my_wlan_on()
-{
-    sudo iwconfig wlan0 txpower on
-}
 
 function comic()
 {
