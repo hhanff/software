@@ -69,10 +69,8 @@ set completion-ignore-case on
 #set prefer-visible-bell on
 
 # Enable options:
-#Enable suport of bash history across multiple bash sessions
-#shopt -s histappend
-export HISTFILESIZE=5000
-#export HISTCONTROL=ignoredups
+export HISTFILESIZE=10000
+export HISTSIZE=10000
 
 #shopt -s cdspell
 shopt -s cdable_vars
@@ -82,6 +80,7 @@ shopt -s checkwinsize
 shopt -s sourcepath
 shopt -s no_empty_cmd_completion  # bash>=2.04 only
 shopt -s cmdhist
+#Enable suport of bash history across multiple bash sessions, don't overwrite it
 shopt -s histappend histreedit histverify
 shopt -s extglob      # Necessary for programmable completion
 shopt -s autocd
@@ -95,7 +94,7 @@ unset MAILCHECK       # I don't want my shell to warn me of incoming mail
 
 export TIMEFORMAT=$'\nreal %3R\tuser %3U\tsys %3S\tpcpu %P\n'
 export HISTTIMEFORMAT="%H:%M > "
-export HISTIGNORE="&:bg:fg:ll:h"
+export HISTIGNORE="&:bg:fg:ll:h:history"
 export HOSTFILE=$HOME/.hosts	# Put a list of remote hosts in ~/.hosts
 
 #-----------------------
@@ -291,7 +290,7 @@ function ec
 # /usr/bin/ecns
 function eco { emacsclient  -nw -c  -a "ecns" $1; }
 
-function eccl { emacs  -nw -Q $1; }
+function e { emacs  -nw -Q $1; }
 
 
 function _exit()	# function to run upon exit of shell
@@ -584,7 +583,7 @@ function my_actel { \
    # ln -s ../init.d/flexlm K98flexlm
 
    # https://help.ubuntu.com/community/LiberoSOC
-   # sudo apt-get install libmotif3 libmotif-dev libmotif4:i386 nspluginwrapper lib32z1 libc6-i386 rpcbind xfonts-100dpi xfonts-75dpi ksh lsb
+   # sudo apt-get install libmotif3 libmotif-dev libmotif4:i386 nspluginwrapper lib32z1 libc6-i386 rpcbind xfonts-100dpi xfonts-75dpi kqsh lsb
 
 
    # Obtain a flelmx gold license from Microsemi
@@ -635,7 +634,8 @@ function my_actel { \
    /opt/Actel/Libero_v11.8/Libero/bin/libero &
 
    # Start Flash Pro express
-   export LD_LIBRARY_PATH=/usr/lib/i386-linux-gnu/; /opt/Actel/Program_DebugV11.7/FlashPro/bin/FPExpress &
+   # If Flash Pro Express keeps crashing @ 69%, do
+   # > sudo ln -s /usr/share/locale-langpack/en_GB/LC_MESSAGES/libc.mo /usr/share/locale-langpack/en_US/LC_MESSAGES/   export LD_LIBRARY_PATH=/usr/lib/i386-linux-gnu/; /opt/Actel/Program_DebugV11.7/FlashPro/bin/FPExpress &
    # killall mgcld actlmgrd snpslmd
 }
 
