@@ -422,6 +422,18 @@ function my_info()   # get current host related info
 }
 
 
+function my_network_restart()
+{
+    sleep 1
+
+    sudo killall openvpn
+    sugo killall openconnect
+    sudo service networking stop
+    sudo service network-manager restart
+    sudo service networking start
+
+}
+
 function my_wlan_restart()
 {
     sudo iwconfig wlan0 txpower off
@@ -430,13 +442,19 @@ function my_wlan_restart()
     sleep 1
     sudo ifconfig wlan0 down
 
-    sudo service networking stop
-    sudo service network-manager restart
-    sudo service networking start
-    
+    my_network_restart
     sudo ifconfig wlan0 up
 }
 
+function my_eth_restart()
+{
+    sudo ifconfig  $1 down
+    sleep 1
+
+    my_network_restart
+
+    sudo ifconfig $1 up
+}
 
 function comic()
 {
@@ -958,7 +976,7 @@ my_icecc_ccache_disable ()
     #<udo service icecc-scheduler stop
  #iceccd -d
 }
-my_icecc_ccache_enable
+my_icecc_ccache_disable
 
 
 
