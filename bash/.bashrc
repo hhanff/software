@@ -176,7 +176,14 @@ function focus() {
 
 }
 
-function my_find_hosts_on_network (){
+function my_cls (){
+    # when leaving the console clear the screen to increase privacy
+    if [ "$SHLVL" = 1 ]; then
+	[ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q
+    fi
+}
+
+    function my_find_hosts_on_network (){
     #IP=(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}');
     IP=$(ip add show $1 | grep 'inet ' | cut -d: -f2 | awk '{ print $2}');
     nmap  -sn $IP;
@@ -631,7 +638,7 @@ function my_actel { \
    # FPExpress &
 
    export LOCALE=C
-   export LD_LIBRARY_PATH=/opt/Actel/Libero_v11.7/
+   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/Actel/Libero_v11.7/
    LIBERO_INSTALLED_DIR=/opt/Actel/Libero_v11.7/; export LIBERO_INSTALLED_DIR
 
    PATH=$LIBERO_INSTALLED_DIR/Libero/bin:$PATH;
@@ -655,7 +662,7 @@ function my_actel { \
    fi
 
    # Start Libero
-   /opt/Actel/Libero_v11.8/Libero/bin/libero &
+   /opt/Actel/Libero_v11.7/Libero/bin/libero &
 
    # Start Flash Pro express
    # If Flash Pro Express keeps crashing @ 69%, do
