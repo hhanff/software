@@ -1,0 +1,178 @@
+#load alias file
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+else
+   echo "no alias file"
+fi
+
+HISTCONTROL=ignoreboth  # no duplicate entries
+HISTSIZE=10000                   # big big histor#y
+HISTFILESIZE=10000               # big big history
+shopt -s histappend                      # append to history, don't overwrite it
+HISTIGNORE='ls:bg:fg:history'
+
+# Save and reload the history after each command finishes
+PROMPT_COMMAND='history -a'
+
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi
+if [ -f ~/.git-prompt.sh ]; then
+  . ~/.git-prompt.sh
+fi
+
+GIT_PS1_SHOWDIRTYSTATE=true
+function _prompt_command() {
+PS1='\
+\[\e[00;33m\]\u\[\e[0m\]\
+\[\e[00;37m\]@\h:\[\e[0m\]\
+\[\e[00;36m\][\w]\[\e[0m\]\
+\[\e[01;32m\]$(__git_ps1 "(%s)")\[\e[0m\]\
+:\
+\[\e[0m\]\[\e[00;37m\] \[\e[0m\]'
+}
+
+PROMPT_COMMAND=_prompt_command
+
+export EDITOR=vim
+export __GL_SYNC_TO_VBLANK=0
+
+export BASE_LOG_LEVEL=ERROR
+
+export LANGUAGE='en_US.UTF-8 git'
+#cd ~/rock/bundles/sherpa_tt/scripts
+#source ~/rock/env.sh
+#source /usr/share/autojump/autojump.sh
+
+rock-find-root()
+{   
+    local __resultvar=$1
+
+    # Allow to set the ROCK_ROOT_DIR externally
+    # to avoid complete dependence upon finding the env.sh
+    if [ "$ROCK_ROOT_DIR" = "" ]; then
+        local ROCK_ROOT_DIR=""
+        if [ -e "$PWD/env.sh" ]; then
+            ROCK_ROOT_DIR=$PWD
+        else
+            ROCK_ROOT_DIR=`echo $PWD`
+            while [ true ]; do 
+                if [ "$ROCK_ROOT_DIR" = "" ]; then
+                    break
+                fi
+        
+                ROCK_ROOT_DIR=`echo $ROCK_ROOT_DIR | sed 's/\(.*\)\/[^\/]*/\1/g'`
+            
+                if [ -e "$ROCK_ROOT_DIR/env.sh" ]; then
+                    break
+                fi
+            done
+        fi      
+    fi
+
+    eval $__resultvar="${ROCK_ROOT_DIR}"
+}
+
+rock-help()
+{
+    echo ""
+    echo "This is only a quick start and reminder for already supervised personnel"
+    echo "This this documentation will not elaborate on every details and options of arguments"
+    echo ""
+    echo "To start a demo (manual control using scripts):"
+    echo "    1. rock-demo"
+    echo "    2. ruby scripts/start_hardware.rb --nologging"
+    echo "    3. ruby scripts/start_mcs.rb --nologging"
+    echo "    4. sherpa_tt_gui"
+    echo ""
+    echo ""
+    echo "To start a demo (manual control using syskit):"
+    echo "    1. rock-demo"
+    echo "    2. syskit run --robot=sherpa_tt"
+    echo "    3. syskit shell"
+    echo "       a. motion_control_system_def!"
+    echo "    4. sherpa_tt_gui"
+    echo ""
+    echo ""
+    echo "To continue development:"
+    echo "    1. rock-devel (to change into the bundles/sherpa_tt of current development folder)"
+    echo ""
+    echo "Contribute/Contact:"
+    echo "    This update this help, change in ~/.bashrc"
+    echo "    Further question call or email: Thomas R. (4151), Sebastian (6636) or Leif (4149)"
+    echo ""
+}
+
+rock-devel()
+{
+    cd ~/dev/rock/tta-17.06/bundles/sherpa_tt
+    rock-source-env
+    rock-bundle-sel sherpa_tt
+    echo ""
+    echo "Attention:"
+    echo "    This is the sherpa_tt development workspace. Please try to commit changes to branches and avoid leaving uncommited changes"
+    echo ""
+}
+
+rock-demo()
+{
+    cd /opt/sherpa_tt/bundles/sherpa_tt
+    rock-source-env
+    rock-bundle-sel sherpa_tt
+    echo ""
+    echo "Attention:"
+    echo "This is the sherpa_tt demo workspace. Do not make manual changes here, use rock-devel instead!!!"
+    echo ""
+}
+
+rock-cebit()
+{
+    rock-demo
+}
+
+
+rock-run()
+{
+    rock-demo
+}
+
+
+rock-source-env()
+{   
+    rock-find-root DIR
+    if [ -d "${DIR}" ]; then
+        echo "Sourcing ${DIR}/env.sh"
+        source ${DIR}/env.sh
+    else
+        echo "Warning: no env.sh found"
+    fi
+}   
+
+rock-restart-omniorb()
+{
+    sudo /etc/init.d/omniorb4-nameserver stop
+    sudo rm -rf /var/lib/omniorb/*
+    sudo /etc/init.d/omniorb4-nameserver start
+}
+
+utah-goto-bundle()
+{
+    cd /opt/utah/bundles/sherpa_tt
+    rock-source-env
+    rock-bundle-sel sherpa_tt
+}
+
+utah-goto-relay()
+{
+    cd /opt/utah/transterra/orogen/port_relay
+    rock-source-env
+}
+
+utah-restart-omniorb()
+{
+    rock-restart-omniorb
+}
+
+if shopt -q login_shell; then
+    rock-help
+fi
