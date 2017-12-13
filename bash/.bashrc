@@ -434,7 +434,7 @@ function my_network_restart()
     sleep 1
 
     sudo killall openvpn
-    sugo killall openconnect
+    sudo killall openconnect
     sudo service networking stop
     sudo service network-manager restart
     sudo service networking start
@@ -665,6 +665,7 @@ function my_actel { \
    /opt/Actel/Libero_v11.7/Libero/bin/libero &
 
    # Start Flash Pro express
+   yes | cp -rf /mnt/temp/HendrikH/X-Joint_V2/X_Joint_V2_171024_uart.pdb /home/hhanff/Projekte/FPGA/designs/X-Joint_V2/trunk/syn/FPExpress/projectData/X_Joint_V2.pdb; export LD_LIBRARY_PATH=/usr/lib/i386-linux-gnu/ && /opt/Actel/Program_DebugV11.7/FlashPro/bin/FPExpress
    # If Flash Pro Express keeps crashing @ 69%, do
    # > sudo ln -s /usr/share/locale-langpack/en_GB/LC_MESSAGES/libc.mo /usr/share/locale-langpack/en_US/LC_MESSAGES/   export LD_LIBRARY_PATH=/usr/lib/i386-linux-gnu/; /opt/Actel/Program_DebugV11.7/FlashPro/bin/FPExpress &
    # killall mgcld actlmgrd snpslmd
