@@ -58,6 +58,10 @@
             color-theme-solarized
             keyfreq
             theme-changer
+            dumb-jump
+            elpy
+            py-autopep8
+            git-gutter
             )
   (when (not package-archive-contents)
     (package-refresh-contents)))
