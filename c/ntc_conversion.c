@@ -7,7 +7,7 @@
 #include <math.h>
 
 /*
-  gcc -pedantic -Wall -W -Wmissing-prototypes -Wstrict-prototypes -Wconversion -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -fshort-enums -fno-common -Dinline= -g -O2 -lm ntc_conversion.c -o ntc_conversion; ./ntc_conversion -c 5904
+  gcc -pedantic -Wall -W -Wmissing-prototypes -Wstrict-prototypes -Wconversion -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -fshort-enums -fno-common -Dinline= -g -O2 -lm ntc_conversion.c -o ntc_conversion; ./ntc_conversion
 */
 
 
@@ -82,18 +82,18 @@ int main(int argc, char **argv) {
 
     fprintf(fp, "Resistance;Temp Roman;Temp Hendrik \n");
     for (i = 286132.0; i>55.0; i--) {
-        if ((read = getline(&line, &len, fp_data)) != -1) {
-           line[strlen(line)-1] = 0; /* Remove \n from line */
-                fprintf(fp, "%s,%3.5f;%3.5f;%3.5f\n",line ,i,get_temp(i), temperature_raw2deg(i));
-            }
-        else {
-            fclose(fp_data);
-            if (line)
-                free(line);
-            exit(EXIT_SUCCESS);
+        /* if ((read = getline(&line, &len, fp_data)) != -1) { */
+           /* line[strlen(line)-1] = 0; /\* Remove \n from line *\/ */
+           fprintf(fp, "%3.5f;%3.5f;%3.5f,%s\n" ,i,get_temp(i), temperature_raw2deg(i),line);
+        /*     } */
+        /* else { */
+        /*     fclose(fp_data); */
+        /*     if (line) */
+        /*         free(line); */
+        /*     exit(EXIT_SUCCESS); */
 
 
-        }
+        /* } */
     }
 
 
