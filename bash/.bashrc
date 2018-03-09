@@ -375,6 +375,7 @@ function extract() # Handy Extract Program.
 	    *.Z) uncompress $1 ;;
 	    *.7z) 7z x $1 ;;
 	    *.tar.xz)  tar -xJf $1 ;;
+	    *.xz)  xz -d $1 ;;
 	    *) echo "'$1' cannot be extracted via >extract<" ;;
 	esac
     else
@@ -554,7 +555,7 @@ alias my_backup="~/Dropbox/src/scripts/my_backup.sh"
 
 alias top='htop'
 alias my_vpn='sudo openvpn ~/Dokumente/Privat/Certificates/pc.ovpn '
-alias my_vpn_work='sudo openconnect -b -u heha01 --authgroup=Anyconnect-MyDFKI --no-cert-check vpn.hb.dfki.de'
+alias my_vpn_work='sudo openconnect -u heha01 --authgroup=Anyconnect-MyDFKI --no-cert-check vpn.hb.dfki.de'
 
 # First test if we are in an interactive session to overcome bind errors
 iatest=$(expr index "$-" i)
@@ -1024,12 +1025,31 @@ export PERL5LIB="/home/hhanff/perl5/lib/perl5/i686-linux-gnu-thread-multi-64int:
 
 # To over come those pesky "Can't set locale" warnings
 #export LC_ALL=C
-export LANGUAGE=en_US.UTF-8
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-# And then run
-# sudo locale-gen en_US.UTF-8
-# sudo dpkg-reconfigure locales # activate all missing languages here, usually en_US.UTF8, en_GB.UTF8 and de_DE.UTF8
+
+my_set_locale_de ()
+{
+   export LANGUAGE=de_DE.UTF-8
+   export LANG=de_DE.UTF-8
+   export LC_ALL=de_DE.UTF-8
+
+   sudo locale-gen de_DE.UTF-8
+   sudo dpkg-reconfigure locales # activate all missing languages here, usually en_US.UTF8, en_GB.UTF8 and de_DE.UTF8
+}
+
+my_set_locale_en ()
+{
+   export LANGUAGE=en_US.UTF-8
+   export LANG=en_US.UTF-8
+   export LC_ALL=en_US.UTF-8
+
+   sudo locale-gen en_US.UTF-8
+   sudo dpkg-reconfigure locales # activate all missing languages here, usually en_US.UTF8, en_GB.UTF8 and de_DE.UTF8
+}
+
+my_ebookreader ()
+{
+    wine ~/.wine/drive_c/Program\ Files\ \(x86\)/Adobe/Adobe\ Digital\ Editions/digitaleditions.exe
+}
 
 export PATH=/opt:$PATH
 export PATH=/opt/xmind/XMind_amd64/:$PATH
@@ -1037,4 +1057,3 @@ export PATH=/opt/xmind/XMind_amd64/:$PATH
 function my_ros_env (){
     source /opt/ros/kinetic/setup.bash
 }
-
