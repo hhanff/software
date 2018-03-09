@@ -671,18 +671,19 @@ function my_actel { \
    # killall mgcld actlmgrd snpslmd
 }
 
-function my_ise { \
-    xilinx_set_preconditions; \
-    source "/opt/Xilinx/"$1"/ISE_DS/settings64.sh"; \
-    "/opt/Xilinx/"$1"/ISE_DS/ISE/bin/lin64/ise"; }
-
 function xilinx_set_preconditions { \
     # export XILINX=/mnt/daten/opt/Xilinx/10.1/ISE/
     # export PATH=/mnt/daten/opt/Xilinx/10.1/ISE/bin/lin:$PATH
     export GDM_LANG=C \
     export LANG=C \
-    # export LD_PRELOAD=/usr/lib/ure/lib/libusb-driver.so
+    #export LD_PRELOAD=/usr/lib/ure/lib/libusb-driver.so
     export XILINXD_LICENSE_FILE=2100@rlb-lic.dfki.uni-bremen.de;}
+
+function my_impact { \
+    xilinx_set_preconditions; \
+    source "/opt/Xilinx/"$1"/ISE_DS/settings64.sh"; \
+    export LD_PRELOAD=/usr/lib/ure/lib/libusb-driver.so \
+    "/opt/Xilinx/"$1"/ISE_DS/ISE/bin/lin64/impact"; }
 
 function my_ise { \
     xilinx_set_preconditions; \
@@ -1032,3 +1033,4 @@ export LC_ALL=en_US.UTF-8
 
 export PATH=/opt:$PATH
 export PATH=/opt/xmind/XMind_amd64/:$PATH
+#source /opt/ros/kinetic/setup.bash
