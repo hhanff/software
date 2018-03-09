@@ -1,0 +1,110 @@
+#!/bin/bash
+##-----------------------------------------------------------------------------
+## Title       : Simulation script
+## Project     : 
+## Library:    : 
+##-----------------------------------------------------------------------------
+## File name   : sim.run
+## Company     : 
+## Platform    : lin
+##-----------------------------------------------------------------------------
+## Purpose     : Provides a means to simulate the camera design
+##-----------------------------------------------------------------------------
+## Assumptions : 
+## Limitations :
+## Known Errors:
+##-----------------------------------------------------------------------------
+## @version $Rev: 1490 $\n
+## @date    $Date: 2011-11-24 17:35:24 +0100 (Do, 24. Nov 2011) $\n
+## @author  $Author: hhanff $\n
+#set -xve
+start_time=$(date +%s)
+
+CIRCLECENTERUPPERTHRESH=78
+CIRCLECENTERLOWERTHRESH=60
+CIRCLECENTERUPPERTHRESH_MAX=80
+
+PIC_FILENAME="test_picture"
+PIC_FOLDER="../doc/pic"
+# Execute the script with iterative values for CIRCLECENTERUPPERTHRESH and CIRCLECENTERLOWERTHRESH
+FOR_LOOP_ENABLE="false"
+SIMULATION="true"
+
+##Generate stimuli input file
+echo "Generating stimuli file..."
+./png2yuv.m $PIC_FOLDER/$PIC_FILENAME
+
+for ((CIRCLECENTERUPPERTHRESH=$CIRCLECENTERUPPERTHRESH; CIRCLECENTERUPPERTHRESH<CIRCLECENTERUPPERTHRESH_MAX; CIRCLECENTERUPPERTHRESH=CIRCLECENTERUPPERTHRESH+1))
+do
+    for ((CIRCLECENTERLOWERTHRESH=$CIRCLECENTERLOWERTHRESH; CIRCLECENTERLOWERTHRESH<CIRCLECENTERUPPERTHRESH; CIRCLECENTERLOWERTHRESH=CIRCLECENTERLOWERTHRESH +1))
+    do
+        # Start the simulation and generate output file with centre
+        # candidate coordinates
+	if [ $SIMULATION == "true" ]; then
+	    source /opt/Xilinx/13.3/ISE_DS/settings64.sh;   
+            /bin/rm -f ../rtl/sensor_processor_pack.vhd
+	    cp ../rtl/sensor_processor_pack.vhd_orig ../rtl/sensor_processor_pack.vhd
+	    # Replace constants in vhdl packages
+	    sed "s/_CIRCLECENTERUPPERTHRESH_/constant CIRCLECENTERUPPERTHRESHOLD_C : natural := $CIRCLECENTERUPPERTHRESH;/g" ../rtl/sensor_processor_pack.vhd > ../rtl/tmp
+            /bin/rm -f  ../rtl/sensor_processor_pack.vhd
+	    mv ../rtl/tmp ../rtl/sensor_processor_pack.vhd
+	    sed "s/_CIRCLECENTERLOWERTHRESH_/constant CIRCLECENTERLOWERTHRESHOLD_C : natural := $CIRCLECENTERLOWERTHRESH;/g" ../rtl/sensor_processor_pack.vhd > ../rtl/tmp
+            /bin/rm -f  ../rtl/sensor_processor_pack.vhd
+	    mv ../rtl/tmp ../rtl/sensor_processor_pack.vhd
+
+	# For debugging
+	    cat  ../rtl/sensor_processor_pack.vhd | grep THRESH
+
+	    # Run fuse to generate the ISim Simulation Executable
+	    /bin/rm ../syn/13.3/camera_control/camera_control.sim/sim_1/camera_control_tb.exe
+	    fuse -intstyle pa -incremental --rangecheck -L secureip -o ../syn/13.3/camera_control/camera_control.sim/sim_1/camera_control_tb.exe --prj ../syn/13.3/camera_control/camera_control.sim/sim_1/camera_control_tb.prj -top work.camera_control_tb
+	    /bin/rm -f $PIC_FOLDER/$PIC_FILENAME"_centre_candidates.txt"
+	    ../syn/13.3/camera_control/camera_control.sim/sim_1/camera_control_tb.exe -tclbatch isim.tcl
+	    # unset variables set by settings64.sh
+	    unset XILINX_DSP
+	    unset LD_LIBRARY_PATH
+	    unset XILINX_EDK
+	    unset LMC_HOME
+	    unset XILINX_PLANAHEAD
+	    unset XILINX
+	fi
+	
+        # Sort the simulation output
+	sort $PIC_FOLDER/$PIC_FILENAME"_centre_candidates.txt" > $PIC_FOLDER/$PIC_FILENAME"_centre_candidates.tmp"
+	/bin/rm -f $PIC_FOLDER/$PIC_FILENAME"_centre_candidates.txt"
+	mv $PIC_FOLDER/$PIC_FILENAME"_centre_candidates.tmp" $PIC_FOLDER/$PIC_FILENAME"_centre_candidates.txt"
+	
+	# This should _not_ happen... I have to fix this in
+	# simulation. Why are there such low x-values in the
+	# centre_candidates.txt file???
+	egrep -v '^0,'  $PIC_FOLDER/$PIC_FILENAME"_centre_candidates.txt" > $PIC_FOLDER/$PIC_FILENAME"_centre_candidates.tmp"
+	/bin/rm -f $PIC_FOLDER/$PIC_FILENAME"_centre_candidates.txt"	
+	mv $PIC_FOLDER/$PIC_FILENAME"_centre_candidates.tmp"  $PIC_FOLDER/$PIC_FILENAME"_centre_candidates.txt"
+	
+        # Generate picture with highlighted centre coordinates
+	# Test if file exists and if it has a file size equal to zero
+	if [ -s $PIC_FOLDER/$PIC_FILENAME"_centre_candidates.txt" ]; then
+	    # If the file exists process the simulation ouput with
+	    # octave. This will generate marks in the picture to
+	    # visualize the location of a circle centre.
+	    echo "Generating png with centre-points"
+	    ./yuv2png.m $PIC_FOLDER/$PIC_FILENAME && \
+		mv $PIC_FOLDER/$PIC_FILENAME"_out.png" $PIC_FOLDER/$PIC_FILENAME"_out_"$CIRCLECENTERUPPERTHRESH"_"$CIRCLECENTERLOWERTHRESH".png"
+	    mv $PIC_FOLDER/$PIC_FILENAME"_centre_candidates.txt" $PIC_FOLDER/$PIC_FILENAME"_centre_candidates_"$CIRCLECENTERUPPERTHRESH"_"$CIRCLECENTERLOWERTHRESH".txt"
+	    eog $PIC_FOLDER/$PIC_FILENAME"_out_"$CIRCLECENTERUPPERTHRESH"_"$CIRCLECENTERLOWERTHRESH".png"
+
+	else
+	    echo $PIC_FOLDER"/"$PIC_FILENAME"_centre_candidates.txt is empty."
+	fi
+	if [ $FOR_LOOP_ENABLE == "false" ]; then
+	    break
+	fi
+    done
+    if [ $FOR_LOOP_ENABLE == "false" ]; then
+	break
+    fi
+done
+finish_time=$(date +%s)
+END_MESSAGE="Simulation completed. Simulation duration: $((finish_time - start_time)) secs."
+echo $END_MESSAGE
+xmessage -center $END_MESSAGE
