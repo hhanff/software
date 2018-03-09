@@ -183,7 +183,7 @@ function my_cls (){
     fi
 }
 
-    function my_find_hosts_on_network (){
+function my_find_hosts_on_network (){
     #IP=(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}');
     IP=$(ip add show $1 | grep 'inet ' | cut -d: -f2 | awk '{ print $2}');
     nmap  -sn $IP;
@@ -768,7 +768,7 @@ alias byte='/usr/bin/mplayer -nocache -audiofile-cache 64 -prefer-ipv4 -playlist
 alias sv='/usr/bin/mplayer -nocache -audiofile-cache 64 -playlist "http://sverigesradio.se/topsy/direkt/132-hi-mp3.m3u"'
 alias flux='/usr/bin/mplayer -nocache -audiofile-cache 64 -prefer-ipv4 $(GET http://www.fluxfm.de/wp-content/themes/motorfm/fluxfm.m3u |head -1)'
 
-alias rm='echo "Use del instead!"'
+#alias rm='echo "Use del instead!"'
 alias cp='cp -i'
 alias mv='mv -i'
 # -> Prevents accidentally clobbering files.
@@ -1033,4 +1033,8 @@ export LC_ALL=en_US.UTF-8
 
 export PATH=/opt:$PATH
 export PATH=/opt/xmind/XMind_amd64/:$PATH
-#source /opt/ros/kinetic/setup.bash
+
+function my_ros_env (){
+    source /opt/ros/kinetic/setup.bash
+}
+
