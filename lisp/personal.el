@@ -34,9 +34,18 @@
             ;;starter-kit
             ;;starter-kit-lisp
             ;;starter-kit-bindings
-            markdown-mode guru-mode marmalade
-            company color-theme
-            dired+ ascope web-mode mew helm smex
+            ;;marmalade
+            use-package
+            counsel
+            bind-key
+            rainbow-delimiters
+            markdown-mode
+            guru-mode
+            company
+            web-mode
+            mew
+            helm
+            smex
             auto-complete
             dtrt-indent
             google-c-style
@@ -55,7 +64,7 @@
             gist
             magit
             auto-complete-auctex
-            color-theme-solarized
+            ;;color-theme-solarized
             keyfreq
             theme-changer
             dumb-jump
@@ -183,8 +192,6 @@
  (add-hook 'c-mode-common-hook 'google-set-c-style)
  (add-hook 'c-mode-common-hook 'google-make-newline-indent)
 
-
- ;; (color-theme-solarized) t
  ;;------------------------------------------------------------------------------
  ;;    General settings (optional)
  ;;------------------------------------------------------------------------------
@@ -232,9 +239,6 @@
 
  ;;(require 'icicles)
  ;;(icy-mode 1)
-
- (require 'dired+)
- (toggle-diredp-find-file-reuse-dir 1)
 
  (require 'keyfreq)
  (setq keyfreq-excluded-commands
@@ -345,8 +349,6 @@
    )
  (global-set-key (kbd "C-S-d") 'duplicate-line)
 
- (require 'ascope)
-
  (defun chomp (str)
    "Chomp leading and tailing whitespace from STR."
    (replace-regexp-in-string (rx (or (: bos (* (any " \t\n")))
@@ -371,14 +373,14 @@
  ;; Zeile kommentieren, falls nicht installiert:
  (setq ispell-program-name "aspell") ; could be ispell as well, depending on your preferences
  (setq ispell-dictionary "english") ; this can obviously be set to any language your spell-checking program supports
- (require 'tex-site)
- (autoload 'reftex-mode "reftex" "RefTeX Minor Mode" t)
- (autoload 'turn-on-reftex "reftex" "RefTeX Minor Mode" nil)
- (autoload 'reftex-citation "reftex-cite" "Make citation" nil)
- (autoload 'reftex-index-phrase-mode "reftex-index" "Phrase Mode" t)
- (add-hook 'latex-mode-hook 'turn-on-reftex) ; with Emacs latex mode
- ;; (add-hook 'reftex-load-hook 'imenu-add-menubar-index)
- (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+ ;; (require 'tex-site)
+ ;; (autoload 'reftex-mode "reftex" "RefTeX Minor Mode" t)
+ ;; (autoload 'turn-on-reftex "reftex" "RefTeX Minor Mode" nil)
+ ;; (autoload 'reftex-citation "reftex-cite" "Make citation" nil)
+ ;; (autoload 'reftex-index-phrase-mode "reftex-index" "Phrase Mode" t)
+ ;; (add-hook 'latex-mode-hook 'turn-on-reftex) ; with Emacs latex mode
+ ;; ;; (add-hook 'reftex-load-hook 'imenu-add-menubar-index)
+ ;; (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 
  (setq LaTeX-eqnarray-label "eq"
        LaTeX-equation-label "eq"
@@ -843,7 +845,7 @@ With prefix P, create local abbrev. Otherwise it will be global."
 (add-hook 'vhdl-mode-hook 'auto-complete-mode)
 ;; start completion when entered 4 characters
 (setq ac-auto-start 4)
-(require 'auto-complete-auctex)
+;;(require 'auto-complete-auctex)
 ;; Use C-n/C-p to select candidates
 ;; --------------------------------
 (define-key ac-complete-mode-map "\C-n" 'ac-next)
@@ -927,7 +929,6 @@ With prefix P, create local abbrev. Otherwise it will be global."
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 (require 'org)
-(require 'ox-reveal)
 
 (require 'ediff)
 ;; don't start another frame
@@ -976,16 +977,16 @@ With negative prefix, apply to -N lines above."
 ;;------------------------------------------------------------------------------
 ;; (load-theme 'zenburn f)
 ;; (load-theme 'afternoon t)
-(disable-theme 'zenburn)
-(disable-theme 'afternoon)
-;; Enable solarize dark theme
-;; (setq prelude-theme 'solarized-dark)
-;; (require 'color-theme-solarized)
-(setq calendar-location-name "Bremen, DE")
-(setq calendar-latitude 53.08)(setq calendar-latitude 53.08)
-(setq calendar-longitude 8.80)
-(require 'theme-changer)
-(change-theme 'solarized-light 'solarized-dark)
+;; (disable-theme 'zenburn)
+;; (disable-theme 'afternoon)
+;; ;; Enable solarize dark theme
+;; ;; (setq prelude-theme 'solarized-dark)
+;; ;; (require 'color-theme-solarized)
+;; (setq calendar-location-name "Bremen, DE")
+;; (setq calendar-latitude 53.08)(setq calendar-latitude 53.08)
+;; (setq calendar-longitude 8.80)
+;; (require 'theme-changer)
+;; (change-theme 'solarized-light 'solarized-dark)
 
 ;; auto insert closing bracket
 (electric-pair-mode 1)
@@ -1000,7 +1001,7 @@ With negative prefix, apply to -N lines above."
 ;; (global-set-key (kbd "C-c C-r") 'ivy-resume)
 ;; (global-set-key (kbd "<f6>") 'ivy-resume)
 ;; (global-set-key (kbd "M-x") 'counsel-M-x)
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+;; (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 ;; (global-set-key (kbd "<f1> f") 'counsel-describe-function)
 ;; (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
 ;; (global-set-key (kbd "<f1> l") 'counsel-find-library)
