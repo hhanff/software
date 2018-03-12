@@ -1065,6 +1065,8 @@ function my_start_terminalserver (){
 }
 
 function my_shutdown_remote () {
-    ssh ailor-zynq "sudo halt"
-    ssh ailor-control "sudo halt"
+    ssh -t ailor-zynq "/sbin/shutdown -h now"
+    #ssh -t ailor-control "/sbin/shutdown -P 0"
+    #ssh -t ailor-control "/sbin/poweroff -f"
+    ssh -t ailor-control "/bin/systemctl halt"
     }
