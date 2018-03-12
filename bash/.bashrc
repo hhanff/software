@@ -1057,3 +1057,14 @@ export PATH=/opt/xmind/XMind_amd64/:$PATH
 function my_ros_env (){
     source /opt/ros/kinetic/setup.bash
 }
+
+function my_start_terminalserver (){
+    #rdesktop -u $USER -d DFKI -f -g 90% marin.dfki.uni-bremen.de
+    rdesktop -u $USER -d DFKI -k de -a 16 -f -g 1900x1020 marin.dfki.uni-bremen.de
+    #rdesktop -u $USER -d DFKI -a 16 -f marin.dfki.uni-bremen.de
+}
+
+function my_shutdown_remote () {
+    ssh ailor-zynq "sudo halt"
+    ssh ailor-control "sudo halt"
+    }
