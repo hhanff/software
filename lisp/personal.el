@@ -1042,3 +1042,8 @@ With negative prefix, apply to -N lines above."
 
 (global-git-gutter-mode +1)
 ;;; Personal.el ends here
+
+;; Mode for editing req files from rmtool
+(add-to-list 'load-path "/home/hhanff/.emacs.d/site-lisp/")
+(autoload 'req-mode "req-mode" "rmtool req-mode" t)
+(add-to-list 'auto-mode-alist '("\\.req\\'" . req-mode))
