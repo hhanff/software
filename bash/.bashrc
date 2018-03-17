@@ -481,8 +481,8 @@ function quickmail_home() {
 # Personnal Aliases
 #---------------------
 alias TRANSTERRA='pushd /mnt/research/projects/ongoing/TransTerrA_15004/'
-alias DAEDALUS='pushd /mnt/research/projects/ongoing/DAEDALUS_15078/'
-alias LIMES='pushd /mnt/research/projects/ongoing/LIMES/'
+alias DAEDALUS='pushd /mnt/research/projects/completed/DAEDALUS_15078/'
+alias LIMES='pushd /mnt/research/projects/completed/LIMES/'
 alias SDSO='pushd /mnt/research/projects/ongoing/EIT-SDSO_18883'
 
 # Create backup with date
