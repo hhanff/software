@@ -63,6 +63,7 @@
             which-key
             gist
             magit
+            auctex
             auto-complete-auctex
             ;;color-theme-solarized
             keyfreq
