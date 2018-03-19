@@ -1001,14 +1001,6 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/qwt-6.1.0/lib/
 #-------------------------------
 # New / Experimental
 #-------------------------------
-
-#-------------------------------
-# Probably not needed
-#-------------------------------
-
-#export PYTHONPATH="$PYTHONPATH:$HOME/.python"
-# do ln -s $PWD ~/.python/ to add the current directory to your $PYTHONPATH
-
 export PERL_LOCAL_LIB_ROOT="/home/hhanff/perl5";
 export PERL_MB_OPT="--install_base /home/hhanff/perl5";
 export PERL_MM_OPT="INSTALL_BASE=/home/hhanff/perl5";
