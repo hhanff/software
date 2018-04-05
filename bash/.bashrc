@@ -445,14 +445,16 @@ function my_network_restart()
 
 function my_wlan_restart()
 {
-    sudo iwconfig wlan0 txpower off
-    sudo iwconfig wlan0 txpower on
+    INTERFACE=$(ifconfig | grep wl | awk '{print $1}')
+    
+    sudo iwconfig $INTERFACE txpower off
+    sudo iwconfig $INTERFACE txpower on
 
     sleep 1
-    sudo ifconfig wlan0 down
+    sudo ifconfig $INTERFACE down
 
     my_network_restart
-    sudo ifconfig wlan0 up
+    sudo ifconfig $INTERFACE up
 }
 
 function my_eth_restart()
