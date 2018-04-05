@@ -823,7 +823,7 @@ export PAGER='less'
 export LESSCHARSET='latin1'
 
 # Copy path to clipboard, paste with middle mouse button
-alias pwd='pwd | xsel && pwd'
+alias my_pwd='pwd | xsel && pwd'
 
 alias o='xdg-open'
 
@@ -926,6 +926,7 @@ PLATFORM=lin
 #---------------
 export FIGNORE=.svn
 #export SVN_EDITOR="/usr/bin/nano -r 79"
+export EDITOR='emacs -nw'
 export SVN_EDITOR='emacsclient -nw -c -a "ecns" $1'
 export GIT_EDITOR='emacsclient -nw -c -a "ecns" $1'
 export SYSTEMC="/usr/local/systemc-2.2"
@@ -1051,8 +1052,10 @@ export PATH=/opt:$PATH
 export PATH=/opt/xmind/XMind_amd64/:$PATH
 
 function my_ros_env (){
+    # unalias pwd;
     source /opt/ros/kinetic/setup.bash
 }
+my_ros_env
 
 function my_start_terminalserver (){
     #rdesktop -u $USER -d DFKI -f -g 90% marin.dfki.uni-bremen.de
