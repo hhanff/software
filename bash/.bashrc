@@ -1069,3 +1069,4 @@ function my_shutdown_remote () {
     #ssh -t ailor-control "/sbin/poweroff -f"
     ssh -t ailor-control "/bin/systemctl halt"
     }
+source ~/.bashrc_secret
