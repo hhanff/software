@@ -1071,3 +1071,4 @@ function my_shutdown_remote () {
     ssh -t ailor-control "/bin/systemctl halt"
     }
 export PATH=$PATH:/opt/gcc-arm-none-eabi-5_4-2016q3/bin/
+source ~/.bashrc_secret
