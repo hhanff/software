@@ -558,7 +558,8 @@ alias my_backup="~/Dropbox/src/scripts/my_backup.sh"
 
 alias top='htop'
 alias my_vpn='sudo openvpn ~/Dokumente/Privat/Certificates/pc.ovpn '
-alias my_vpn_work='sudo openconnect -u heha01 --authgroup=Anyconnect-MyDFKI --no-cert-check vpn.hb.dfki.de --compression=all -d -v '
+# alias my_vpn_work='sudo openconnect -u heha01 --authgroup=Anyconnect-MyDFKI --no-cert-check vpn.hb.dfki.de --compression=all -d -v '
+alias my_vpn_work='sudo openconnect -u heha01 --authgroup=Anyconnect-MyDFKI vpn.hb.dfki.de --compression=all -d     --servercert pin-sha256:WClzvvEcDHhWtLPigdAQHZhMGdtTcwQU1dMEjZ8b6l4= -vvv '
 
 # First test if we are in an interactive session to overcome bind errors
 iatest=$(expr index "$-" i)
@@ -1069,3 +1070,4 @@ function my_shutdown_remote () {
     #ssh -t ailor-control "/sbin/poweroff -f"
     ssh -t ailor-control "/bin/systemctl halt"
     }
+export PATH=$PATH:/opt/gcc-arm-none-eabi-5_4-2016q3/bin/

@@ -795,7 +795,7 @@ With prefix P, create local abbrev. Otherwise it will be global."
 
 '(source-file-menu t)
 (autoload 'vhdl-mode "vhdl-mode" "VHDL Mode" t)
-(setq vhdl-basic-offset 2)
+(setq vhdl-basic-offset 4)
 
 ;; Usage: Open any vhdl file and invoke vhdl-goto-type-def with key sequence (\C-c\C-s by default).
 ;; Cursor will jump to corresponding definition if there is one. Functions searches packages
