@@ -558,8 +558,9 @@ alias my_backup="~/Dropbox/src/scripts/my_backup.sh"
 
 alias top='htop'
 alias my_vpn='sudo openvpn ~/Dokumente/Privat/Certificates/pc.ovpn '
+alias my_vpn_work='sudo openconnect --authgroup=Anyconnect-MyDFKI --servercert pin-sha256:Y0Q6cPTjpJ+y7CRnCNyaHXctFenoIXdJ1PtA7tqeow8= vpn.hb.dfki.de --compression=all -d -v '
 # alias my_vpn_work='sudo openconnect -u heha01 --authgroup=Anyconnect-MyDFKI --no-cert-check vpn.hb.dfki.de --compression=all -d -v '
-alias my_vpn_work='sudo openconnect -u heha01 --authgroup=Anyconnect-MyDFKI vpn.hb.dfki.de --compression=all -d     --servercert pin-sha256:WClzvvEcDHhWtLPigdAQHZhMGdtTcwQU1dMEjZ8b6l4= -vvv '
+# alias my_vpn_work='sudo openconnect -u heha01 --authgroup=Anyconnect-MyDFKI vpn.hb.dfki.de --compression=all -d     --servercert pin-sha256:WClzvvEcDHhWtLPigdAQHZhMGdtTcwQU1dMEjZ8b6l4= -vvv '
 
 # First test if we are in an interactive session to overcome bind errors
 iatest=$(expr index "$-" i)
