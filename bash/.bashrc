@@ -312,7 +312,7 @@ function my_emacs_config_generate(){
     echo " (tool-bar-mode -1)"  >> /tmp/.emacs
 }
 my_emacs_config_generate
-function e { emacs -u /tmp/.emacs -nw -Q $1; }
+function e { emacs -l /tmp/.emacs -nw --quick $1; }
 
 
 function _exit()	# function to run upon exit of shell
