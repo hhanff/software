@@ -1,4 +1,4 @@
-#=================================================================
+#===============================================================
 #
 # PERSONAL $HOME/.bashrc FILE for bash-2.05a (or later)
 #
@@ -297,7 +297,22 @@ function ec
 # /usr/bin/ecns
 function eco { emacsclient  -nw -c  -a "ecns" $1; }
 
-function e { emacs  -nw -Q $1; }
+function my_emacs_config_generate(){
+    \rm -rf /tmp/.emacs
+    echo "(setq line-number-display-limit 16000000) ; line numbers in long files" >> /tmp/.emacs
+    echo "(setq inhibit-startup-message   t)   ; Don't want any startup message" >> /tmp/.emacs
+    echo "(setq auto-save-list-file-name  nil) ; Don't want any .saves files" >> /tmp/.emacs
+    echo "(setq auto-save-default         nil) ; Don't want any auto saving" >> /tmp/.emacs
+    echo ";; Enable backup files." >> /tmp/.emacs
+    echo "(setq make-backup-files t)" >> /tmp/.emacs
+    echo ";; Enable versioning with default values (keep five last versions, I think!)" >> /tmp/.emacs
+    echo "(setq version-control t)" >> /tmp/.emacs
+    echo ";; Save all backup file in this directory." >> /tmp/.emacs
+    echo "(setq backup-directory-alist (quote ((".*" . "/tmp/emacs_backup_files"))))" >> /tmp/.emacs
+    echo " (tool-bar-mode -1)"  >> /tmp/.emacs
+}
+my_emacs_config_generate
+function e { emacs -u /tmp/.emacs -nw -Q $1; }
 
 
 function _exit()	# function to run upon exit of shell
@@ -305,9 +320,6 @@ function _exit()	# function to run upon exit of shell
     echo -e "${RED}Hasta la vista, baby!!!${NC}"
 }
 trap _exit EXIT
-
-function ll()
-{ ls -l "$@"| egrep "^d" ; ls -lXB "$@" 2>&-| egrep -v "^d|total "; }
 
 #-------------------------------------------------------------
 # find pattern in a set of files and highlight them:
@@ -446,7 +458,7 @@ function my_network_restart()
 function my_wlan_restart()
 {
     INTERFACE=$(ifconfig | grep wl | awk '{print $1}')
-    
+
     sudo iwconfig $INTERFACE txpower off
     sudo iwconfig $INTERFACE txpower on
 
@@ -809,7 +821,8 @@ alias lc='ls -lcr'		# sort by change time
 alias lu='ls -lur'		# sort by access time
 alias lr='ls -lR'               # recursive ls
 alias lt='ls -ltr'              # sort by date
-alias ll='ls -l'                # long information
+function ll()
+{ ls -l "$@"| egrep "^d" ; ls -lXB "$@" 2>&-| egrep -v "^d|total "; }
 alias lm='ls -al |more'         # pipe through 'more'
 alias tree='tree -CsuhD'		# nice alternative to 'ls'
 alias l='la'
