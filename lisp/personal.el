@@ -63,6 +63,7 @@
             which-key
             gist
             magit
+            auctex
             auto-complete-auctex
             ;;color-theme-solarized
             keyfreq
@@ -373,14 +374,15 @@
  ;; Zeile kommentieren, falls nicht installiert:
  (setq ispell-program-name "aspell") ; could be ispell as well, depending on your preferences
  (setq ispell-dictionary "english") ; this can obviously be set to any language your spell-checking program supports
- ;; (require 'tex-site)
- ;; (autoload 'reftex-mode "reftex" "RefTeX Minor Mode" t)
- ;; (autoload 'turn-on-reftex "reftex" "RefTeX Minor Mode" nil)
- ;; (autoload 'reftex-citation "reftex-cite" "Make citation" nil)
- ;; (autoload 'reftex-index-phrase-mode "reftex-index" "Phrase Mode" t)
- ;; (add-hook 'latex-mode-hook 'turn-on-reftex) ; with Emacs latex mode
- ;; ;; (add-hook 'reftex-load-hook 'imenu-add-menubar-index)
- ;; (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+
+ (require 'tex-site)
+ (autoload 'reftex-mode "reftex" "RefTeX Minor Mode" t)
+ (autoload 'turn-on-reftex "reftex" "RefTeX Minor Mode" nil)
+ (autoload 'reftex-citation "reftex-cite" "Make citation" nil)
+ (autoload 'reftex-index-phrase-mode "reftex-index" "Phrase Mode" t)
+ (add-hook 'latex-mode-hook 'turn-on-reftex) ; with Emacs latex mode
+ ;; (add-hook 'reftex-load-hook 'imenu-add-menubar-index)
+ (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 
  (setq LaTeX-eqnarray-label "eq"
        LaTeX-equation-label "eq"
@@ -793,7 +795,7 @@ With prefix P, create local abbrev. Otherwise it will be global."
 
 '(source-file-menu t)
 (autoload 'vhdl-mode "vhdl-mode" "VHDL Mode" t)
-(setq vhdl-basic-offset 2)
+(setq vhdl-basic-offset 4)
 
 ;; Usage: Open any vhdl file and invoke vhdl-goto-type-def with key sequence (\C-c\C-s by default).
 ;; Cursor will jump to corresponding definition if there is one. Functions searches packages

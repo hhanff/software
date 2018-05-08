@@ -1,4 +1,4 @@
-#=================================================================
+#===============================================================
 #
 # PERSONAL $HOME/.bashrc FILE for bash-2.05a (or later)
 #
@@ -299,7 +299,22 @@ function ec
 # /usr/bin/ecns
 function eco { emacsclient  -nw -c  -a "ecns" $1; }
 
-function e { emacs  -nw -Q $1; }
+function my_emacs_config_generate(){
+    \rm -rf /tmp/.emacs
+    echo "(setq line-number-display-limit 16000000) ; line numbers in long files" >> /tmp/.emacs
+    echo "(setq inhibit-startup-message   t)   ; Don't want any startup message" >> /tmp/.emacs
+    echo "(setq auto-save-list-file-name  nil) ; Don't want any .saves files" >> /tmp/.emacs
+    echo "(setq auto-save-default         nil) ; Don't want any auto saving" >> /tmp/.emacs
+    echo ";; Enable backup files." >> /tmp/.emacs
+    echo "(setq make-backup-files t)" >> /tmp/.emacs
+    echo ";; Enable versioning with default values (keep five last versions, I think!)" >> /tmp/.emacs
+    echo "(setq version-control t)" >> /tmp/.emacs
+    echo ";; Save all backup file in this directory." >> /tmp/.emacs
+    echo "(setq backup-directory-alist (quote ((".*" . "/tmp/emacs_backup_files"))))" >> /tmp/.emacs
+    echo " (tool-bar-mode -1)"  >> /tmp/.emacs
+}
+my_emacs_config_generate
+function e { emacs -l /tmp/.emacs -nw --quick $1; }
 
 
 function _exit()	# function to run upon exit of shell
@@ -307,9 +322,6 @@ function _exit()	# function to run upon exit of shell
     echo -e "${RED}Hasta la vista, baby!!!${NC}"
 }
 trap _exit EXIT
-
-function ll()
-{ ls -l "$@"| egrep "^d" ; ls -lXB "$@" 2>&-| egrep -v "^d|total "; }
 
 #-------------------------------------------------------------
 # find pattern in a set of files and highlight them:
@@ -447,14 +459,16 @@ function my_network_restart()
 
 function my_wlan_restart()
 {
-    sudo iwconfig wlan0 txpower off
-    sudo iwconfig wlan0 txpower on
+    INTERFACE=$(ifconfig | grep wl | awk '{print $1}')
+
+    sudo iwconfig $INTERFACE txpower off
+    sudo iwconfig $INTERFACE txpower on
 
     sleep 1
-    sudo ifconfig wlan0 down
+    sudo ifconfig $INTERFACE down
 
     my_network_restart
-    sudo ifconfig wlan0 up
+    sudo ifconfig $INTERFACE up
 }
 
 function my_eth_restart()
@@ -558,7 +572,9 @@ alias my_backup="~/Dropbox/src/scripts/my_backup.sh"
 
 alias top='htop'
 alias my_vpn='sudo openvpn ~/Dokumente/Privat/Certificates/pc.ovpn '
-alias my_vpn_work='sudo openconnect -u heha01 --authgroup=Anyconnect-MyDFKI --no-cert-check vpn.hb.dfki.de'
+alias my_vpn_work='sudo openconnect --authgroup=Anyconnect-MyDFKI --servercert pin-sha256:Y0Q6cPTjpJ+y7CRnCNyaHXctFenoIXdJ1PtA7tqeow8= vpn.hb.dfki.de --compression=all -d -v '
+# alias my_vpn_work='sudo openconnect -u heha01 --authgroup=Anyconnect-MyDFKI --no-cert-check vpn.hb.dfki.de --compression=all -d -v '
+# alias my_vpn_work='sudo openconnect -u heha01 --authgroup=Anyconnect-MyDFKI vpn.hb.dfki.de --compression=all -d     --servercert pin-sha256:WClzvvEcDHhWtLPigdAQHZhMGdtTcwQU1dMEjZ8b6l4= -vvv '
 
 # First test if we are in an interactive session to overcome bind errors
 iatest=$(expr index "$-" i)
@@ -808,7 +824,8 @@ alias lc='ls -lcr'		# sort by change time
 alias lu='ls -lur'		# sort by access time
 alias lr='ls -lR'               # recursive ls
 alias lt='ls -ltr'              # sort by date
-alias ll='ls -l'                # long information
+function ll()
+{ ls -l "$@"| egrep "^d" ; ls -lXB "$@" 2>&-| egrep -v "^d|total "; }
 alias lm='ls -al |more'         # pipe through 'more'
 alias tree='tree -CsuhD'		# nice alternative to 'ls'
 alias l='la'
@@ -823,7 +840,7 @@ export PAGER='less'
 export LESSCHARSET='latin1'
 
 # Copy path to clipboard, paste with middle mouse button
-alias pwd='pwd | xsel && pwd'
+alias my_pwd='pwd | xsel && pwd'
 
 alias o='xdg-open'
 
@@ -926,6 +943,7 @@ PLATFORM=lin
 #---------------
 export FIGNORE=.svn
 #export SVN_EDITOR="/usr/bin/nano -r 79"
+export EDITOR='emacs -nw'
 export SVN_EDITOR='emacsclient -nw -c -a "ecns" $1'
 export GIT_EDITOR='emacsclient -nw -c -a "ecns" $1'
 export SYSTEMC="/usr/local/systemc-2.2"
@@ -1003,14 +1021,6 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/qwt-6.1.0/lib/
 #-------------------------------
 # New / Experimental
 #-------------------------------
-
-#-------------------------------
-# Probably not needed
-#-------------------------------
-
-#export PYTHONPATH="$PYTHONPATH:$HOME/.python"
-# do ln -s $PWD ~/.python/ to add the current directory to your $PYTHONPATH
-
 export PERL_LOCAL_LIB_ROOT="/home/hhanff/perl5";
 export PERL_MB_OPT="--install_base /home/hhanff/perl5";
 export PERL_MM_OPT="INSTALL_BASE=/home/hhanff/perl5";
@@ -1059,8 +1069,10 @@ export PATH=/opt:$PATH
 export PATH=/opt/xmind/XMind_amd64/:$PATH
 
 function my_ros_env (){
+    # unalias pwd;
     source /opt/ros/kinetic/setup.bash
 }
+my_ros_env
 
 function my_start_terminalserver (){
     #rdesktop -u $USER -d DFKI -f -g 90% marin.dfki.uni-bremen.de
@@ -1074,3 +1086,5 @@ function my_shutdown_remote () {
     #ssh -t ailor-control "/sbin/poweroff -f"
     ssh -t ailor-control "/bin/systemctl halt"
     }
+export PATH=$PATH:/opt/gcc-arm-none-eabi-5_4-2016q3/bin/
+source ~/.bashrc_secret
