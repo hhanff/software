@@ -69,6 +69,8 @@ set completion-ignore-case on
 #set prefer-visible-bell on
 
 # Enable options:
+#Enable suport of bash history across multiple bash sessions
+#shopt -s histappend
 export HISTFILESIZE=10000
 export HISTSIZE=10000
 
