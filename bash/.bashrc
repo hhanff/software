@@ -694,7 +694,8 @@ function xilinx_set_preconditions { \
     # export PATH=/mnt/daten/opt/Xilinx/10.1/ISE/bin/lin:$PATH
     export GDM_LANG=C \
     export LANG=C \
-    #export LD_PRELOAD=/usr/lib/ure/lib/libusb-driver.so
+    # export LD_PRELOAD=/usr/lib/ure/lib/libusb-driver.so
+    # export XILINXD_LICENSE_FILE=27500@skripnik;
     export XILINXD_LICENSE_FILE=2100@rlb-lic.dfki.uni-bremen.de;}
 
 function my_impact { \
