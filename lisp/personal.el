@@ -157,14 +157,14 @@
          (delete-char (- init-word original-point))
          (insert key)
          (yas-expand)))))
-	 
+
 ;; When yas/minor-mode is activated in a term/ansi-term buffer, pressing tab
 ;; results in the following error:
 ;;      term-send-raw: Wrong type argument: characterp, tab.
 ;; This fixes the error.
 (add-hook 'term-mode-hook (lambda()
                             (yas-minor-mode -1)))
-	 
+
  (define-key yas-minor-mode-map (kbd "<C-tab>")     'yas-ido-expand)
  ;; ;; If yas is not working with vhdl mode, try
  ;; cd ~/.emacs.d/elpa/yasnippet*/snippets
@@ -1071,9 +1071,14 @@ With negative prefix, apply to -N lines above."
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
 (global-git-gutter-mode +1)
-;;; Personal.el ends here
 
 ;; Mode for editing req files from rmtool
 (add-to-list 'load-path "/home/hhanff/.emacs.d/site-lisp/")
 (autoload 'req-mode "req-mode" "rmtool req-mode" t)
 (add-to-list 'auto-mode-alist '("\\.req\\'" . req-mode))
+
+;; To convert non printable text characters to german Umlaute open
+;; my_convert_to_utf8.el mark everything and do M-x eval-region.
+;; Next open the affected file and call the lisp function
+
+;;; Personal.el ends here
