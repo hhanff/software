@@ -701,8 +701,9 @@ function xilinx_set_preconditions { \
 
 function my_impact { \
     xilinx_set_preconditions; \
-    source "/opt/Xilinx/"$1"/ISE_DS/settings64.sh"; \
-    export LD_PRELOAD=/usr/lib/ure/lib/libusb-driver.so \
+    source "/opt/Xilinx/"$1"/ISE_DS/settings64.sh";
+    # export LD_PRELOAD=/usr/lib/ure/lib/libusb-driver.so
+    export LD_PRELOAD=/opt/Xilinx/usb-driver/libusb-driver.so
     "/opt/Xilinx/"$1"/ISE_DS/ISE/bin/lin64/impact"; }
 
 function my_ise { \
