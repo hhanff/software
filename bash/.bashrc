@@ -572,7 +572,7 @@ alias my_backup="~/Dropbox/src/scripts/my_backup.sh"
 
 alias top='htop'
 alias my_vpn='sudo openvpn ~/Dokumente/Privat/Certificates/pc.ovpn '
-alias my_vpn_work='sudo openconnect --authgroup=Anyconnect-MyDFKI --servercert pin-sha256:Y0Q6cPTjpJ+y7CRnCNyaHXctFenoIXdJ1PtA7tqeow8= vpn.hb.dfki.de --compression=all -d -v '
+alias my_vpn_work='sudo openconnect --authgroup=Anyconnect-MyDFKI --servercert sha1:f25296a06a928e74494a3eb3adb644add910748d vpn.hb.dfki.de --compression=all -d -v'
 # alias my_vpn_work='sudo openconnect -u heha01 --authgroup=Anyconnect-MyDFKI --no-cert-check vpn.hb.dfki.de --compression=all -d -v '
 # alias my_vpn_work='sudo openconnect -u heha01 --authgroup=Anyconnect-MyDFKI vpn.hb.dfki.de --compression=all -d     --servercert pin-sha256:WClzvvEcDHhWtLPigdAQHZhMGdtTcwQU1dMEjZ8b6l4= -vvv '
 
@@ -943,7 +943,7 @@ PLATFORM=lin
 #---------------
 export FIGNORE=.svn
 #export SVN_EDITOR="/usr/bin/nano -r 79"
-export EDITOR='emacs -nw'
+export EDITOR='e'
 export SVN_EDITOR='emacsclient -nw -c -a "ecns" $1'
 export GIT_EDITOR='emacsclient -nw -c -a "ecns" $1'
 export SYSTEMC="/usr/local/systemc-2.2"
