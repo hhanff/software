@@ -1033,6 +1033,9 @@ With negative prefix, apply to -N lines above."
 
 (elpy-enable)
 
+% Make pdflatex work withcv_hhanff_en.tex
+(setq LaTeX-command-style '(("" "%(PDF)%(latex) -shell-escape %S%(PDFout)")))
+
 ;; use flycheck not flymake with elpy
 (when (require 'flycheck nil t)
   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))

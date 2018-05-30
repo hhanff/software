@@ -485,10 +485,10 @@ function comic()
 }
 
 # To get both functions working please read doc/init/Linux-Unix/ssmtp/ssmtp_howto.txt
-function quickmail_work() {
+function my_mail_work() {
 	echo "$*" | mail -s "$*" hendrik.hanff@dfki.de;
 }
-function quickmail_home() {
+function my_mail_home() {
 	echo "$*" | mail -s "$*" hendrik.hanff@googlemail.com;
 }
 #-------------------
