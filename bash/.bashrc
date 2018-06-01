@@ -191,10 +191,6 @@ function my_find_hosts_on_network (){
     nmap  -sn $IP;
 }
 
-function my_info () {
-    echo /etc/*_ver* /etc/*-rel*; cat /etc/*_ver* /etc/*-rel*
-}
-
 function my_ssh_dfki () {
   ssh hhanff@ricssh.hb.dfki.de -p 22222 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -L 13021:hhanff-u.local:22 -f sleep 10 && \
   ssh localhost -p 13021 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no  -XC
@@ -438,9 +434,10 @@ function my_info()   # get current host related info
   echo -e "\n${RED}Machine stats :$NC " ; uptime
   echo -e "\n${RED}Memory stats :$NC " ; free -h
   echo -e "\n${RED}Local IP Address :$NC" ; ifconfig 2>&-
-  echo -e "\n${RED}Linux Version :$NC" ; cat /etc/*release
+  echo -e "\n${RED}Linux Version :$NC" ; cat /etc/*release /etc/*_ver*
   echo -e "\n${RED}Battery Level : $NC" ; acpi -b
   echo -e "\n${RED}Debian Version : $NC"; cat /etc/debian_version ;
+  echo -e "\n${RED}CPU : $NC"; lscpu ;
   echo
 }
 
