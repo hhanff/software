@@ -136,12 +136,12 @@ Needed to determine end of name."
       (let ((ido-current-directory (expand-file-name (file-name-directory (buffer-file-name))))
             filename)
         (let (ido-saved-vc-mt
-              (vc-master-templates (and (boundp 'vc-master-templates) vc-master-templates))
+              (vc-backend-master-templates (and (boundp 'vc-backend-master-templates) vc-backend-master-templates))
               (ido-work-directory-index -1)
               (ido-work-file-index -1)
               (ido-find-literal nil))
           (unless filename
-            (setq ido-saved-vc-mt vc-master-templates)
+            (setq ido-saved-vc-mt vc-backend-master-templates)
             (setq filename (ido-read-internal 'file
                                               (concat "Where is '" package-name "? ")
                                               'ido-file-history nil nil nil))))

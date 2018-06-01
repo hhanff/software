@@ -63,6 +63,7 @@
             which-key
             gist
             magit
+            auctex
             auto-complete-auctex
             ;;color-theme-solarized
             keyfreq
@@ -156,6 +157,14 @@
          (delete-char (- init-word original-point))
          (insert key)
          (yas-expand)))))
+
+;; When yas/minor-mode is activated in a term/ansi-term buffer, pressing tab
+;; results in the following error:
+;;      term-send-raw: Wrong type argument: characterp, tab.
+;; This fixes the error.
+(add-hook 'term-mode-hook (lambda()
+                            (yas-minor-mode -1)))
+
  (define-key yas-minor-mode-map (kbd "<C-tab>")     'yas-ido-expand)
  ;; ;; If yas is not working with vhdl mode, try
  ;; cd ~/.emacs.d/elpa/yasnippet*/snippets
@@ -334,6 +343,7 @@
  (setq desktop-base-file-name "emacs-desktop")
  (desktop-save-mode 1)
 
+(setq delete-old-versions t)
  ;; Functions needed for global / gtags
  (autoload 'gtags-mode "gtags" "" t)
 
@@ -349,6 +359,7 @@
    )
  (global-set-key (kbd "C-S-d") 'duplicate-line)
 
+;; (require 'ascope)
  (defun chomp (str)
    "Chomp leading and tailing whitespace from STR."
    (replace-regexp-in-string (rx (or (: bos (* (any " \t\n")))
@@ -373,14 +384,15 @@
  ;; Zeile kommentieren, falls nicht installiert:
  (setq ispell-program-name "aspell") ; could be ispell as well, depending on your preferences
  (setq ispell-dictionary "english") ; this can obviously be set to any language your spell-checking program supports
- ;; (require 'tex-site)
- ;; (autoload 'reftex-mode "reftex" "RefTeX Minor Mode" t)
- ;; (autoload 'turn-on-reftex "reftex" "RefTeX Minor Mode" nil)
- ;; (autoload 'reftex-citation "reftex-cite" "Make citation" nil)
- ;; (autoload 'reftex-index-phrase-mode "reftex-index" "Phrase Mode" t)
- ;; (add-hook 'latex-mode-hook 'turn-on-reftex) ; with Emacs latex mode
- ;; ;; (add-hook 'reftex-load-hook 'imenu-add-menubar-index)
- ;; (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+
+ (require 'tex-site)
+ (autoload 'reftex-mode "reftex" "RefTeX Minor Mode" t)
+ (autoload 'turn-on-reftex "reftex" "RefTeX Minor Mode" nil)
+ (autoload 'reftex-citation "reftex-cite" "Make citation" nil)
+ (autoload 'reftex-index-phrase-mode "reftex-index" "Phrase Mode" t)
+ (add-hook 'latex-mode-hook 'turn-on-reftex) ; with Emacs latex mode
+ ;; (add-hook 'reftex-load-hook 'imenu-add-menubar-index)
+ (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 
  (setq LaTeX-eqnarray-label "eq"
        LaTeX-equation-label "eq"
@@ -615,16 +627,16 @@
 
 
 
-;; ;; Smex is a M-x enhancement for Emacs. Built on top of Ido, it provides a
-;; ;; convenient interface to your recently and most frequently used commands. And
-;; ;; to all the other commands, too.
-;; (require 'smex) ; Not needed if you use package.el
-;; (smex-initialize) ; Can be omitted. This might cause a (minimal) delay when Smex
-;;                   ; is auto-initialized on its first run.
-;; (global-set-key (kbd "M-x") 'smex)
-;; (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-;; ;; This is your old M-x.
-;; (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+;; Smex is a M-x enhancement for Emacs. Built on top of Ido, it provides a
+;; convenient interface to your recently and most frequently used commands. And
+;; to all the other commands, too.
+(require 'smex) ; Not needed if you use package.el
+(smex-initialize) ; Can be omitted. This might cause a (minimal) delay when Smex
+                  ; is auto-initialized on its first run.
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;; This is your old M-x.
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
 ;;------------------------------------------------------------------------------
 ;;   Customize keybindings
@@ -713,6 +725,24 @@ With prefix P, create local abbrev. Otherwise it will be global."
 (put 'upcase-region 'disabled nil)
 (put 'eval-expression 'disabled nil)
 
+(defun move-line-up ()
+  "Move up the current line."
+   (interactive)
+  (transpose-lines 1)
+  (forward-line -2)
+  (indent-according-to-mode))
+
+(defun move-line-down ()
+  "Move down the current line."
+  (interactive)
+  (forward-line 1)
+  (transpose-lines 1)
+  (forward-line -1)
+  (indent-according-to-mode))
+
+(global-set-key [(control shift up)]  'move-line-up)
+(global-set-key [(control shift down)]  'move-line-down)
+
 ;; Xilinx ucf-file mode
 (add-to-list 'load-path "/home/hhanff/.emacs.d/site-lisp/emacs-ucf-mode")
 (autoload 'ucf-mode "ucf-mode" "Xilinx UCF mode" t)
@@ -793,7 +823,7 @@ With prefix P, create local abbrev. Otherwise it will be global."
 
 '(source-file-menu t)
 (autoload 'vhdl-mode "vhdl-mode" "VHDL Mode" t)
-(setq vhdl-basic-offset 2)
+(setq vhdl-basic-offset 4)
 
 ;; Usage: Open any vhdl file and invoke vhdl-goto-type-def with key sequence (\C-c\C-s by default).
 ;; Cursor will jump to corresponding definition if there is one. Functions searches packages
@@ -1031,6 +1061,9 @@ With negative prefix, apply to -N lines above."
 
 (elpy-enable)
 
+% Make pdflatex work withcv_hhanff_en.tex
+(setq LaTeX-command-style '(("" "%(PDF)%(latex) -shell-escape %S%(PDFout)")))
+
 ;; use flycheck not flymake with elpy
 (when (require 'flycheck nil t)
   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
@@ -1041,9 +1074,14 @@ With negative prefix, apply to -N lines above."
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
 (global-git-gutter-mode +1)
-;;; Personal.el ends here
 
 ;; Mode for editing req files from rmtool
 (add-to-list 'load-path "/home/hhanff/.emacs.d/site-lisp/")
 (autoload 'req-mode "req-mode" "rmtool req-mode" t)
 (add-to-list 'auto-mode-alist '("\\.req\\'" . req-mode))
+
+;; To convert non printable text characters to german Umlaute open
+;; my_convert_to_utf8.el mark everything and do M-x eval-region.
+;; Next open the affected file and call the lisp function
+
+;;; Personal.el ends here

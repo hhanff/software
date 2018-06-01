@@ -1,0 +1,33 @@
+[user]
+	name = hhanff
+	email = hendrik.hanff@dfki.de
+[core]
+	excludesfile = /home/hhanff/.gitexcludes
+	filemode = true
+	editor = nano
+[merge]
+	tool = diffuse
+        prompt = false
+[diff]
+	tool = /usr/bin/diffuse
+        algorithm = patience
+	guitool = meld
+	color = true
+[difftool]
+	prompt = false
+[color]
+	branch = auto
+	diff = auto
+	status = auto
+	ui = true
+[push]
+	default = matching
+[github]
+	user = hhanff
+[format]
+	signoff = true
+[alias]
+	reset = reset --soft HEAD^
+	graph = log --graph --oneline --decorate --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+[credential]
+	helper = cache
