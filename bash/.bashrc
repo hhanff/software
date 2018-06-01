@@ -205,6 +205,18 @@ function my_update(){
   sudo apt-get autoclean
 }
 
+
+function my_initial_install_tools {\
+    my_update
+    sudo apt-get install \
+		emacs \
+		git \
+		git-gui
+		subversion \
+		chromium-browser
+	}
+
+
 function my_scan_ocr(){
   /bin/rm -rf /tmp/scan_ocr.p*
   /bin/rm -rf /tmp/scan_ocr.tiff
