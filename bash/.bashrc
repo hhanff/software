@@ -191,10 +191,6 @@ function my_find_hosts_on_network (){
     nmap  -sn $IP;
 }
 
-function my_info () {
-    echo /etc/*_ver* /etc/*-rel*; cat /etc/*_ver* /etc/*-rel*
-}
-
 function my_ssh_dfki () {
   ssh hhanff@ricssh.hb.dfki.de -p 22222 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -L 13021:hhanff-u.local:22 -f sleep 10 && \
   ssh localhost -p 13021 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no  -XC
@@ -208,6 +204,21 @@ function my_update(){
   sudo apt-get clean && \
   sudo apt-get autoclean
 }
+
+
+function my_initial_install_tools {\
+    my_update
+    sudo apt-get install \
+    emacs \
+    git \
+    git-gui
+    subversion \
+    diffuse \
+    chromium-browser \
+    tree \
+    rdesktop
+}
+
 
 function my_scan_ocr(){
   /bin/rm -rf /tmp/scan_ocr.p*
@@ -438,9 +449,10 @@ function my_info()   # get current host related info
   echo -e "\n${RED}Machine stats :$NC " ; uptime
   echo -e "\n${RED}Memory stats :$NC " ; free -h
   echo -e "\n${RED}Local IP Address :$NC" ; ifconfig 2>&-
-  echo -e "\n${RED}Linux Version :$NC" ; cat /etc/*release
+  echo -e "\n${RED}Linux Version :$NC" ; cat /etc/*release /etc/*_ver*
   echo -e "\n${RED}Battery Level : $NC" ; acpi -b
   echo -e "\n${RED}Debian Version : $NC"; cat /etc/debian_version ;
+  echo -e "\n${RED}CPU : $NC"; lscpu ;
   echo
 }
 
@@ -979,7 +991,7 @@ my_icecc_ccache_enable ()
  # If the following archive is missing:
  # sudo icecc --build-native
  # mv *.tar.gz ~/icemon-build-native.tar.gz; sudo chown hhanff:hhanff ~/icemon-build-native.tar.gz
- export ICECC_VERSION='~/c0f03a758aad72cd4be82955744463cd.tar.gz'
+ export ICECC_VERSION='~/icemon-build-native.tar.gz'
  export PATH=/usr/lib/icecc/bin:$PATH
  export CXX='/usr/bin/g++'
  export CC='/usr/bin/gcc'
@@ -1010,8 +1022,6 @@ my_icecc_ccache_disable ()
  #iceccd -d
 }
 my_icecc_ccache_disable
-
-
 
 QWT_ROOT=/usr/local/qwt-6.1.0/
 QT_PLUGIN_PATH="${QWT_ROOT}/plugins:$QT_PLUGIN_PATH"
