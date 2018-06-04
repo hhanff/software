@@ -209,12 +209,15 @@ function my_update(){
 function my_initial_install_tools {\
     my_update
     sudo apt-get install \
-		emacs \
-		git \
-		git-gui
-		subversion \
-		chromium-browser
-	}
+    emacs \
+    git \
+    git-gui
+    subversion \
+    diffuse \
+    chromium-browser \
+    tree \
+    rdesktop
+}
 
 
 function my_scan_ocr(){
@@ -988,7 +991,7 @@ my_icecc_ccache_enable ()
  # If the following archive is missing:
  # sudo icecc --build-native
  # mv *.tar.gz ~/icemon-build-native.tar.gz; sudo chown hhanff:hhanff ~/icemon-build-native.tar.gz
- export ICECC_VERSION='~/c0f03a758aad72cd4be82955744463cd.tar.gz'
+ export ICECC_VERSION='~/icemon-build-native.tar.gz'
  export PATH=/usr/lib/icecc/bin:$PATH
  export CXX='/usr/bin/g++'
  export CC='/usr/bin/gcc'
@@ -1019,8 +1022,6 @@ my_icecc_ccache_disable ()
  #iceccd -d
 }
 my_icecc_ccache_disable
-
-
 
 QWT_ROOT=/usr/local/qwt-6.1.0/
 QT_PLUGIN_PATH="${QWT_ROOT}/plugins:$QT_PLUGIN_PATH"
