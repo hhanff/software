@@ -1074,7 +1074,7 @@ function my_ros_env (){
     # unalias pwd;
     source /opt/ros/kinetic/setup.bash
 }
-my_ros_env
+#my_ros_env
 
 function my_start_terminalserver (){
     #rdesktop -u $USER -d DFKI -f -g 90% marin.dfki.uni-bremen.de
