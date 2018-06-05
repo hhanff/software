@@ -196,10 +196,6 @@ function my_find_hosts_on_network (){
     nmap  -sn $IP;
 }
 
-function my_info () {
-    echo /etc/*_ver* /etc/*-rel*; cat /etc/*_ver* /etc/*-rel*
-}
-
 function my_ssh_dfki () {
   ssh hhanff@ricssh.hb.dfki.de -p 22222 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -L 13021:hhanff-u.local:22 -f sleep 10 && \
   ssh localhost -p 13021 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no  -XC
@@ -213,6 +209,21 @@ function my_update(){
   sudo apt-get clean && \
   sudo apt-get autoclean
 }
+
+
+function my_initial_install_tools {\
+    my_update
+    sudo apt-get install \
+    emacs \
+    git \
+    git-gui
+    subversion \
+    diffuse \
+    chromium-browser \
+    tree \
+    rdesktop
+}
+
 
 function my_scan_ocr(){
   /bin/rm -rf /tmp/scan_ocr.p*
@@ -443,9 +454,10 @@ function my_info()   # get current host related info
   echo -e "\n${RED}Machine stats :$NC " ; uptime
   echo -e "\n${RED}Memory stats :$NC " ; free -h
   echo -e "\n${RED}Local IP Address :$NC" ; ifconfig 2>&-
-  echo -e "\n${RED}Linux Version :$NC" ; cat /etc/*release
+  echo -e "\n${RED}Linux Version :$NC" ; cat /etc/*release /etc/*_ver*
   echo -e "\n${RED}Battery Level : $NC" ; acpi -b
   echo -e "\n${RED}Debian Version : $NC"; cat /etc/debian_version ;
+  echo -e "\n${RED}CPU : $NC"; lscpu ;
   echo
 }
 
@@ -492,10 +504,10 @@ function comic()
 }
 
 # To get both functions working please read doc/init/Linux-Unix/ssmtp/ssmtp_howto.txt
-function quickmail_work() {
+function my_mail_work() {
 	echo "$*" | mail -s "$*" hendrik.hanff@dfki.de;
 }
-function quickmail_home() {
+function my_mail_home() {
 	echo "$*" | mail -s "$*" hendrik.hanff@googlemail.com;
 }
 #-------------------
@@ -577,7 +589,7 @@ alias my_backup="~/Dropbox/src/scripts/my_backup.sh"
 
 alias top='htop'
 alias my_vpn='sudo openvpn ~/Dokumente/Privat/Certificates/pc.ovpn '
-alias my_vpn_work='sudo openconnect --authgroup=Anyconnect-MyDFKI --servercert pin-sha256:Y0Q6cPTjpJ+y7CRnCNyaHXctFenoIXdJ1PtA7tqeow8= vpn.hb.dfki.de --compression=all -d -v '
+alias my_vpn_work='sudo openconnect --authgroup=Anyconnect-MyDFKI --servercert sha1:f25296a06a928e74494a3eb3adb644add910748d vpn.hb.dfki.de --compression=all -d -v'
 # alias my_vpn_work='sudo openconnect -u heha01 --authgroup=Anyconnect-MyDFKI --no-cert-check vpn.hb.dfki.de --compression=all -d -v '
 # alias my_vpn_work='sudo openconnect -u heha01 --authgroup=Anyconnect-MyDFKI vpn.hb.dfki.de --compression=all -d     --servercert pin-sha256:WClzvvEcDHhWtLPigdAQHZhMGdtTcwQU1dMEjZ8b6l4= -vvv '
 
@@ -701,7 +713,8 @@ function xilinx_set_preconditions { \
     # export PATH=/mnt/daten/opt/Xilinx/10.1/ISE/bin/lin:$PATH
     export GDM_LANG=C \
     export LANG=C \
-    #export LD_PRELOAD=/usr/lib/ure/lib/libusb-driver.so
+    # export LD_PRELOAD=/usr/lib/ure/lib/libusb-driver.so
+    # export XILINXD_LICENSE_FILE=27500@skripnik;
     export XILINXD_LICENSE_FILE=2100@rlb-lic.dfki.uni-bremen.de;}
 
 function my_impact { \
@@ -949,7 +962,7 @@ PLATFORM=lin
 #---------------
 export FIGNORE=.svn
 #export SVN_EDITOR="/usr/bin/nano -r 79"
-export EDITOR='emacs -nw'
+export EDITOR='e'
 export SVN_EDITOR='emacsclient -nw -c -a "ecns" $1'
 export GIT_EDITOR='emacsclient -nw -c -a "ecns" $1'
 export SYSTEMC="/usr/local/systemc-2.2"
@@ -983,7 +996,7 @@ my_icecc_ccache_enable ()
  # If the following archive is missing:
  # sudo icecc --build-native
  # mv *.tar.gz ~/icemon-build-native.tar.gz; sudo chown hhanff:hhanff ~/icemon-build-native.tar.gz
- export ICECC_VERSION='~/c0f03a758aad72cd4be82955744463cd.tar.gz'
+ export ICECC_VERSION='~/icemon-build-native.tar.gz'
  export PATH=/usr/lib/icecc/bin:$PATH
  export CXX='/usr/bin/g++'
  export CC='/usr/bin/gcc'
@@ -1014,8 +1027,6 @@ my_icecc_ccache_disable ()
  #iceccd -d
 }
 my_icecc_ccache_disable
-
-
 
 QWT_ROOT=/usr/local/qwt-6.1.0/
 QT_PLUGIN_PATH="${QWT_ROOT}/plugins:$QT_PLUGIN_PATH"
@@ -1078,7 +1089,7 @@ function my_ros_env (){
     # unalias pwd;
     source /opt/ros/kinetic/setup.bash
 }
-my_ros_env
+#my_ros_env
 
 function my_start_terminalserver (){
     #rdesktop -u $USER -d DFKI -f -g 90% marin.dfki.uni-bremen.de
