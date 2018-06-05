@@ -178,6 +178,11 @@ function focus() {
 
 }
 
+function my_umount_cifs (){
+    # Unmount hanging cifs mounted filesystems
+    sudo umount -a -t cifs -l
+}
+
 function my_cls (){
     # when leaving the console clear the screen to increase privacy
     if [ "$SHLVL" = 1 ]; then
@@ -1089,7 +1094,7 @@ function my_ros_env (){
     # unalias pwd;
     source /opt/ros/kinetic/setup.bash
 }
-my_ros_env
+#my_ros_env
 
 function my_start_terminalserver (){
     #rdesktop -u $USER -d DFKI -f -g 90% marin.dfki.uni-bremen.de
