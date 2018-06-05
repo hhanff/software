@@ -220,7 +220,8 @@ function my_initial_install_tools {\
     auctex \
     texlive-latex-extra \
     autotools-dev \
-    automake
+    automake \
+    screen
 }
 
 
@@ -1102,5 +1103,9 @@ function my_shutdown_remote () {
     #ssh -t ailor-control "/sbin/poweroff -f"
     ssh -t ailor-control "/bin/systemctl halt"
     }
+
 export PATH=$PATH:/opt/gcc-arm-none-eabi-5_4-2016q3/bin/
-source ~/.bashrc_secret
+
+if [ -f ~/.bashrc_secret ]; then
+    source ~/.bashrc_secret
+fi
