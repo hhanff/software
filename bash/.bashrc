@@ -216,7 +216,11 @@ function my_initial_install_tools {\
     diffuse \
     chromium-browser \
     tree \
-    rdesktop
+    rdesktop \
+    auctex \
+    texlive-latex-extra \
+    autotools-dev \
+    automake
 }
 
 
