@@ -178,6 +178,11 @@ function focus() {
 
 }
 
+function my_umount_cifs (){
+    # Unmount hanging cifs mounted filesystems
+    sudo umount -a -t cifs -l
+}
+
 function my_cls (){
     # when leaving the console clear the screen to increase privacy
     if [ "$SHLVL" = 1 ]; then
