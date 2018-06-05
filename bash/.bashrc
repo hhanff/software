@@ -53,8 +53,6 @@ fi
 
 export DISPLAY
 
-source /etc/bash_completion
-
 #if a command line is overwritten by itself instead of being scrolled to the right when a long command line is entered, create a file called ~/.inputrc with the following content:
 #set horizontal-scroll-mode on
 set -o notify
