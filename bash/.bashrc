@@ -2,7 +2,6 @@
 #
 # PERSONAL $HOME/.bashrc FILE for bash-2.05a (or later)
 #
-# Last modified: Tue Apr 15 20:32:34 CEST 2003
 #
 # This file is read (normally) by interactive shells only.
 # Here is the place to define your aliases, functions and
@@ -331,6 +330,7 @@ function my_emacs_config_generate(){
     echo ";; Save all backup file in this directory." >> /tmp/.emacs
     echo "(setq backup-directory-alist (quote ((".*" . "/tmp/emacs_backup_files"))))" >> /tmp/.emacs
     echo " (tool-bar-mode -1)"  >> /tmp/.emacs
+    echo "(set-terminal-coding-system 'utf-8)  ; Set coding system to utf-8 in terminal mode" >> /tmp/.emacs
 }
 my_emacs_config_generate
 function e { emacs -l /tmp/.emacs -nw --quick $1; }
