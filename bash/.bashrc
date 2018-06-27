@@ -328,7 +328,7 @@ function my_emacs_config_generate(){
     echo ";; Enable versioning with default values (keep five last versions, I think!)" >> /tmp/.emacs
     echo "(setq version-control t)" >> /tmp/.emacs
     echo ";; Save all backup file in this directory." >> /tmp/.emacs
-    echo "(setq backup-directory-alist (quote ((".*" . "/tmp/emacs_backup_files"))))" >> /tmp/.emacs
+    echo "(setq backup-directory-alist '((\".\" . \"/tmp/emacs_backup_files/\")))" >> /tmp/.emacs
     echo " (tool-bar-mode -1)"  >> /tmp/.emacs
     echo "(set-terminal-coding-system 'utf-8)  ; Set coding system to utf-8 in terminal mode" >> /tmp/.emacs
 }
@@ -520,6 +520,7 @@ alias TRANSTERRA='pushd /mnt/research/projects/ongoing/TransTerrA_15004/'
 alias DAEDALUS='pushd /mnt/research/projects/completed/DAEDALUS_15078/'
 alias LIMES='pushd /mnt/research/projects/completed/LIMES/'
 alias SDSO='pushd /mnt/research/projects/ongoing/EIT-SDSO_18883'
+alias ROSEN='pushd /mnt/research/projects/ongoing/ROSEN_AUV_II_20023'
 
 # Create backup with date
 bu() {
