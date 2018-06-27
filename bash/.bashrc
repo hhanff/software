@@ -208,7 +208,6 @@ function my_update(){
   sudo apt-get autoclean
 }
 
-
 function my_initial_install_tools {\
     my_update
     sudo apt-get install \
@@ -224,9 +223,15 @@ function my_initial_install_tools {\
     texlive-latex-extra \
     autotools-dev \
     automake \
-    screen
-}
+    screen \
+    mplayer \
+    qrencode \
+    inkscape \
+    clang \
+    pdftk
 
+    sudo addgroup hhanff dialout
+}
 
 function my_scan_ocr(){
   /bin/rm -rf /tmp/scan_ocr.p*
@@ -717,8 +722,8 @@ function xilinx_set_preconditions { \
     export GDM_LANG=C \
     export LANG=C \
     # export LD_PRELOAD=/usr/lib/ure/lib/libusb-driver.so
-    # export XILINXD_LICENSE_FILE=27500@skripnik;
-    export XILINXD_LICENSE_FILE=2100@rlb-lic.dfki.uni-bremen.de;}
+    # export XILINXD_LICENSE_FILE=2100@rlb-lic.dfki.uni-bremen.de;}
+    export XILINXD_LICENSE_FILE=2100@skripnik;}
 
 function my_impact { \
     xilinx_set_preconditions; \
