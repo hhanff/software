@@ -46,3 +46,5 @@ desktop.ini
 *~
 *#
 *.bak
+/c++/tutorial/tutorial/dist/
+/c++/tutorial/tutorial/build/
