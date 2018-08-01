@@ -227,9 +227,25 @@ function my_initial_install_tools {\
     qrencode \
     inkscape \
     clang \
-    pdftk
+    pdftk \
+    encfs
 
     sudo addgroup hhanff dialout
+
+    # Make git config settings
+    git config --global user.name "Hendrik Hanff"
+    git config --global user.email "hendrik.hanff@dfki.de"
+
+    # Instal repo
+    cd /opt; sudo chown hhanff:hhanff
+    git clone https://android.googlesource.com/tools/repo
+
+    # Program for reading out Peters temperature sensor
+    https://github.com/petervojtek/usb-thermometer.git
+    cd usb-thermometer
+    sudo apt-get install libusb-dev
+    make
+
 }
 
 function my_scan_ocr(){
@@ -390,7 +406,7 @@ function fstr_install {\
     # > mknod /dev/null c 1 3
     # > chmod 666 /dev/null
     if which ag >/dev/null; then
-      alias fstr='ag --skip-vcs-ignores --unrestricted -i --stats  --hidden --depth 255'
+      alias fstr='ag --skip-vcs-ignores --unrestricted -i --stats  --hidden --depth 255 --follow'
     else
 	alias  fstr='find . -type d \( -path \*/SCCS -o -path \*/RCS -o -path \*/CVS -o -path \*/MCVS -o -path \*/.svn -o -path \*/.git -o -path \*/.hg -o -path \*/.bzr -o -path \*/_MTN -o -path \*/_darcs -o -path \*/\{arch\} \) -prune -o \! -type d \( -name .\#\* -o -name \*.o -o -name \*\~ -o -name \*.bin -o -name \*.lbin -o -name \*.so -o -name \*.a -o -name \*.ln -o -name \*.blg -o -name \*.bbl -o -name \*.elc -o -name \*.lof -o -name \*.glo -o -name \*.idx -o -name \*.lot -o -name \*.fmt -o -name \*.tfm -o -name \*.class -o -name \*.fas -o -name \*.lib -o -name \*.mem -o -name \*.x86f -o -name \*.sparcf -o -name \*.dfsl -o -name \*.pfsl -o -name \*.d64fsl -o -name \*.p64fsl -o -name \*.lx64fsl -o -name \*.lx32fsl -o -name \*.dx64fsl -o -name \*.dx32fsl -o -name \*.fx64fsl -o -name \*.fx32fsl -o -name \*.sx64fsl -o -name \*.sx32fsl -o -name \*.wx64fsl -o -name \*.wx32fsl -o -name \*.fasl -o -name \*.ufsl -o -name \*.fsl -o -name \*.dxl -o -name \*.lo -o -name \*.la -o -name \*.gmo -o -name \*.mo -o -name \*.toc -o -name \*.aux -o -name \*.cp -o -name \*.fn -o -name \*.ky -o -name \*.pg -o -name \*.tp -o -name \*.vr -o -name \*.cps -o -name \*.fns -o -name \*.kys -o -name \*.pgs -o -name \*.tps -o -name \*.vrs -o -name \*.pyc -o -name \*.pyo \) -prune -o  -type f \( -name \*.cc -o -name \*.cxx -o -name \*.cpp -o -name \*.C -o -name \*.CC -o -name \*.c\+\+ \) | xargs grep  -nH -e '
 	# alias fstr='grep -r "192.168.1.5" /etc/'
@@ -1120,3 +1136,9 @@ export PATH=$PATH:/opt/gcc-arm-none-eabi-5_4-2016q3/bin/
 if [ -f ~/.bashrc_secret ]; then
     source ~/.bashrc_secret
 fi
+
+export PATH=$PATH:/opt/repo/
+
+function my_room_temperature (){
+    while true; do sudo /opt/usb-thermometer/pcsensor; sleep 10; done
+}
