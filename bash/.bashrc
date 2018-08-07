@@ -210,25 +210,30 @@ function my_update(){
 function my_initial_install_tools {\
     my_update
     sudo apt-get install \
-    emacs \
-    git \
-    git-gui
-    subversion \
-    diffuse \
-    chromium-browser \
-    tree \
-    rdesktop \
-    auctex \
-    texlive-latex-extra \
-    autotools-dev \
-    automake \
-    screen \
-    mplayer \
-    qrencode \
-    inkscape \
-    clang \
-    pdftk \
-    encfs
+         emacs \
+         git \
+         git-gui \
+         subversion \
+         diffuse \
+         chromium-browser \
+         tree \
+         rdesktop \
+         auctex \
+         texlive-latex-extra \
+         autotools-dev \
+         automake \
+         screen \
+         mplayer \
+         qrencode \
+         clang \
+         pdftk \
+         encfs \
+         snap
+
+    sudo snap install \
+         okular \
+         inkscape
+
 
     sudo addgroup hhanff dialout
 
@@ -245,6 +250,9 @@ function my_initial_install_tools {\
     cd usb-thermometer
     sudo apt-get install libusb-dev
     make
+
+    # Software which needs to be installed manually:
+    echo "Please install netbeans for c++, yEd and freemind manually."
 
 }
 
@@ -1142,3 +1150,8 @@ export PATH=$PATH:/opt/repo/
 function my_room_temperature (){
     while true; do sudo /opt/usb-thermometer/pcsensor; sleep 10; done
 }
+
+function my_hibernate (){
+    sudo pm-hibernate
+}
+alias my_standby='pm-hibernate'
