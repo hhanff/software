@@ -242,14 +242,17 @@ function my_initial_install_tools {\
     git config --global user.email "hendrik.hanff@dfki.de"
 
     # Instal repo
-    cd /opt; sudo chown hhanff:hhanff
+    pushd /opt; sudo chown hhanff:hhanff
     git clone https://android.googlesource.com/tools/repo
+    popd
 
     # Program for reading out Peters temperature sensor
-    https://github.com/petervojtek/usb-thermometer.git
+    pushd /opt
+    git clone https://github.com/petervojtek/usb-thermometer.git
     cd usb-thermometer
     sudo apt-get install libusb-dev
     make
+    popd
 
     # Software which needs to be installed manually:
     echo "Please install netbeans for c++, yEd and freemind manually."
