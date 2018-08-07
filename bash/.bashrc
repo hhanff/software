@@ -232,7 +232,8 @@ function my_initial_install_tools {\
 
     sudo snap install \
          okular \
-         inkscape
+         inkscape \
+	 freemind
 
 
     sudo addgroup hhanff dialout
@@ -255,7 +256,7 @@ function my_initial_install_tools {\
     popd
 
     # Software which needs to be installed manually:
-    echo "Please install netbeans for c++, yEd and freemind manually."
+    echo "Please install netbeans for c++ and  yEd manually."
 
 }
 
