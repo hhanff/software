@@ -204,7 +204,8 @@ function my_update(){
   sudo apt-get dist-upgrade && \
   sudo apt-get autoremove && \
   sudo apt-get clean && \
-  sudo apt-get autoclean
+  sudo apt-get autoclean \
+  sudo snap refresh
 }
 
 function my_initial_install_tools {\
@@ -228,8 +229,12 @@ function my_initial_install_tools {\
          clang \
          pdftk \
          encfs \
-         snap
+         snap \
+	 owncloud-client
 
+    sudo apt-get purge --remove inkscape freemind okular
+
+    sudo snap refresh
     sudo snap install \
          okular \
          inkscape \
@@ -243,7 +248,7 @@ function my_initial_install_tools {\
     git config --global user.email "hendrik.hanff@dfki.de"
 
     # Instal repo
-    pushd /opt; sudo chown hhanff:hhanff
+    pushd /opt; sudo chown -R hhanff:hhanff .
     git clone https://android.googlesource.com/tools/repo
     popd
 
