@@ -241,7 +241,6 @@ function my_initial_install_tools {\
          inkscape \
 	 freemind
 
-
     sudo addgroup hhanff dialout
 
     # Make git config settings
@@ -249,17 +248,40 @@ function my_initial_install_tools {\
     git config --global user.email "hendrik.hanff@dfki.de"
 
     # Instal repo
-    pushd /opt; sudo chown -R hhanff:hhanff .
-    git clone https://android.googlesource.com/tools/repo
-    popd
+    if [ -d /opt/repo ]
+    then
+	echo "repo tool is already installed -> continuing"
+    else
+        pushd /opt; sudo chown -R hhanff:hhanff .
+        git clone https://android.googlesource.com/tools/repo
+        popd
+    fi
 
     # Program for reading out Peters temperature sensor
-    pushd /opt
-    git clone https://github.com/petervojtek/usb-thermometer.git
-    cd usb-thermometer
-    sudo apt-get install libusb-dev
-    make
-    popd
+    if [ -d /opt/repo ]
+    then
+       echo "software to readout usb temperature sensor is already installed -> continuing"
+    else
+        pushd /opt
+        git clone https://github.com/petervojtek/usb-thermometer.git
+        cd usb-thermometer
+        sudo apt-get install libusb-dev
+        make
+        popd
+    fi
+
+    # can4linux
+    if [ -d /opt/can4linux ]
+    then
+        echo "can4linux is already installed -> continuing"
+    else
+        pushd /opt
+        git clone https://gitlab.com/hjoertel/can4linux.git
+        cd can4linux/can4linux
+        make -B TARGET=GENERIC
+        echo "Create virtual can port: 'sudo /sbin/insmod /opt/can4linux/can4linux/can4linux.ko virtual=1; ls /dev/ | grep can'"
+        popd
+    fi
 
     # Software which needs to be installed manually:
     echo "Please install netbeans for c++ and  yEd manually."
