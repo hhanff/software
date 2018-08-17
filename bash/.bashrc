@@ -231,7 +231,8 @@ function my_initial_install_tools {\
          encfs \
          snap \
 	 owncloud-client \
-         acpi
+         acpi \
+         gpodder
 
     sudo apt-get purge --remove inkscape freemind okular
 
@@ -1187,3 +1188,11 @@ function my_hibernate (){
     sudo pm-hibernate
 }
 alias my_standby='pm-hibernate'
+
+function my_virtualenv (){
+    virtualenv  --python=/usr/bin/python2.7 env
+    cd env
+    source bin/activate
+    echo "Disable virtual environment with 'disable' command"
+    echo "Install modules with pip."
+}
