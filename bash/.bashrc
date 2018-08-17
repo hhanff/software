@@ -230,7 +230,8 @@ function my_initial_install_tools {\
          pdftk \
          encfs \
          snap \
-	 owncloud-client
+	 owncloud-client \
+         acpi
 
     sudo apt-get purge --remove inkscape freemind okular
 
