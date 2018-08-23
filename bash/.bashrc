@@ -232,15 +232,17 @@ function my_initial_install_tools {\
          snap \
 	 owncloud-client \
          acpi \
-         gpodder
+         gpodder \
+         vlc
 
-    sudo apt-get purge --remove inkscape freemind okular
+    sudo apt-get purge --remove inkscape freemind okular gimp
 
     sudo snap refresh
     sudo snap install \
          okular \
          inkscape \
-	 freemind
+	 freemind \
+         gimp
 
     sudo addgroup hhanff dialout
 
@@ -473,6 +475,30 @@ function extract() # Handy Extract Program.
 	    *.tar.xz)  tar -xJf $1 ;;
 	    *.xz)  xz -d $1 ;;
 	    *) echo "'$1' cannot be extracted via >extract<" ;;
+	esac
+    else
+	echo "'$1' is not a valid file"
+    fi
+}
+
+function extract_undo() # Delete files extracted from acrchive
+{
+    if [ -f $1 ] ; then
+	case $1 in
+	    *.tar.bz2) tar tf $1  | xargs -I{} rm -rfv {};;
+	    *.tar.gz) tar tf $1  | xargs -I{} rm -rfv {};;
+	    #*.bz2) bunzip2 $1  | xargs -I{} rm -rfv {};;
+	    #*.rar) unrar x $1  | xargs -I{} rm -rfv {};;
+	    #*.gz) gunzip $1  | xargs -I{} rm -rfv {};;
+	    *.tar) tar tf $1  | xargs -I{} rm -rfv {};;
+	    *.tbz2) tar tf $1  | xargs -I{} rm -rfv {};;
+	    *.tgz) tar tf $1  | xargs -I{} rm -rfv {};;
+	    *.zip) unzip -Z -1 $1 | xargs -I{} rm -rfv {};;
+	    #*.Z) uncompress $1  | xargs -I{} rm -rfv {};;
+	    #*.7z) 7z x $1  | xargs -I{} rm -rfv {};;
+	    *.tar.xz)  tar -tf $1  | xargs -I{} rm -rfv {};;
+	    #*.xz)  xz -d $1  | xargs -I{} rm -rfv {};;
+	    *) echo "'$1' cannot be processed via >extract_undo<" ;;
 	esac
     else
 	echo "'$1' is not a valid file"
