@@ -984,7 +984,7 @@ complete -f -o default -X '!*.+(ogg|OGG)' mplayer ogg123
 complete -f -o default -X '!*.pl'  perl perl5
 complete -o default -F _longopts_func configure bash
 complete -o default -F _longopts_func wget id info a2ps ls recode
-complete -F _make_targets -X '+($*|*.[cho])' make gmake pmake
+#complete -F _make_targets -X '+($*|*.[cho])' make gmake pmake
 
 
 
