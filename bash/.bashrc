@@ -287,7 +287,9 @@ function my_initial_install_tools {\
     fi
 
     # Software which needs to be installed manually:
-    echo "Please install netbeans for c++ and  yEd manually."
+    echo "Please install netbeans for c++, digikam from appimage and  yEd manually."
+    alias digikam='digikam-5.9.0-01-x86-64.appimage'
+
 
 }
 
