@@ -242,7 +242,8 @@ function my_initial_install_tools {\
          okular \
          inkscape \
 	 freemind \
-         gimp
+         gimp \
+         audacity
 
     sudo addgroup hhanff dialout
 
@@ -261,7 +262,7 @@ function my_initial_install_tools {\
     fi
 
     # Program for reading out Peters temperature sensor
-    if [ -d /opt/repo ]
+    if [ -d /opt/usb-thermometer ]
     then
        echo "software to readout usb temperature sensor is already installed -> continuing"
     else
@@ -270,6 +271,22 @@ function my_initial_install_tools {\
         cd usb-thermometer
         sudo apt-get install libusb-dev
         make
+        popd
+    fi
+
+    # Xilinx Platform Cable USB II
+    if [ -d /opt/Xilinx/usb-driver ]
+    then
+        echo "software for using Xilinx Platform Cable USB II already installed -> continuing"
+    else
+        mkdir -p /opt/Xilinx
+        sudo chown hhanff:hhanff /opt/Xilinx
+        pushd /opt/Xilinx
+        git clone git://git.zerfleddert.de/usb-driver
+        cd usb-driver
+        make
+        sudo ./setup_pcusb ../14.7/ISE_DS/ISE/
+        sudo service udev restart
         popd
     fi
 
@@ -551,6 +568,7 @@ function my_info()   # get current host related info
   echo -e "\n${RED}Battery Level : $NC" ; acpi -b
   echo -e "\n${RED}Debian Version : $NC"; cat /etc/debian_version ;
   echo -e "\n${RED}CPU : $NC"; lscpu ;
+  echo -e "\n${RED}Systemctl status:$NC"; systemctl --failed;
   echo
 }
 
