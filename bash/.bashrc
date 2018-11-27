@@ -36,7 +36,7 @@ function get_xserver ()
             XSERVER=$(who am i | awk '{print $NF}' | tr -d ')''(' )
             XSERVER=${XSERVER%%:*}
             ;;
-        aterm | rxvt)
+       aterm | rxvt)
             ;;
     esac
 }
@@ -208,7 +208,7 @@ function my_update(){
   sudo snap refresh
 }
 
-function my_initial_install_tools {\
+function my_initial_setup {\
     my_update
     sudo apt-get install \
          emacs \
@@ -233,7 +233,11 @@ function my_initial_install_tools {\
 	 owncloud-client \
          acpi \
          gpodder \
-         vlc
+         vlc \
+         cifs-utils \
+         terminator \
+         ccache \
+         nmap
 
     sudo apt-get purge --remove inkscape freemind okular gimp
 
@@ -258,6 +262,9 @@ function my_initial_install_tools {\
     else
         pushd /opt; sudo chown -R hhanff:hhanff .
         git clone https://android.googlesource.com/tools/repo
+        cd /usr/bin/
+        sudo ln -s /opt/repo/repo .
+        chmod a+x repo
         popd
     fi
 
@@ -290,24 +297,33 @@ function my_initial_install_tools {\
         popd
     fi
 
-    # can4linux
-    if [ -d /opt/can4linux ]
-    then
-        echo "can4linux is already installed -> continuing"
+    # # can4linux
+    # if [ -d /opt/can4linux ]
+    # then
+    #     echo "can4linux is already installed -> continuing"
+    # else
+    #     pushd /opt
+    #     git clone https://gitlab.com/hjoertel/can4linux.git
+    #     cd can4linux/can4linux
+    #     make -B TARGET=GENERIC
+    #     echo "Create virtual can port: 'sudo /sbin/insmod /opt/can4linux/can4linux/can4linux.ko virtual=1; ls /dev/ | grep can'"
+    #     popd
+    # fi
+
+    # ripgrep
+    if which rg >/dev/null; then
+        alias fstr++='rg -L --ignore-case --stats  --hidden'
     else
-        pushd /opt
-        git clone https://gitlab.com/hjoertel/can4linux.git
-        cd can4linux/can4linux
-        make -B TARGET=GENERIC
-        echo "Create virtual can port: 'sudo /sbin/insmod /opt/can4linux/can4linux/can4linux.ko virtual=1; ls /dev/ | grep can'"
+        pushd /tmp
+        curl -L0 https://github.com/BurntSushi/ripgrep/releases/download/0.10.0/ripgrep_0.10.0_amd64.debgit clone
+        sudo dpkg -i ripgrep_0.10.0_amd64.deb
+        echo "Installed ripgrep"
         popd
     fi
 
     # Software which needs to be installed manually:
     echo "Please install netbeans for c++, digikam from appimage and  yEd manually."
     alias digikam='digikam-5.9.0-01-x86-64.appimage'
-
-
 }
 
 function my_scan_ocr(){
@@ -447,10 +463,10 @@ function my_update_tags()
 }
 
 # Find a file with a pattern in name:
-function ff(){\
+function ff(){
     # Find files and find directories
-    find . -type f -iname '*'$*'*';\
-    find . -type d -iname '*'$*'*';
+    find -L . -type f -iname '*'$*'*';
+    find -L . -type d -iname '*'$*'*';
     #alias ff='ack -g'
 }
 
@@ -467,7 +483,9 @@ function fstr_install {\
     # > rm /dev/null
     # > mknod /dev/null c 1 3
     # > chmod 666 /dev/null
-    if which ag >/dev/null; then
+    if which rg >/dev/null; then
+       alias fstr='rg -L --ignore-case --stats  --hidden'
+    elif which ag >/dev/null; then
       alias fstr='ag --skip-vcs-ignores --unrestricted -i --stats  --hidden --depth 255 --follow'
     else
 	alias  fstr='find . -type d \( -path \*/SCCS -o -path \*/RCS -o -path \*/CVS -o -path \*/MCVS -o -path \*/.svn -o -path \*/.git -o -path \*/.hg -o -path \*/.bzr -o -path \*/_MTN -o -path \*/_darcs -o -path \*/\{arch\} \) -prune -o \! -type d \( -name .\#\* -o -name \*.o -o -name \*\~ -o -name \*.bin -o -name \*.lbin -o -name \*.so -o -name \*.a -o -name \*.ln -o -name \*.blg -o -name \*.bbl -o -name \*.elc -o -name \*.lof -o -name \*.glo -o -name \*.idx -o -name \*.lot -o -name \*.fmt -o -name \*.tfm -o -name \*.class -o -name \*.fas -o -name \*.lib -o -name \*.mem -o -name \*.x86f -o -name \*.sparcf -o -name \*.dfsl -o -name \*.pfsl -o -name \*.d64fsl -o -name \*.p64fsl -o -name \*.lx64fsl -o -name \*.lx32fsl -o -name \*.dx64fsl -o -name \*.dx32fsl -o -name \*.fx64fsl -o -name \*.fx32fsl -o -name \*.sx64fsl -o -name \*.sx32fsl -o -name \*.wx64fsl -o -name \*.wx32fsl -o -name \*.fasl -o -name \*.ufsl -o -name \*.fsl -o -name \*.dxl -o -name \*.lo -o -name \*.la -o -name \*.gmo -o -name \*.mo -o -name \*.toc -o -name \*.aux -o -name \*.cp -o -name \*.fn -o -name \*.ky -o -name \*.pg -o -name \*.tp -o -name \*.vr -o -name \*.cps -o -name \*.fns -o -name \*.kys -o -name \*.pgs -o -name \*.tps -o -name \*.vrs -o -name \*.pyc -o -name \*.pyo \) -prune -o  -type f \( -name \*.cc -o -name \*.cxx -o -name \*.cpp -o -name \*.C -o -name \*.CC -o -name \*.c\+\+ \) | xargs grep  -nH -e '
@@ -478,7 +496,7 @@ fstr_install;
 
 function extract() # Handy Extract Program.
 {
-    if [ -f $1 ] ; then
+    if [ -f "$1" ] ; then
 	case $1 in
 	    *.tar.bz2) tar xvjf $1 ;;
 	    *.tar.gz) tar xvzf $1 ;;
@@ -838,6 +856,7 @@ function my_impact { \
 
 function my_ise { \
     xilinx_set_preconditions; \
+    export LD_PRELOAD=/opt/Xilinx/usb-driver/libusb-driver.so
     source "/opt/Xilinx/"$1"/ISE_DS/settings64.sh"; \
     "/opt/Xilinx/"$1"/ISE_DS/ISE/bin/lin64/ise"; }
 
@@ -1098,17 +1117,14 @@ export SYSTEMC="/usr/local/systemc-2.2"
 # sudo  ln -s /usr/bin/ccache /opt/ccache/bin/g++
 # sudo  ln -s /usr/bin/ccache /opt/ccache/bin/gcc
 # chown -R hhanff:hhanff /opt/ccache
-# Den folgenden Befehl ausführen wenn bei icemon keine Jobs rausgehen.
-# cd; icecc --build-native
-# Die Datei noch in icemon-build-native.tar.gz umbenennen.
+# If the following archive is missing:
+# cd; sudo icecc --build-native
+# mv *.tar.gz ~/icemon-build-native.tar.gz; sudo chown hhanff:hhanff ~/icemon-build-native.tar.gz
 
 my_icecc_ccache_enable ()
 {
 
- # If the following archive is missing:
- # sudo icecc --build-native
- # mv *.tar.gz ~/icemon-build-native.tar.gz; sudo chown hhanff:hhanff ~/icemon-build-native.tar.gz
- export ICECC_VERSION='~/icemon-build-native.tar.gz'
+ #export ICECC_VERSION='~/icemon-build-native.tar.gz'
  export PATH=/usr/lib/icecc/bin:$PATH
  export CXX='/usr/bin/g++'
  export CC='/usr/bin/gcc'
@@ -1194,12 +1210,14 @@ my_ebookreader ()
     wine ~/.wine/drive_c/Program\ Files\ \(x86\)/Adobe/Adobe\ Digital\ Editions/digitaleditions.exe
 }
 
-export PATH=/opt:$PATH
-export PATH=/opt/xmind/XMind_amd64/:$PATH
+export PATH=$PATH:/opt/
+export PATH=$PATH:/opt/xmind/XMind_amd64/
 
 function my_ros_env (){
     # unalias pwd;
+    source /usr/share/gazebo-7/setup.sh
     source /opt/ros/kinetic/setup.bash
+    source $HOME/catkin_ws/devel/setup.bash
 }
 #my_ros_env
 
@@ -1218,8 +1236,6 @@ function my_shutdown_remote () {
     ssh -t ailor-control "/bin/systemctl halt"
     }
 
-export PATH=$PATH:/opt/gcc-arm-none-eabi-5_4-2016q3/bin/
-
 if [ -f ~/.bashrc_secret ]; then
     source ~/.bashrc_secret
 fi
@@ -1228,6 +1244,11 @@ export PATH=$PATH:/opt/repo/
 
 function my_room_temperature (){
     while true; do sudo /opt/usb-thermometer/pcsensor; sleep 10; done
+}
+
+function my_network_monitor (){
+    # Default: enps30
+    speedometer -l  -r  ${1:-enp3s0} -t  ${1:-enp3s0} -m $(( 1024 * 1024 * 3 / 2  ))
 }
 
 function my_hibernate (){
