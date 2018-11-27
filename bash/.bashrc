@@ -235,13 +235,16 @@ function my_initial_install_tools {\
 	 owncloud-client \
          acpi \
          gpodder \
-         apt-file \
+         vlc \
+	 apt-file \
          texlive-lang-german \
          texlive-fonts-extra \
          xournal
 
     sudo apt-file update
     sudo apt-get purge --remove inkscape freemind okular
+
+    sudo apt-get purge --remove inkscape freemind okular gimp
 
     sudo pip install --user \
          cpplint
@@ -251,7 +254,8 @@ function my_initial_install_tools {\
          okular \
          inkscape \
 	 freemind \
-         gimp
+         gimp \
+         audacity
 
     sudo addgroup hhanff dialout
 
@@ -271,7 +275,7 @@ function my_initial_install_tools {\
     fi
 
     # Program for reading out Peters temperature sensor
-    if [ -d /opt/repo ]
+    if [ -d /opt/usb-thermometer ]
     then
        echo "software to readout usb temperature sensor is already installed -> continuing"
     else
@@ -280,6 +284,22 @@ function my_initial_install_tools {\
         cd usb-thermometer
         sudo apt-get install libusb-dev
         make
+        popd
+    fi
+
+    # Xilinx Platform Cable USB II
+    if [ -d /opt/Xilinx/usb-driver ]
+    then
+        echo "software for using Xilinx Platform Cable USB II already installed -> continuing"
+    else
+        mkdir -p /opt/Xilinx
+        sudo chown hhanff:hhanff /opt/Xilinx
+        pushd /opt/Xilinx
+        git clone git://git.zerfleddert.de/usb-driver
+        cd usb-driver
+        make
+        sudo ./setup_pcusb ../14.7/ISE_DS/ISE/
+        sudo service udev restart
         popd
     fi
 
@@ -297,7 +317,9 @@ function my_initial_install_tools {\
     fi
 
     # Software which needs to be installed manually:
-    echo "Please install netbeans for c++ and  yEd manually."
+    echo "Please install netbeans for c++, digikam from appimage and  yEd manually."
+    alias digikam='digikam-5.9.0-01-x86-64.appimage'
+
 
     export EMACS_VERSION=26.1
     sudo apt-get install libxpm-dev
@@ -503,6 +525,30 @@ function extract() # Handy Extract Program.
     fi
 }
 
+function extract_undo() # Delete files extracted from acrchive
+{
+    if [ -f $1 ] ; then
+	case $1 in
+	    *.tar.bz2) tar tf $1  | xargs -I{} rm -rfv {};;
+	    *.tar.gz) tar tf $1  | xargs -I{} rm -rfv {};;
+	    #*.bz2) bunzip2 $1  | xargs -I{} rm -rfv {};;
+	    #*.rar) unrar x $1  | xargs -I{} rm -rfv {};;
+	    #*.gz) gunzip $1  | xargs -I{} rm -rfv {};;
+	    *.tar) tar tf $1  | xargs -I{} rm -rfv {};;
+	    *.tbz2) tar tf $1  | xargs -I{} rm -rfv {};;
+	    *.tgz) tar tf $1  | xargs -I{} rm -rfv {};;
+	    *.zip) unzip -Z -1 $1 | xargs -I{} rm -rfv {};;
+	    #*.Z) uncompress $1  | xargs -I{} rm -rfv {};;
+	    #*.7z) 7z x $1  | xargs -I{} rm -rfv {};;
+	    *.tar.xz)  tar -tf $1  | xargs -I{} rm -rfv {};;
+	    #*.xz)  xz -d $1  | xargs -I{} rm -rfv {};;
+	    *) echo "'$1' cannot be processed via >extract_undo<" ;;
+	esac
+    else
+	echo "'$1' is not a valid file"
+    fi
+}
+
 # ARCHIVE COMPRESS {{{
 compress() {
     if [[ -n "$1" ]]; then
@@ -547,6 +593,7 @@ function my_info()   # get current host related info
   echo -e "\n${RED}Battery Level : $NC" ; acpi -b
   echo -e "\n${RED}Debian Version : $NC"; cat /etc/debian_version ;
   echo -e "\n${RED}CPU : $NC"; lscpu ;
+  echo -e "\n${RED}Systemctl status:$NC"; systemctl --failed;
   echo
 }
 
