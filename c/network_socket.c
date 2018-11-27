@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[]){
   static char buffer[256];
-  
+
   int sock_fd, err, length, port;
   struct sockaddr_in server_addr;
   fd_set input_fdset;
@@ -47,7 +47,7 @@ int main(int argc, char *argv[]){
   if ( err = -1){
     perror("connect: connect() failed");
   }
-  
+
   while(1){
     FD_ZERO(&input_fdset);
     FD_SET(STDIN_FILENO, &input_fdset);
@@ -62,7 +62,7 @@ int main(int argc, char *argv[]){
       }
       length = strlen(buffer);
       send(sock_fd, buffer, length, 0);
-    }         
+    }
     else{
       length = recv(sock_fd, buffer, 256, 0);
       if ( length == 0){
@@ -72,8 +72,8 @@ int main(int argc, char *argv[]){
       write(STDOUT_FILENO, buffer, length);
     }
   }
-  
+
   close(sock_fd);
-  return 0;  
-                         
+  return 0;
+
 }

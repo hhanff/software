@@ -212,6 +212,7 @@ function my_initial_install_tools {\
     my_update
     sudo apt-get install \
          emacs \
+         htop \
          git \
          git-gui \
          subversion \
@@ -227,26 +228,37 @@ function my_initial_install_tools {\
          mplayer \
          qrencode \
          clang \
+	 clang-tidy \
          pdftk \
          encfs \
          snap \
 	 owncloud-client \
          acpi \
-         gpodder
+         gpodder \
+         apt-file \
+         texlive-lang-german \
+         texlive-fonts-extra \
+         xournal
 
+    sudo apt-file update
     sudo apt-get purge --remove inkscape freemind okular
+
+    sudo pip install --user \
+         cpplint
 
     sudo snap refresh
     sudo snap install \
          okular \
          inkscape \
-	 freemind
+	 freemind \
+         gimp
 
     sudo addgroup hhanff dialout
 
     # Make git config settings
     git config --global user.name "Hendrik Hanff"
     git config --global user.email "hendrik.hanff@dfki.de"
+    git config --global credential.helper cache
 
     # Instal repo
     if [ -d /opt/repo ]
@@ -286,6 +298,18 @@ function my_initial_install_tools {\
 
     # Software which needs to be installed manually:
     echo "Please install netbeans for c++ and  yEd manually."
+
+    export EMACS_VERSION=26.1
+    sudo apt-get install libxpm-dev
+    pushd /opt; mkdir emacs; cd emacs
+    wget https://ftp.gnu.org/gnu/emacs/emacs-"26.1".tar.xz
+    tar -xf emacs-26.1.tar.xz
+    cd emacs-26.1
+    ./autogen.sh
+    ./configure
+    sudo update-alternatives --install "/usr/bin/emacs" "emacs" "/opt/emacs/emacs-26.1/src/emacs" 1000
+    make -j
+    popd
 
 }
 
@@ -929,13 +953,16 @@ alias my_pwd='pwd | xsel && pwd'
 
 alias o='xdg-open'
 
-iso-8859-1()
+my_convert_to_iso-8859-1()
 {
     # Diese Funktion wurde für die LIMES WP Docunebtation eingefügt.
     # Manchmal ist eine Datei so zerschossen, dass man den Konflikt händisch
     # mit diffuse auflösen muss. Manchmal hilft es aber auch mit iconv zu
     # arbeiten.
-    iconv  -f UTF8 -t ISO-8859-1 $1>$1.iso-8859-1
+    rm -rf $1.iso-8859-1
+    tr -cd '\11\12\15\40-\176' < $1 > $1.tmp
+    iconv  -f UTF8 -t ISO-8859-1 $1.tmp>$1.iso-8859-1
+    rm -rf $1.tmp
 }
 
 # Auto completion stuff
@@ -1154,11 +1181,14 @@ export PATH=/opt/xmind/XMind_amd64/:$PATH
 function my_ros_env (){
     # unalias pwd;
     source /opt/ros/kinetic/setup.bash
+    source /usr/share/gazebo-7/setup.sh
+    source $HOME/catkin_ws/devel/setup.bash
 }
+
 #my_ros_env
 
 function my_start_terminalserver (){
-    if [ "$HOSTNAME" == "hhanff-lap-u" ]; then
+    if [ "$HOSTNAME" == "hhanff2-lap-u" ]; then
         rdesktop -u $USER -d DFKI -k de -a 16 -f -g 1350x700 marin.dfki.uni-bremen.de;
     else
         rdesktop -u $USER -d DFKI -k de -a 16 -f -g 1900x1020 marin.dfki.uni-bremen.de;
@@ -1196,3 +1226,5 @@ function my_virtualenv (){
     echo "Disable virtual environment with 'disable' command"
     echo "Install modules with pip."
 }
+
+alias locate='locate --all --basename --ignore-case'
