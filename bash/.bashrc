@@ -36,7 +36,7 @@ function get_xserver ()
             XSERVER=$(who am i | awk '{print $NF}' | tr -d ')''(' )
             XSERVER=${XSERVER%%:*}
             ;;
-        aterm | rxvt)
+       aterm | rxvt)
             ;;
     esac
 }
@@ -60,8 +60,6 @@ set -o ignoreeof
 set -o nounset
 #set -o xtrace        # Useful for debuging
 set completion-ignore-case on
-
-
 #set bell-style visible
 #set prefer-visible-bell on
 
@@ -114,18 +112,8 @@ NC='\e[0m'              # No Color
 #---------------
 # Shell Prompt
 #---------------
-
-#if [[ "${DISPLAY#$HOST}" != ":0.0" &&  "${DISPLAY}" != ":0" ]]; then
-    HILIT=${red}   # remote machine: prompt will be partly red
-    HILIT1=${red}   # remote machine: prompt will be partly red
-#else
-    HILIT2=${CYAN}  # local machine: prompt will be partly cyan
-#fi
-
-#  --> Replace instances of \W with \w in prompt functions below
-#+ --> to get display of full path name.
-    #  curl -o ~/.git-prompt.sh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
-    # echo "source ~/.git-prompt.sh" >> ~/.bash_profile; source ~/.bash_profile
+#  curl -o ~/.git-prompt.sh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+# echo "source ~/.git-prompt.sh" >> ~/.bash_profile; source ~/.bash_profile
 function fastprompt() {
    case $TERM in
         *xterm | rxvt | eterm-*)
@@ -140,10 +128,8 @@ function fastprompt() {
              # set_title='\[\e]0;\u@\h: \w\a\]';;
              # export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
     esac
-
 }
 fastprompt
-
 
 
 #===============================================================
@@ -153,28 +139,6 @@ fastprompt
 #-------------------------------------------------------------
 # Personal Funtions
 #-------------------------------------------------------------
-function cpstat()
-{
-      local pid="${1:-$(pgrep -xn cp)}" src dst
-  [[ "$pid" ]] || return
-  while [[ -f "/proc/$pid/fd/3" ]]; do
-    read src dst < <(stat -L --printf '%s ' "/proc/$pid/fd/"{3,4})
-    (( src )) || break
-    printf 'cp %d%%\r' $((dst*100/src))
-    sleep 1
-  done
-  echo
-
-}
-# Set focus to a window after the command execution has finished
-function focus() {
-  winID=`xprop -root |awk '/_NET_ACTIVE_WINDOW/ {print $5; exit;}'`
-  $@;
-  #wmctrl -a -i $winID;
-  wmctrl -a 'sim';
-
-}
-
 function my_umount_cifs (){
     # Unmount hanging cifs mounted filesystems
     sudo umount -a -t cifs -l
@@ -193,10 +157,6 @@ function my_find_hosts_on_network (){
     nmap  -sn $IP;
 }
 
-function my_ssh_dfki () {
-  ssh hhanff@ricssh.hb.dfki.de -p 22222 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -L 13021:hhanff-u.local:22 -f sleep 10 && \
-  ssh localhost -p 13021 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no  -XC
-}
 
 function my_update(){
   sudo apt-get update && \
@@ -239,7 +199,16 @@ function my_initial_install_tools {\
 	 apt-file \
          texlive-lang-german \
          texlive-fonts-extra \
-         xournal
+         cifs-utils \
+         terminator \
+         ccache \
+         nmap \
+         xournal \
+         multitail \
+         icemon \
+         xsel \
+         speedometer \
+         sendmail
 
     sudo apt-file update
     sudo apt-get purge --remove inkscape freemind okular
@@ -271,6 +240,9 @@ function my_initial_install_tools {\
     else
         pushd /opt; sudo chown -R hhanff:hhanff .
         git clone https://android.googlesource.com/tools/repo
+        cd /usr/bin/
+        sudo ln -s /opt/repo/repo .
+        chmod a+x repo
         popd
     fi
 
@@ -303,17 +275,27 @@ function my_initial_install_tools {\
         popd
     fi
 
-    # can4linux
-    if [ -d /opt/can4linux ]
-    then
-        echo "can4linux is already installed -> continuing"
+    # # can4linux
+    # if [ -d /opt/can4linux ]
+    # then
+    #     echo "can4linux is already installed -> continuing"
+    # else
+    #     pushd /opt
+    #     git clone https://gitlab.com/hjoertel/can4linux.git
+    #     cd can4linux/can4linux
+    #     make -B TARGET=GENERIC
+    #     echo "Create virtual can port: 'sudo /sbin/insmod /opt/can4linux/can4linux/can4linux.ko virtual=1; ls /dev/ | grep can'"
+    #     popd
+    # fi
+
+    # ripgrep
+    if which rg >/dev/null; then
+        alias fstr++='rg -L --ignore-case --stats  --hidden'
     else
-        pushd /opt
-        git clone https://gitlab.com/hjoertel/can4linux.git
-        cd can4linux/can4linux
-        make -B TARGET=GENERIC
-        echo "Create virtual can port: 'sudo /sbin/insmod /opt/can4linux/can4linux/can4linux.ko virtual=1; ls /dev/ | grep can'"
-        popd
+        pushd /tmp
+        wget https://github.com/BurntSushi/ripgrep/releases/download/0.10.0/ripgrep_0.10.0_amd64.deb
+        sudo dpkg -i ripgrep_0.10.0_amd64.deb
+        echo "Installed ripgrep"
     fi
 
     # Software which needs to be installed manually:
@@ -335,51 +317,19 @@ function my_initial_install_tools {\
 
 }
 
-function my_scan_ocr(){
-  /bin/rm -rf /tmp/scan_ocr.p*
-  /bin/rm -rf /tmp/scan_ocr.tiff
-  /bin/rm -rf /tmp/out.html
-  /bin/rm -rf ./scan_ocr.p*
-  #/bin/rm -rf /tmp/scan_ocr.tiff
-  # scanimage -d epson2  --resolution=600 > /tmp/scan_ocr.tiff
-  # scanimage -d epson2 --resolution=300 -p > /tmp/scan_ocr.pnm
-  scanimage -d epson2 -x 215 -y 297 --resolution=300 -l 0 -t 0 --mode color -p > /tmp/scan_ocr.pnm
-  tesseract /tmp/scan_ocr.pnm  /tmp/scan_ocr -l deu hocr
-  #sudo apt-get install exactimage
-  hocr2pdf -i /tmp/scan_ocr.pnm -o scan_ocr.pdf < /tmp/scan_ocr.html
-#  pnmtops /tmp/scan_ocr.pnm > /tmp/scan_ocr.ps
-#  ps2pdf /tmp/scan_ocr.ps
-}
 
-function my_scan_hq(){
-  /bin/rm -rf /tmp/scan_hq.p*
-  /bin/rm -rf ./scan_hq.p*
-  scanimage -d epson2  -x 215 -y 297 -l 0 -t 0 --resolution=600 -p > /tmp/scan_hq.pnm
-  #scanimage -d epson2  --resolution=600 --mode color -p > /tmp/scan_hq.pnm
-  pnmtops /tmp/scan_hq.pnm > /tmp/scan_hq.ps
-  ps2pdf /tmp/scan_hq.ps
- # mv /tmp/scan_hq.pdf scan_hq2.pdf
-}
-function my_scan_lq(){
-    /bin/rm -rf /tmp/scan_lq.p*
-    /bin/rm -rf ./scan_lq.p*
-    scanimage -d epson2 -x 215 -y 297 -l 0 -t 0 --resolution=300 -p > /tmp/scan_lq.pnm
-    #scanimage -d epson2  --resolution=600 --mode color -p > /tmp/scan_lq.pnm
-    pnmtops /tmp/scan_lq.pnm > /tmp/scan_lq.ps
-    pnmtopng /tmp/scan_lq.pnm > ./scan_lq.png
-    ps2pdf /tmp/scan_lq.ps
-#    mv /tmp/scan_lq.pdf .
-}
 function my_can_up()
 {
 #  sudo /sbin/ip link set can0 up type can bitrate 500000 restart-ms 2000
   sudo /sbin/ip link set can0 up type can bitrate 1000000 restart-ms 2000
 }
 
+
 function my_can_down()
 {
   sudo /sbin/ip link set can0 down
 }
+
 
 function my_sshfs()
 {
@@ -389,41 +339,23 @@ function my_sshfs()
   echo "Aushängen erfolgt mit umount"
 }
 
-function my_scp()
-{
-  echo "Eine Datei nach Host kopieren:"
-  echo "scp VHDL.tgz hhanff@spielmeyerhanff.dyndns.org:/home/hhanff/sda1/backup/home/hhanff/ebooks/"
-  echo ""
-  echo "Eine Datei von Host kopieren:"
-  echo "scp root@spielmeyerhanff.dyndns.org:/home/hhanff/sda1/backup/home/hhanff/ebooks/VHDL.tgz /home/DFKI/hhanff/ebooks/"
-}
-
-function my_tgz()
-{
-tar -czvf $1.tgz $1
-}
 
 function cg()
-  {
+{
     rsync -rv $1 $2 --progress
     echo Done
-  }
+}
 
 
+function my_svn_diff () { svn diff  -x -wp $@ | cdiff |less -R; }
 
-function svndiff () { svn diff  -x -wp $@ | cdiff |less -R; }
 
 #Open a file in the current running emacs
 function ec
 {
   emacsclient --no-wait "$@"
 }
-# The eco function requires a ecns bash script in /usr/bin containing the
-# following two lines:
-# sudo su echo '#!/bin/bash' > /usr/bin/ecns echo 'emacs
-# -nw -fs --no-desktop -q -l ~/.emacs_eco.el "$1";' >> /usr/bin/ecns chmod a+x
-# /usr/bin/ecns
-function eco { emacsclient  -nw -c  -a "ecns" $1; }
+
 
 function my_emacs_config_generate(){
     \rm -rf /tmp/.emacs
@@ -441,6 +373,8 @@ function my_emacs_config_generate(){
     echo "(set-terminal-coding-system 'utf-8)  ; Set coding system to utf-8 in terminal mode" >> /tmp/.emacs
 }
 my_emacs_config_generate
+
+
 function e { emacs -l /tmp/.emacs -nw --quick $1; }
 
 
@@ -451,10 +385,6 @@ function _exit()	# function to run upon exit of shell
 trap _exit EXIT
 
 #-------------------------------------------------------------
-# find pattern in a set of files and highlight them:
-function rgrep(){
-find . \( -path \*/SCCS -o -path \*/RCS -o -path \*/CVS -o -path \*/MCVS -o -path \*/.svn -o -path \*/.git -o -path \*/.hg -o -path \*/.bzr -o -path \*/_MTN -o -path \*/_darcs -o -path \*/\{arch\} \) -prune -o  -type f \( -name \*.c \) -print0 | xargs -0 -e grep  -nH -e $1
-}
 
 # This function updated my TAGS file inside the proj folder
 function my_update_tags()
@@ -472,10 +402,10 @@ function my_update_tags()
 }
 
 # Find a file with a pattern in name:
-function ff(){\
+function ff(){
     # Find files and find directories
-    find . -type f -iname '*'$*'*';\
-    find . -type d -iname '*'$*'*';
+    find -L . -type f -iname '*'$*'*';
+    find -L . -type d -iname '*'$*'*';
     #alias ff='ack -g'
 }
 
@@ -492,18 +422,20 @@ function fstr_install {\
     # > rm /dev/null
     # > mknod /dev/null c 1 3
     # > chmod 666 /dev/null
-    if which ag >/dev/null; then
+    if which rg >/dev/null; then
+       alias fstr='rg -L --ignore-case --stats  --hidden'
+    elif which ag >/dev/null; then
       alias fstr='ag --skip-vcs-ignores --unrestricted -i --stats  --hidden --depth 255 --follow'
     else
-	alias  fstr='find . -type d \( -path \*/SCCS -o -path \*/RCS -o -path \*/CVS -o -path \*/MCVS -o -path \*/.svn -o -path \*/.git -o -path \*/.hg -o -path \*/.bzr -o -path \*/_MTN -o -path \*/_darcs -o -path \*/\{arch\} \) -prune -o \! -type d \( -name .\#\* -o -name \*.o -o -name \*\~ -o -name \*.bin -o -name \*.lbin -o -name \*.so -o -name \*.a -o -name \*.ln -o -name \*.blg -o -name \*.bbl -o -name \*.elc -o -name \*.lof -o -name \*.glo -o -name \*.idx -o -name \*.lot -o -name \*.fmt -o -name \*.tfm -o -name \*.class -o -name \*.fas -o -name \*.lib -o -name \*.mem -o -name \*.x86f -o -name \*.sparcf -o -name \*.dfsl -o -name \*.pfsl -o -name \*.d64fsl -o -name \*.p64fsl -o -name \*.lx64fsl -o -name \*.lx32fsl -o -name \*.dx64fsl -o -name \*.dx32fsl -o -name \*.fx64fsl -o -name \*.fx32fsl -o -name \*.sx64fsl -o -name \*.sx32fsl -o -name \*.wx64fsl -o -name \*.wx32fsl -o -name \*.fasl -o -name \*.ufsl -o -name \*.fsl -o -name \*.dxl -o -name \*.lo -o -name \*.la -o -name \*.gmo -o -name \*.mo -o -name \*.toc -o -name \*.aux -o -name \*.cp -o -name \*.fn -o -name \*.ky -o -name \*.pg -o -name \*.tp -o -name \*.vr -o -name \*.cps -o -name \*.fns -o -name \*.kys -o -name \*.pgs -o -name \*.tps -o -name \*.vrs -o -name \*.pyc -o -name \*.pyo \) -prune -o  -type f \( -name \*.cc -o -name \*.cxx -o -name \*.cpp -o -name \*.C -o -name \*.CC -o -name \*.c\+\+ \) | xargs grep  -nH -e '
-	# alias fstr='grep -r "192.168.1.5" /etc/'
+        # find pattern in a set of files and highlight them:
+        alias fstr='find . \( -path \*/SCCS -o -path \*/RCS -o -path \*/CVS -o -path \*/MCVS -o -path \*/.svn -o -path \*/.git -o -path \*/.hg -o -path \*/.bzr -o -path \*/_MTN -o -path \*/_darcs -o -path \*/\{arch\} \) -prune -o  -type f \( -name \*.c \) -print0 | xargs -0 -e grep  -nH -e $1'
     fi
 }
 fstr_install;
 
 function extract() # Handy Extract Program.
 {
-    if [ -f $1 ] ; then
+    if [ -f "$1" ] ; then
 	case $1 in
 	    *.tar.bz2) tar xvjf $1 ;;
 	    *.tar.gz) tar xvzf $1 ;;
@@ -550,7 +482,7 @@ function extract_undo() # Delete files extracted from acrchive
 }
 
 # ARCHIVE COMPRESS {{{
-compress() {
+my_compress() {
     if [[ -n "$1" ]]; then
 	FILE=$1
 	case $FILE in
@@ -565,15 +497,11 @@ compress() {
 	echo "usage: compress <foo.tar.gz> ./foo ./bar"
     fi
 }
+alias my_pack=my_compress
 
 #-------------------------------------------------------------
 # Process/system related functions:
 #-----------------------------------
-
-#Display process tree
-function pp()
-{ my_ps f | awk '!/awk/ && $0~var' var=${1:-".*"} ; }
-
 function my_ip() # Get IP adresses.
 {
 MY_IP=$(/sbin/ifconfig eth1 | awk '/inet Adresse/ { print $2 } ' | sed -e s/Adresse://)
@@ -646,9 +574,9 @@ function my_mail_work() {
 function my_mail_home() {
 	echo "$*" | mail -s "$*" hendrik.hanff@googlemail.com;
 }
-#-------------------
-# Personnal Aliases
-#---------------------
+
+
+# Personnal Aliases for quickly accessing directories
 alias TRANSTERRA='pushd /mnt/research/projects/ongoing/TransTerrA_15004/'
 alias DAEDALUS='pushd /mnt/research/projects/completed/DAEDALUS_15078/'
 alias LIMES='pushd /mnt/research/projects/completed/LIMES/'
@@ -720,7 +648,7 @@ alias ttyS1='sudo minicom -o ttyS1'
 alias dush="du -xsm .[!.]* *  | sort -n | awk '{ printf(\"%4s MB ./\",\$1) ; for (i=1;i<=NF;i++) { if (i>1) printf(\"%s \",\$i) } ; printf(\"\n\") }' | tail "
 alias rmsvn='find . -type d -name '*.svn*' -print0 | xargs -0 rm -rdf && la -R | grep svn'
 
-alias m="rm -rf /tmp/playlist.tmp &&  find ~/mp3  -name *.mp3 -not -name 'Hörbücher' > /tmp/playlist.tmp && mplayer -playlist /tmp/playlist.tmp -shuffle -loop 0 | grep Playing"
+alias m="rm -rf /tmp/playlist.tmp &&  find ~/Musik -name *.mp3 -not -name 'Hörbücher' > /tmp/playlist.tmp && mplayer -playlist /tmp/playlist.tmp -shuffle -loop 0 | grep Playing"
 
 alias my_backup="~/Dropbox/src/scripts/my_backup.sh"
 
@@ -771,7 +699,7 @@ function del () {
     fi
 }
 
-function my_tea_timer { sleep $1 && xmessage -center "Tea is ready!"; }
+function my_tea_timer { sleep $1 && xmessage -center "Timer expired!"; }
 
 function my_ccleaner { sudo sh -c "sync; echo 3 > /proc/sys/vm/drop_caches"; }
 
@@ -863,6 +791,7 @@ function my_impact { \
 
 function my_ise { \
     xilinx_set_preconditions; \
+    export LD_PRELOAD=/opt/Xilinx/usb-driver/libusb-driver.so
     source "/opt/Xilinx/"$1"/ISE_DS/settings64.sh"; \
     "/opt/Xilinx/"$1"/ISE_DS/ISE/bin/lin64/ise"; }
 
@@ -916,16 +845,6 @@ function my_timestamp_converter { \
     echo $((0x$TIMESTAMP))|awk '{print strftime("%c",$1)}';
 }
 
-function my_test_ack_installed {\
-    if which ack-grep >/dev/null; then
-      echo "ack exists"  >/dev/null
-    else
-      echo "Please provide sudo password to install missing tool ack-grep"
-      sudo apt-get install ack-grep;
-    fi
-}
-my_test_ack_installed;
-
 function my_generate_passwd { \
  cat /dev/urandom| tr -dc 'a-zA-Z0-9-_!@#$%^&*()_+{}|:<>?=' | fold -w 12 | head -n 4
  read TRASH;
@@ -933,7 +852,7 @@ function my_generate_passwd { \
 }
 
 # When using sudo, use alias expansion (otherwise sudo ignores your aliases)
-# This is for making la, lk... visible for sudo
+# This is  ##äm   for making la, lk... visible for sudo
 alias sudo='sudo '
 
 # Radio über die Konsole
@@ -944,7 +863,6 @@ alias byte='/usr/bin/mplayer -nocache -audiofile-cache 64 -prefer-ipv4 -playlist
 alias sv='/usr/bin/mplayer -nocache -audiofile-cache 64 -playlist "http://sverigesradio.se/topsy/direkt/132-hi-mp3.m3u"'
 alias flux='/usr/bin/mplayer -nocache -audiofile-cache 64 -prefer-ipv4 $(GET http://www.fluxfm.de/wp-content/themes/motorfm/fluxfm.m3u |head -1)'
 
-#alias rm='echo "Use del instead!"'
 alias cp='cp -i'
 alias mv='mv -i'
 # -> Prevents accidentally clobbering files.
@@ -957,12 +875,6 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 
 alias path='echo -e ${PATH//:/\\n}'
-alias print='/usr/bin/lp -o nobanner -d $LPDEST'
-      # Assumes LPDEST is defined
-alias pjet='enscript -h -G -fCourier9 -d $LPDEST'
-      # Pretty-print using enscript
-alias background='xv -root -quit -max -rmode 5'
-      # Put a picture in the background
 
 alias du='du -kh'
 alias df='df -kTh'
@@ -991,7 +903,6 @@ alias gl='git log --graph --pretty="format:%C(yellow)%h%Cgreen%d%Creset %s %C(cy
 # Find a file with a pattern in name:
 alias grep='grep --color=auto'
 
-#alias more='less'
 export PAGER='less'
 export LESSCHARSET='latin1'
 
@@ -1060,8 +971,6 @@ complete -o default -F _longopts_func configure bash
 complete -o default -F _longopts_func wget id info a2ps ls recode
 #complete -F _make_targets -X '+($*|*.[cho])' make gmake pmake
 
-
-
 # This is a 'universal' completion function - it works when commands have
 # a so-called 'long options' mode , ie: 'ls --all' instead of 'ls -a'
 
@@ -1093,25 +1002,11 @@ fi
 # Local Variables:
 PLATFORM=lin
 
-# PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
-#PROMPT_COMMAND='echo -ne "\033]0;${PWD/$HOME/~}\007"
-#export PROMPT_COMMAND="history -a;history -r;$PROMPT_COMMAND"'
-
-#---------------
-# Path
-#---------------
 export FIGNORE=.svn
-#export SVN_EDITOR="/usr/bin/nano -r 79"
 export EDITOR='e'
 export SVN_EDITOR='emacsclient -nw -c -a "ecns" $1'
 export GIT_EDITOR='emacsclient -nw -c -a "ecns" $1'
 export SYSTEMC="/usr/local/systemc-2.2"
-#export VIMRUNTIME=~/.vimruntime
-
-
-# JAVA_HOME="/usr/java/jre1.6.0_29"
-# export JAVA_HOME
-#export XILINXD_LICENSE_FILE=/opt/FLEXlm/xilinx.lic <-- This is the location of your license file. you should have put this file in this place before
 
 # icecc and ccache related variables
 # sudo apt-get install icecc
@@ -1126,26 +1021,54 @@ export SYSTEMC="/usr/local/systemc-2.2"
 # sudo  ln -s /usr/bin/ccache /opt/ccache/bin/g++
 # sudo  ln -s /usr/bin/ccache /opt/ccache/bin/gcc
 # chown -R hhanff:hhanff /opt/ccache
-# Den folgenden Befehl ausführen wenn bei icemon keine Jobs rausgehen.
-# cd; icecc --build-native
-# Die Datei noch in icemon-build-native.tar.gz umbenennen.
+# If the following archive is missing:
+# cd; sudo icecc --build-native
+# mv *.tar.gz ~/icemon-build-native.tar.gz; sudo chown hhanff:hhanff ~/icemon-build-native.tar.gz
 
-my_icecc_ccache_enable ()
+my_icecc_enable ()
 {
 
- # If the following archive is missing:
- # sudo icecc --build-native
- # mv *.tar.gz ~/icemon-build-native.tar.gz; sudo chown hhanff:hhanff ~/icemon-build-native.tar.gz
- export ICECC_VERSION='~/icemon-build-native.tar.gz'
- export PATH=/usr/lib/icecc/bin:$PATH
- export CXX='/usr/bin/g++'
- export CC='/usr/bin/gcc'
+ #export ICECC_VERSION='~/icemon-build-native.tar.gz'
+ # export CXX="/usr/lib/icecc/bin/c++"
+ # export CC="/usr/lib/icecc/bin/cc"
+ # export CXX=icecc
+ # export CC=icecc
 
- export PATH=/opt/ccache/bin:$PATH
- #iceccd -d
- #sudo service icecc-scheduler start
- export CCACHE_PREFIX=icecc
+ # Add icecc to  PATH when using only icecc.
+ export PATH=/usr/lib/icecc/bin:$PATH
+
 }
+
+
+my_ccache_enable ()
+{
+
+    #export ICECC_VERSION='~/icemon-build-native.tar.gz'
+    # export CXX="/usr/lib/icecc/bin/c++"
+    # export CC="/usr/lib/icecc/bin/cc"
+    # export CXX=icecc
+    # export CC=icecc
+
+    # Add icecc to  PATH when using only icecc.
+    # export PATH=/usr/lib/icecc/bin:$PATH
+
+    # Add only ccache to PATH when using icecc with ccache
+    export PATH=/opt/ccache/bin:$PATH
+    #iceccd -d
+    #sudo service icecc-scheduler start
+    export CCACHE_PREFIX=icecc
+}
+
+
+my_ccache_enable () {
+    my_icecc_enable
+    # Remove icecc from path
+    export PATH=$(echo $PATH | sed -e 's;:\?/usr/lib/icecc/bin/bin;;' -e 's;/usr/lib/icecc/bin/bin:\?;;')
+    export PATH=$(echo $PATH | sed -e 's;:\?/usr/lib/icecc/bin;;' -e 's;/usr/lib/icecc/bin:\?;;')
+    my_ccache_enable
+
+}
+
 
 my_icecc_ccache_disable ()
 {
@@ -1166,36 +1089,13 @@ my_icecc_ccache_disable ()
     #<udo service icecc-scheduler stop
  #iceccd -d
 }
-my_icecc_ccache_disable
 
-QWT_ROOT=/usr/local/qwt-6.1.0/
-QT_PLUGIN_PATH="${QWT_ROOT}/plugins:$QT_PLUGIN_PATH"
-export QT_PLUGIN_PATH
-QMAKEFEATURES="${QWT_ROOT}/features:$QTMAKEFEATURES"
-export QMAKEFEATURES
-
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/qwt-6.1.0/lib/
-#-------------------------------
-# New / Experimental
-#-------------------------------
-export PERL_LOCAL_LIB_ROOT="/home/hhanff/perl5";
-export PERL_MB_OPT="--install_base /home/hhanff/perl5";
-export PERL_MM_OPT="INSTALL_BASE=/home/hhanff/perl5";
-export PERL5LIB="/home/hhanff/perl5/lib/perl5/i686-linux-gnu-thread-multi-64int:/home/hhanff/perl5/lib/perl5";
 
 # To overcome the error
 # svn: Can't convert string from 'UTF-8' to native encoding:
 # while doing an svn up:
 # export LC_MESSAGES LC_CTYPE
 
-# Another good tip comes from this page which includes the tip that if you add
-# "[ \t]*" to your HISTIGNORE variable you can make any command be ignored by
-# starting it with a space. Good if you need a little extra privacy for some
-# commands.
-# export HISTIGNORE="[ \t]*:history:$HISTIGNORE"
-
-# To over come those pesky "Can't set locale" warnings
-#export LC_ALL=C
 
 my_set_locale_de ()
 {
@@ -1222,17 +1122,24 @@ my_ebookreader ()
     wine ~/.wine/drive_c/Program\ Files\ \(x86\)/Adobe/Adobe\ Digital\ Editions/digitaleditions.exe
 }
 
-export PATH=/opt:$PATH
-export PATH=/opt/xmind/XMind_amd64/:$PATH
-
 function my_ros_env (){
     # unalias pwd;
-    source /opt/ros/kinetic/setup.bash
     source /usr/share/gazebo-7/setup.sh
+    source /opt/ros/kinetic/setup.bash
     source $HOME/catkin_ws/devel/setup.bash
-}
 
-#my_ros_env
+    IP=$(ip add show wlp3s0 | grep 'inet ' | cut -d: -f2 | awk '{ print $2}' | sed -e s/\\/24//);
+    export ROS_MASTER_URI=http://127.0.0.1:11311
+    export ROS_MASTER_URI=http://${IP}:11311
+    export ROS_MASTER_URI=http://localhost:11311
+    # IP=$(hostname -i); export ROS_HOSTNAME=${IP};
+    export ROS_HOSTNAME=${IP};
+    #export ROS_HOSTNAME=192.168.128.221
+
+    echo "ROS_HOSTNAME = " $ROS_HOSTNAME
+    echo "ROS_MASTER_URI = " $ROS_MASTER_URI
+}
+my_ros_env
 
 function my_start_terminalserver (){
     if [ "$HOSTNAME" == "hhanff2-lap-u" ]; then
@@ -1249,22 +1156,23 @@ function my_shutdown_remote () {
     ssh -t ailor-control "/bin/systemctl halt"
     }
 
-export PATH=$PATH:/opt/gcc-arm-none-eabi-5_4-2016q3/bin/
-
 if [ -f ~/.bashrc_secret ]; then
     source ~/.bashrc_secret
 fi
-
-export PATH=$PATH:/opt/repo/
 
 function my_room_temperature (){
     while true; do sudo /opt/usb-thermometer/pcsensor; sleep 10; done
 }
 
+function my_network_monitor (){
+    # Default: enps30
+    speedometer -l  -r  ${1:-enp3s0} -t  ${1:-enp3s0} -m $(( 1024 * 1024 * 3 / 2  ))
+}
+
 function my_hibernate (){
     sudo pm-hibernate
 }
-alias my_standby='pm-hibernate'
+alias my_standby='my_hibernate'
 
 function my_virtualenv (){
     virtualenv  --python=/usr/bin/python2.7 env
