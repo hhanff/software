@@ -208,7 +208,8 @@ function my_initial_install_tools {\
          icemon \
          xsel \
          speedometer \
-         sendmail
+         sendmail \
+         zsh
 
     sudo apt-file update
     sudo apt-get purge --remove inkscape freemind okular
