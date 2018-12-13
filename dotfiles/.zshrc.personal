@@ -537,6 +537,7 @@ alias DAEDALUS='pushd /mnt/research/projects/completed/DAEDALUS_15078/'
 alias LIMES='pushd /mnt/research/projects/completed/LIMES/'
 alias SDSO='pushd /mnt/research/projects/ongoing/EIT-SDSO_18883'
 alias ROSEN='pushd /mnt/research/projects/ongoing/ROSEN_AUV_II_20023'
+alias ROBIN='pushd /mnt/research/projects/ongoing/ROBIN_19868'
 
 # Create backup with date
 bu() {
@@ -816,11 +817,6 @@ alias mv='mv -i'
 # -> Prevents accidentally clobbering files.
 alias mkdir='mkdir -p'
 
-alias h='history'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-
 alias path='echo -e ${PATH//:/\\n}'
 
 alias du='du -kh'
@@ -1056,3 +1052,5 @@ function my_virtualenv (){
 }
 
 alias locate='locate --all --basename --ignore-case'
+
+export  DISABLE_UNTRACKED_FILES_DIRTY=false
