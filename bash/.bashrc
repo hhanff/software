@@ -208,7 +208,8 @@ function my_initial_install_tools {\
          icemon \
          xsel \
          speedometer \
-         sendmail
+         sendmail \
+         jekyll
 
     sudo apt-file update
     sudo apt-get purge --remove inkscape freemind okular
@@ -398,7 +399,7 @@ function my_update_tags()
 #	    "*.cpp"  -o -name "*.h" \) -print0  | xargs -0 ctags -Re --append  --output=TAGS;
 
 #     cd -;
-    find . | grep ".*\.\(hh\|hxx\|cc\|cpp\|h\|hpp\|c\)" | xargs etags -f TAGS
+    find . | grep ".*\.\(hh\|hxx\|cc\|cpp\|h\|hpp\|c\)" | xargs etags --declarations  -f TAGS
 }
 
 # Find a file with a pattern in name:
@@ -1128,13 +1129,14 @@ function my_ros_env (){
     source /opt/ros/kinetic/setup.bash
     source $HOME/catkin_ws/devel/setup.bash
 
-    IP=$(ip add show wlp3s0 | grep 'inet ' | cut -d: -f2 | awk '{ print $2}' | sed -e s/\\/24//);
+    #IP=$(ip add show wlp3s0 | grep 'inet ' | cut -d: -f2 | awk '{ print $2}' | sed -e s/\\/24//);
+    IP=$(hostname -i); export ROS_HOSTNAME=${IP};
     export ROS_MASTER_URI=http://127.0.0.1:11311
     export ROS_MASTER_URI=http://${IP}:11311
     export ROS_MASTER_URI=http://localhost:11311
-    # IP=$(hostname -i); export ROS_HOSTNAME=${IP};
+    export ROS_HOSTNAME=192.168.128.221
     export ROS_HOSTNAME=${IP};
-    #export ROS_HOSTNAME=192.168.128.221
+    export ROS_HOSTNAME=localhost;
 
     echo "ROS_HOSTNAME = " $ROS_HOSTNAME
     echo "ROS_MASTER_URI = " $ROS_MASTER_URI
