@@ -17,6 +17,8 @@
 #
 #
 #===============================================================
+source ~/.profile_common
+
 # Enable options:
 #Enable suport of bash history across multiple bash sessions
 #shopt -s histappend
