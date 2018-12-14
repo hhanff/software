@@ -1,27 +1,28 @@
-#===============================================================
-#
-# PERSONAL $HOME/.bashrc FILE for bash-2.05a (or later)
-#
-#
-# This file is read (normally) by interactive shells only.
-# Here is the place to define your aliases, functions and
-# other interactive features like your prompt.
-#
-# This file was designed (originallyfunc) for Solaris but based
-# on Redhat's default .bashrc file
-# --> Modified for Linux.
-# The majority of the code you'll find here is based on code found
-# on Usenet (or internet).
-# This bashrc file is a bit overcrowded -- remember it is just
-# just an example. Tailor it to your needs
-#
-#
-#===============================================================
-#-------------------------------------------------------------
-# Source global definitions (if any)
-#-------------------------------------------------------------
-if [ -f /etc/bashrc ]; then
-. /etc/bashrc # --> Read /etc/bashrc, if present.
+# ~/.profile: executed by the command interpreter for login shells.
+# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
+# exists.
+# see /usr/share/doc/bash/examples/startup-files for examples.
+# the files are located in the bash-doc package.
+
+# the default umask is set in /etc/profile; for setting the umask
+# for ssh logins, install and configure the libpam-umask package.
+#umask 022
+
+# if running bash
+if [ -n "$BASH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+	. "$HOME/.bashrc"
+    fi
+    # Source global definitions (if any)
+    if [ -f /etc/bashrc ]; then
+	. /etc/bashrc # --> Read /etc/bashrc, if present.
+    fi
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
 fi
 #-------------------------------------------------------------
 # This works for linux - your mileage may vary....
@@ -63,6 +64,12 @@ set completion-ignore-case on
 #set bell-style visible
 #set prefer-visible-bell on
 
+# Enable options:
+#Enable suport of bash history across multiple bash sessions
+#shopt -s histappend
+export HISTFILESIZE=10000
+export HISTSIZE=10000
+
 # Disable options:
 #shopt -u mailwarn
 unset MAILCHECK       # I don't want my shell to warn me of incoming mail
@@ -72,20 +79,6 @@ export HISTTIMEFORMAT="%H:%M > "
 export HISTIGNORE="&:bg:fg:ll:h:history"
 export HOSTFILE=$HOME/.hosts	# Put a list of remote hosts in ~/.hosts
 
-#-----------------------
-# Greeting, motd etc...
-#-----------------------
-
-# Define some colors first:
-red='\e[0;31m'
-RED='\e[1;31m'
-green='\e[0;32m'
-GREEN='\e[1;32m'
-blue='\e[0;34m'
-BLUE='\e[1;34m'
-cyan='\e[0;36m'
-CYAN='\e[1;36m'
-NC='\e[0m'              # No Color
 
 #===============================================================
 # ALIASES AND FUNCTIONS
@@ -163,7 +156,9 @@ function my_initial_install_tools {\
          icemon \
          xsel \
          speedometer \
-         sendmail
+         sendmail \
+	 zsh \
+         jekyll
 
     sudo apt-file update
     sudo apt-get purge --remove inkscape freemind okular
@@ -333,10 +328,9 @@ my_emacs_config_generate
 
 function e { emacs -l /tmp/.emacs -nw --quick $1; }
 
-
 function _exit()	# function to run upon exit of shell
 {
-    echo -e "${RED}Hasta la vista, baby!!!${NC}"
+    echo -e "\e[1;31mHasta la vista, baby!!!\e[0m"
 }
 trap _exit EXIT
 
@@ -446,7 +440,7 @@ my_compress() {
 	    *.tar.bz2 ) shift && tar cjf $FILE $* ;;
 	    *.tar.gz ) shift && tar czf $FILE $* ;;
 	    *.tgz ) shift && tar czf $FILE $* ;;
-	    *.zip ) shift && zip $FILE $* ;;
+	    *.zip ) shift && zip -r $FILE $* ;;
 	    *.rar ) shift && rar $FILE $* ;;
 	esac
     else
@@ -538,7 +532,6 @@ alias DAEDALUS='pushd /mnt/research/projects/completed/DAEDALUS_15078/'
 alias LIMES='pushd /mnt/research/projects/completed/LIMES/'
 alias SDSO='pushd /mnt/research/projects/ongoing/EIT-SDSO_18883'
 alias ROSEN='pushd /mnt/research/projects/ongoing/ROSEN_AUV_II_20023'
-alias ROBIN='pushd /mnt/research/projects/ongoing/ROBIN_19868'
 
 # Create backup with date
 bu() {
@@ -603,6 +596,7 @@ alias ttyS0='sudo minicom -o ttyS0'
 alias ttyS1='sudo minicom -o ttyS1'
 
 alias dush="du -xsm .[!.]* *  | sort -n | awk '{ printf(\"%4s MB ./\",\$1) ; for (i=1;i<=NF;i++) { if (i>1) printf(\"%s \",\$i) } ; printf(\"\n\") }' | tail "
+alias rmsvn="find . -type d -name '*.svn*' -print0 | xargs -0 rm -rdf && la -R | grep svn"
 
 alias m="rm -rf /tmp/playlist.tmp &&  find ~/Musik -name *.mp3 -not -name 'Hörbücher' > /tmp/playlist.tmp && mplayer -playlist /tmp/playlist.tmp -shuffle -loop 0 | grep Playing"
 
@@ -613,6 +607,7 @@ alias my_vpn='sudo openvpn ~/Dokumente/Privat/Certificates/pc.ovpn '
 alias my_vpn_work='sudo openconnect --authgroup=Anyconnect-MyDFKI --servercert sha1:f25296a06a928e74494a3eb3adb644add910748d vpn.hb.dfki.de --compression=all -d -v'
 # alias my_vpn_work='sudo openconnect -u heha01 --authgroup=Anyconnect-MyDFKI --no-cert-check vpn.hb.dfki.de --compression=all -d -v '
 # alias my_vpn_work='sudo openconnect -u heha01 --authgroup=Anyconnect-MyDFKI vpn.hb.dfki.de --compression=all -d     --servercert pin-sha256:WClzvvEcDHhWtLPigdAQHZhMGdtTcwQU1dMEjZ8b6l4= -vvv '
+
 
 # Don't remove files immediately. Move them to /tmp/trash instead. They will
 # be kept until the next reboot.
@@ -700,7 +695,6 @@ function my_actel { \
    export LM_LICENSE_FILE=1702@$HOSTNAME:$LM_LICENSE_FILE
    export SNPSLMD_LICENSE_FILE=1702@$HOSTNAME:$SNPSLMD_LICENSE_FILE
    export DISPLAY=:0
-
 
    TEST=`ps ax |grep lmgrd |grep -v grep`
 
@@ -867,7 +861,6 @@ my_convert_to_iso-8859-1()
     rm -rf $1.tmp
 }
 
-
 # Local Variables:
 PLATFORM=lin
 
@@ -991,26 +984,6 @@ my_ebookreader ()
     wine ~/.wine/drive_c/Program\ Files\ \(x86\)/Adobe/Adobe\ Digital\ Editions/digitaleditions.exe
 }
 
-function my_ros_env (){
-    # unalias pwd;
-    source /usr/share/gazebo-7/setup.sh
-    source /opt/ros/kinetic/setup.bash
-    source $HOME/catkin_ws/devel/setup.bash
-
-    #IP=$(ip add show wlp3s0 | grep 'inet ' | cut -d: -f2 | awk '{ print $2}' | sed -e s/\\/24//);
-    IP=$(hostname -i); export ROS_HOSTNAME=${IP};
-    export ROS_MASTER_URI=http://127.0.0.1:11311
-    export ROS_MASTER_URI=http://${IP}:11311
-    export ROS_MASTER_URI=http://localhost:11311
-    export ROS_HOSTNAME=192.168.128.221
-    export ROS_HOSTNAME=${IP};
-    export ROS_HOSTNAME=localhost;
-
-    echo "ROS_HOSTNAME = " $ROS_HOSTNAME
-    echo "ROS_MASTER_URI = " $ROS_MASTER_URI
-}
-#my_ros_env
-
 function my_start_terminalserver (){
     if [ "$HOSTNAME" == "hhanff2-lap-u" ]; then
         rdesktop -u $USER -d DFKI -k de -a 16 -f -g 1350x700 marin.dfki.uni-bremen.de;
@@ -1053,5 +1026,3 @@ function my_virtualenv (){
 }
 
 alias locate='locate --all --basename --ignore-case'
-
-export  DISABLE_UNTRACKED_FILES_DIRTY=false
