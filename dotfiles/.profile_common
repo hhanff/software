@@ -959,9 +959,12 @@ my_ebookreader ()
 }
 
 function my_start_terminalserver (){
-    if [ "$HOSTNAME" == "hhanff2-lap-u" ]; then
+    HOSTNAME=$(hostname)
+    if [ $HOSTNAME = 'hhanff2-lap-u' ]; then
+        echo "Running on laptop..."
         rdesktop -u $USER -d DFKI -k de -a 16 -f -g 1350x700 marin.dfki.uni-bremen.de;
     else
+        echo "Running on desktop PC..."
         rdesktop -u $USER -d DFKI -k de -a 16 -f -g 1900x1020 marin.dfki.uni-bremen.de;
     fi
 }

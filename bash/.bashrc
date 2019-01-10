@@ -1,22 +1,3 @@
-#===============================================================
-#
-# PERSONAL $HOME/.bashrc FILE for bash-2.05a (or later)
-#
-#
-# This file is read (normally) by interactive shells only.
-# Here is the place to define your aliases, functions and
-# other interactive features like your prompt.
-#
-# This file was designed (originallyfunc) for Solaris but based
-# on Redhat's default .bashrc file
-# --> Modified for Linux.
-# The majority of the code you'll find here is based on code found
-# on Usenet (or internet).
-# This bashrc file is a bit overcrowded -- remember it is just
-# just an example. Tailor it to your needs
-#
-#
-#===============================================================
 source ~/.profile_common
 
 # Enable options:
@@ -58,7 +39,7 @@ NC='\e[0m'              # No Color
 #---------------
 # Shell Prompt
 #---------------
-#  curl -o ~/.git-prompt.sh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+# curl -o ~/.git-prompt.sh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
 # echo "source ~/.git-prompt.sh" >> ~/.bash_profile; source ~/.bash_profile
 function fastprompt() {
    case $TERM in
