@@ -973,8 +973,8 @@ function my_shutdown_remote () {
     ssh -t ailor-control "/bin/systemctl halt"
     }
 
-if [ -f ~/.bashrc_secret ]; then
-    source ~/.bashrc_secret
+if [ -f ~/.profile_secret ]; then
+    source ~/.profile_secret
 fi
 
 function my_room_temperature (){
