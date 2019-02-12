@@ -99,15 +99,17 @@ function my_ros_env (){
 
     #IP=$(ip add show wlp3s0 | grep 'inet ' | cut -d: -f2 | awk '{ print $2}' | sed -e s/\\/24//);
     IP=$(hostname -i); export ROS_HOSTNAME=${IP};
-    export ROS_MASTER_URI=http://127.0.0.1:11311
     export ROS_MASTER_URI=http://${IP}:11311
     export ROS_MASTER_URI=http://localhost:11311
+    export ROS_MASTER_URI=http://$(hostname):11311
     export ROS_HOSTNAME=192.168.128.221
-    export ROS_HOSTNAME=${IP};
-    export ROS_HOSTNAME=localhost;
-
+    #export ROS_HOSTNAME=${IP};
+    #export ROS_HOSTNAME=localhost;
+    export ROS_HOSTNAME=$(hostname)
     echo "ROS_HOSTNAME = " $ROS_HOSTNAME
     echo "ROS_MASTER_URI = " $ROS_MASTER_URI
+    export PYTHONPATH=$PYTHONPATH:/opt/deptool
+
 }
 my_ros_env
 
@@ -115,7 +117,6 @@ my_ros_env
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-source ~/.profile_common
 unalias history
 export DISABLE_UNTRACKED_FILES_DIRTY=false
 

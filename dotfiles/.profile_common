@@ -150,6 +150,13 @@ function my_initial_install_tools {\
          gimp \
          audacity
 
+    sudo add-apt-repository ppa:alexlarsson/flatpak
+    sudo apt update
+    sudo apt install flatpak
+    sudo apt install gnome-software-plugin-flatpak
+    flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    firefox https://flathub.org/apps/category/All
+
     sudo addgroup hhanff dialout
 
     # Make git config settings
@@ -1003,3 +1010,5 @@ function my_virtualenv (){
 }
 
 alias locate='locate --all --basename --ignore-case'
+
+alias my_hosts_list='nmap -sP "$(ip -4 -o route get 1 | cut -d " " -f 8)"/24 | grep report | cut -d " " -f 5-'
