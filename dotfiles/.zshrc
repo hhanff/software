@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH="/home/hhanff/.oh-my-zsh"
+export ZSH="/home/hhanff/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -17,34 +17,34 @@ ZSH_THEME="robbyrussell"
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+CASE_SENSITIVE="false"
 
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+HYPHEN_INSENSITIVE="false"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="false"
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
 
 # Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
+DISABLE_LS_COLORS="false"
 
 # Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+DISABLE_AUTO_TITLE="false"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
@@ -52,7 +52,7 @@ ZSH_THEME="robbyrussell"
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="yyyy/mm/dd"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -67,6 +67,7 @@ plugins=(
   common-aliases # e.g. la or lt
   copyfile # Copies content of a file into clipboard
   git-extras
+  emacs
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -98,11 +99,11 @@ function my_ros_env (){
     source $HOME/catkin_ws/devel/setup.zsh
 
     #IP=$(ip add show wlp3s0 | grep 'inet ' | cut -d: -f2 | awk '{ print $2}' | sed -e s/\\/24//);
-    IP=$(hostname -i); export ROS_HOSTNAME=${IP};
-    export ROS_MASTER_URI=http://${IP}:11311
-    export ROS_MASTER_URI=http://localhost:11311
+    # IP=$(hostname -i); export ROS_HOSTNAME=${IP};
+    # export ROS_MASTER_URI=http://${IP}:11311
+    # export ROS_MASTER_URI=http://localhost:11311
     export ROS_MASTER_URI=http://$(hostname):11311
-    export ROS_HOSTNAME=192.168.128.221
+    # export ROS_HOSTNAME=192.168.128.221
     #export ROS_HOSTNAME=${IP};
     #export ROS_HOSTNAME=localhost;
     export ROS_HOSTNAME=$(hostname)
@@ -119,6 +120,7 @@ my_ros_env
 # For a full list of active aliases, run `alias`.
 unalias history
 export DISABLE_UNTRACKED_FILES_DIRTY=false
-
+export DISABLE_AUTO_UPDATE=false
+export DISABLE_UPDATE_PROMPT=false
 # For my_start_terminalserver in zsh:
 source ~/.profile_common

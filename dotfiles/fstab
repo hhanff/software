@@ -7,6 +7,7 @@
 # <file system> <mount point>   <type>  <options>       <dump>  <pass>
 # / was on /dev/sda2 during installation
 UUID=38415631-85c9-440d-9ddb-86c903729a35 /               ext4    errors=remount-ro 0       1
+UUID=0ec7f615-1ab8-40a7-a02c-010f4c6537b4 /home	ext4	nodev,nosuid	0	2
 # swap was on /dev/sda1 during installation
 UUID=4cb4db1f-e31a-4d3a-b06e-117b575e7fd4 none            swap    sw              0       0
 /dev/fd0        /media/floppy0  auto 	rw,user,noauto,exec,utf8 0       0

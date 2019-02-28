@@ -34,7 +34,6 @@ set -o noclobber
 set -o ignoreeof
 set -o nounset
 #set -o xtrace        # Useful for debuging
-set completion-ignore-case on
 #set bell-style visible
 #set prefer-visible-bell on
 
@@ -132,7 +131,17 @@ function my_initial_install_tools {\
          speedometer \
          sendmail \
 	 zsh \
-         jekyll
+         jekyll \
+         autoconf \
+	 openvpn \
+         speedometer \
+         cifs-utils \
+         zsh \
+         mplayer \
+         tree \
+         rdesktop \
+         encfs \
+         screen
 
     sudo apt-file update
     sudo apt-get purge --remove inkscape freemind okular
@@ -235,15 +244,18 @@ function my_initial_install_tools {\
 
 
     export EMACS_VERSION=26.1
-    sudo apt-get install libxpm-dev
+    sudo apt install libxpm-dev libjpeg-dev libpng12-dev libgif-dev libtiff5-dev libgnutls-dev libxaw7-dev libtinfo-dev
     pushd /opt; mkdir emacs; cd emacs
-    wget https://ftp.gnu.org/gnu/emacs/emacs-"26.1".tar.xz
-    tar -xf emacs-26.1.tar.xz
-    cd emacs-26.1
+    wget https://ftp.gnu.org/gnu/emacs/emacs-"$EMACS_VERSION".tar.xz
+    tar -xf emacs-"$EMACS_VERSION".tar.xz
+    cd emacs-"$EMACS_VERSION"
     ./autogen.sh
     ./configure
-    sudo update-alternatives --install "/usr/bin/emacs" "emacs" "/opt/emacs/emacs-26.1/src/emacs" 1000
+    sudo update-alternatives --install "/usr/bin/emacs" "emacs" "/opt/emacs/emacs-"$EMACS_VERSION"/src/emacs" 1000
     make -j
+    pushd /usr/bin
+    sudo ln -s /opt/emacs/emacs-"$EMACS_VERSION"/lib-src/emacsclient .
+    popd
     popd
 
 }
@@ -307,13 +319,8 @@ function my_emacs_config_generate()
 my_emacs_config_generate
 
 
-function e { emacs -l /tmp/.emacs -nw --quick $1; }
-
-function _exit()	# function to run upon exit of shell
-{
-    echo -e "\e[1;31mHasta la vista, baby!!!\e[0m"
-}
-trap _exit EXIT
+alias e="/usr/bin/emacs -l /tmp/.emacs -nw --quick $@"
+set completion-ignore-case on
 
 #-------------------------------------------------------------
 
@@ -339,6 +346,7 @@ function ff(){
     find -L . -type d -iname '*'$*'*';
     #alias ff='ack -g'
 }
+alias ff=ff
 
 # If the error "/dev/null: cannot overwrite existing file" occurs:
 # > sudo su
@@ -493,11 +501,6 @@ function my_eth_restart()
     sudo ifconfig $1 up
 }
 
-function comic()
-{
-    eog `wget -O - http://xkcd.com/ | grep 'png' | grep '<img src="http://imgs.xkcd.com/comics/' | sed s/title=\".*//g | sed 's/.png\"/.png/g' | sed 's/<img src=\"//g'`;
-}
-
 # To get both functions working please read doc/init/Linux-Unix/ssmtp/ssmtp_howto.txt
 function my_mail_work() {
 	echo "$*" | mail -s "$*" hendrik.hanff@dfki.de;
@@ -513,6 +516,7 @@ alias DAEDALUS='pushd /mnt/research/projects/completed/DAEDALUS_15078/'
 alias LIMES='pushd /mnt/research/projects/completed/LIMES/'
 alias SDSO='pushd /mnt/research/projects/ongoing/EIT-SDSO_18883'
 alias ROSEN='pushd /mnt/research/projects/ongoing/ROSEN_AUV_II_20023'
+alias ROBIN='pushd /mnt/research/projects/ongoing/ROBIN_19868'
 
 # Create backup with date
 bu() {
@@ -811,11 +815,16 @@ alias lc='ls -lcr'		# sort by change time
 alias lu='ls -lur'		# sort by access time
 alias lr='ls -lR'               # recursive ls
 alias lt='ls -ltr'              # sort by date
+alias l='la'
 function ll()
 { ls -l "$@"| egrep "^d" ; ls -lXB "$@" 2>&-| egrep -v "^d|total "; }
 alias lm='ls -al |more'         # pipe through 'more'
-alias tree='tree -CsuhD'		# nice alternative to 'ls'
-alias l='la'
+
+if which tree >/dev/null; then
+   alias tree='tree -CsuhD'		# nice alternative to 'ls'
+else
+   alias tree='pwd;find . -path ./node_modules -prune -o -print | sort | sed '\''1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/| /g'\'''     
+fi
 
 alias gl='git log --graph --pretty="format:%C(yellow)%h%Cgreen%d%Creset %s %C(cyan) %an , %Cred%ar%Creset"'
 
@@ -849,7 +858,6 @@ export FIGNORE=.svn
 export EDITOR='e'
 export SVN_EDITOR='emacsclient -nw -c -a "ecns" $1'
 export GIT_EDITOR='emacsclient -nw -c -a "ecns" $1'
-export SYSTEMC="/usr/local/systemc-2.2"
 
 # icecc and ccache related variables
 # sudo apt-get install icecc
