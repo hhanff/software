@@ -133,6 +133,7 @@ function my_initial_install_tools {\
          jekyll \
          autoconf \
 	 openvpn \
+         openconnect \
          speedometer \
          cifs-utils \
          zsh \
@@ -824,7 +825,7 @@ alias lm='ls -al |more'         # pipe through 'more'
 if which tree >/dev/null; then
    alias tree='tree -CsuhD'		# nice alternative to 'ls'
 else
-   alias tree='pwd;find . -path ./node_modules -prune -o -print | sort | sed '\''1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/| /g'\'''     
+   alias tree='pwd;find . -path ./node_modules -prune -o -print | sort | sed '\''1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/| /g'\'''
 fi
 
 alias gl='git log --graph --pretty="format:%C(yellow)%h%Cgreen%d%Creset %s %C(cyan) %an , %Cred%ar%Creset"'
@@ -1021,3 +1022,48 @@ function my_virtualenv (){
 alias locate='locate --all --basename --ignore-case'
 
 alias my_hosts_list='nmap -sP "$(ip -4 -o route get 1 | cut -d " " -f 8)"/24 | grep report | cut -d " " -f 5-'
+
+function my_ros_env (){
+
+    #IP=$(ip add show wlp3s0 | grep 'inet ' | cut -d: -f2 | awk '{ print $2}' | sed -e s/\\/24//);
+    IP=$(hostname -i); export ROS_HOSTNAME=${IP};
+    export ROS_MASTER_URI=http://127.0.0.1:11311
+    export ROS_MASTER_URI=http://localhost:11311
+    export ROS_MASTER_URI=http://${IP}:11311
+    export ROS_MASTER_URI=http://10.250.3.6:11311
+    export ROS_MASTER_URI=http://$(hostname):11311
+    export ROS_HOSTNAME=192.168.128.221
+    export ROS_HOSTNAME=${IP};
+    export ROS_HOSTNAME=localhost;
+    export ROS_HOSTNAME=$(hostname)
+    export ROS_HOSTNAME=$(hostname)
+    #export PYTHONPATH=$PYTHONPATH:/opt/deptool
+
+    if [ ${0} = 'bash' ]; then
+        if [ -f /usr/share/gazebo-7/setup.sh ] ; then
+            source /usr/share/gazebo-7/setup.sh
+        fi
+        if [ -f  /opt/ros/kinetic/setup.sh ] ; then
+            source /opt/ros/kinetic/setup.sh
+        fi
+        if [ -f  $HOME/catkin_ws/devel/setup.sh ] ; then
+            source $HOME/catkin_ws/devel/setup.sh
+        fi
+        echo "ROS_HOSTNAME = " $ROS_HOSTNAME
+        echo "ROS_MASTER_URI = " $ROS_MASTER_URI
+    else
+        if [ -f /usr/share/gazebo-7/setup.sh ] ; then
+            source /usr/share/gazebo-7/setup.sh
+        fi
+        if [ -f  /opt/ros/kinetic/setup.zsh ] ; then
+            source /opt/ros/kinetic/setup.zsh
+        fi
+        if [ -f  $HOME/catkin_ws/devel/setup.zsh ] ; then
+            source $HOME/catkin_ws/devel/setup.zsh
+        fi
+        echo "ROS_HOSTNAME = " $ROS_HOSTNAME
+        echo "ROS_MASTER_URI = " $ROS_MASTER_URI
+    fi
+
+}
+my_ros_env
