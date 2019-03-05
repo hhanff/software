@@ -98,7 +98,7 @@ function my_initial_install_tools {\
          git-gui \
          subversion \
          diffuse \
-         chromium-browser \
+         chromium \
          tree \
          rdesktop \
          auctex \
@@ -109,15 +109,15 @@ function my_initial_install_tools {\
          mplayer \
          qrencode \
          clang \
-	 clang-tidy \
+         clang-tidy \
          pdftk \
          encfs \
          snap \
-	 owncloud-client \
+         owncloud-client \
          acpi \
          gpodder \
          vlc \
-	 apt-file \
+         apt-file \
          texlive-lang-german \
          texlive-fonts-extra \
          cifs-utils \
@@ -126,10 +126,9 @@ function my_initial_install_tools {\
          nmap \
          xournal \
          multitail \
-         icemon \
+         icecc-monitor \
          xsel \
          speedometer \
-         sendmail \
 	 zsh \
          jekyll \
          autoconf \
@@ -142,6 +141,8 @@ function my_initial_install_tools {\
          rdesktop \
          encfs \
          screen
+         zsh \
+         jekyll
 
     sudo apt-file update
     sudo apt-get purge --remove inkscape freemind okular
@@ -244,19 +245,19 @@ function my_initial_install_tools {\
 
 
     export EMACS_VERSION=26.1
-    sudo apt install libxpm-dev libjpeg-dev libpng12-dev libgif-dev libtiff5-dev libgnutls-dev libxaw7-dev libtinfo-dev
+    sudo apt install libxpm-dev autoconf libxaw7-dev libjpeg-dev libpng-dev libgif-dev  libtiff-dev gnutls-dev \
+      libtinfo-dev libncurses-dev  mailutils
     pushd /opt; mkdir emacs; cd emacs
     wget https://ftp.gnu.org/gnu/emacs/emacs-"$EMACS_VERSION".tar.xz
     tar -xf emacs-"$EMACS_VERSION".tar.xz
     cd emacs-"$EMACS_VERSION"
     ./autogen.sh
     ./configure
-    sudo update-alternatives --install "/usr/bin/emacs" "emacs" "/opt/emacs/emacs-"$EMACS_VERSION"/src/emacs" 1000
     make -j
+    sudo update-alternatives --install "/usr/bin/emacs" "emacs" "/opt/emacs/emacs-26.1/src/emacs" 1000
     pushd /usr/bin
     sudo ln -s /opt/emacs/emacs-"$EMACS_VERSION"/lib-src/emacsclient .
-    popd
-    popd
+    popd    popd
 
 }
 
