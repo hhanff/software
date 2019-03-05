@@ -147,25 +147,30 @@ fi
 
 function my_ros_env (){
     # unalias pwd;
+    if [ -f /usr/share/gazebo-7/setup.sh ] ; then
     source /usr/share/gazebo-7/setup.sh
-    source /opt/ros/kinetic/setup.bash
-    source $HOME/catkin_ws/devel/setup.bash
-
-    #IP=$(ip add show wlp3s0 | grep 'inet ' | cut -d: -f2 | awk '{ print $2}' | sed -e s/\\/24//);
-    IP=$(hostname -i); export ROS_HOSTNAME=${IP};
-    export ROS_MASTER_URI=http://127.0.0.1:11311
-    export ROS_MASTER_URI=http://localhost:11311
-    export ROS_MASTER_URI=http://${IP}:11311
-    export ROS_MASTER_URI=http://10.250.3.6:11311
-    export ROS_MASTER_URI=http://$(hostname):11311
-    export ROS_HOSTNAME=192.168.128.221
-    export ROS_HOSTNAME=${IP};
-    export ROS_HOSTNAME=localhost;
-    export ROS_HOSTNAME=$(hostname)
-
-
-    echo "ROS_HOSTNAME = " $ROS_HOSTNAME
-    echo "ROS_MASTER_URI = " $ROS_MASTER_URI
+    fi
+    if [ -f  /opt/ros/kinetic/setup.sh ] ; then
+    source /opt/ros/kinetic/setup.sh
+    fi
+    if [ -f  $HOME/catkin_ws/devel/setup.sh ] ; then
+    source $HOME/catkin_ws/devel/setup.sh
+      #IP=$(ip add show wlp3s0 | grep 'inet ' | cut -d: -f2 | awk '{ print $2}' | sed -e s/\\/24//);
+      IP=$(hostname -i); export ROS_HOSTNAME=${IP};
+      export ROS_MASTER_URI=http://127.0.0.1:11311
+      export ROS_MASTER_URI=http://localhost:11311
+      export ROS_MASTER_URI=http://${IP}:11311
+      export ROS_MASTER_URI=http://10.250.3.6:11311
+      export ROS_MASTER_URI=http://$(hostname):11311
+      export ROS_HOSTNAME=192.168.128.221
+      export ROS_HOSTNAME=${IP};
+      export ROS_HOSTNAME=localhost;
+      export ROS_HOSTNAME=$(hostname)
+  
+  
+      echo "ROS_HOSTNAME = " $ROS_HOSTNAME
+      echo "ROS_MASTER_URI = " $ROS_MASTER_URI
+    fi
 }
 my_ros_env
 

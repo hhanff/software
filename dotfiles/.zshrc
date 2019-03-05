@@ -33,6 +33,7 @@ DISABLE_AUTO_UPDATE="false"
 DISABLE_LS_COLORS="false"
 
 # Uncomment the following line to disable auto-setting terminal title.
+export EMACS=emacs
 DISABLE_AUTO_TITLE="false"
 
 # Uncomment the following line to enable command auto-correction.
@@ -94,22 +95,28 @@ source $ZSH/oh-my-zsh.sh
 
 function my_ros_env (){
     # unalias pwd;
+    if [ -f /usr/share/gazebo-7/setup.sh ] ; then
     source /usr/share/gazebo-7/setup.sh
+    fi
+    if [ -f  /opt/ros/kinetic/setup.zsh ] ; then
     source /opt/ros/kinetic/setup.zsh
+    fi
+    if [ -f  $HOME/catkin_ws/devel/setup.zsh ] ; then
     source $HOME/catkin_ws/devel/setup.zsh
-
-    #IP=$(ip add show wlp3s0 | grep 'inet ' | cut -d: -f2 | awk '{ print $2}' | sed -e s/\\/24//);
-    # IP=$(hostname -i); export ROS_HOSTNAME=${IP};
-    # export ROS_MASTER_URI=http://${IP}:11311
-    # export ROS_MASTER_URI=http://localhost:11311
-    export ROS_MASTER_URI=http://$(hostname):11311
-    # export ROS_HOSTNAME=192.168.128.221
-    #export ROS_HOSTNAME=${IP};
-    #export ROS_HOSTNAME=localhost;
-    export ROS_HOSTNAME=$(hostname)
-    echo "ROS_HOSTNAME = " $ROS_HOSTNAME
-    echo "ROS_MASTER_URI = " $ROS_MASTER_URI
-    export PYTHONPATH=$PYTHONPATH:/opt/deptool
+    
+      #IP=$(ip add show wlp3s0 | grep 'inet ' | cut -d: -f2 | awk '{ print $2}' | sed -e s/\\/24//);
+      # IP=$(hostname -i); export ROS_HOSTNAME=${IP};
+      # export ROS_MASTER_URI=http://${IP}:11311
+      # export ROS_MASTER_URI=http://localhost:11311
+      # export ROS_MASTER_URI=http://$(hostname):11311
+      # export ROS_HOSTNAME=192.168.128.221
+      #export ROS_HOSTNAME=${IP};
+      #export ROS_HOSTNAME=localhost;
+      export ROS_HOSTNAME=$(hostname)
+      echo "ROS_HOSTNAME = " $ROS_HOSTNAME
+      echo "ROS_MASTER_URI = " $ROS_MASTER_URI
+      export PYTHONPATH=$PYTHONPATH:/opt/deptool
+    fi
 
 }
 my_ros_env
