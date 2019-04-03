@@ -103,7 +103,10 @@ function my_initial_install_tools {\
          tree \
          rdesktop \
          auctex \
+         texlive-latex-recommended \
          texlive-latex-extra \
+         texlive-science \
+         texlive-bibtex-extra \
          autotools-dev \
          automake \
          screen \
@@ -145,12 +148,24 @@ function my_initial_install_tools {\
          screen
          zsh \
          jekyll \
+
+
          selinux-basics \
          unattended-upgrades \
          apt-listchanges \
          bsd-mailx \
          clamav \
          fail2ban
+         python-pip \
+         python-virtualenv \
+         xsel
+
+    sudo add-apt-repository ppa:webupd8team/indicator-kdeconnect
+    sudo apt update
+    sudo apt install kdeconnect indicator-kdeconnect
+    /usr/bin/indicator-kdeconnect
+
+    pip install --user catkin-cppcheck
 
     sudo apt-file update
 
@@ -259,22 +274,44 @@ function my_initial_install_tools {\
     echo "Please install netbeans for c++, digikam from appimage and  yEd manually."
     alias digikam='digikam-5.9.0-01-x86-64.appimage'
 
+    # netbeans
+    if which netbeans >/dev/null; then
+        echo "Netbeans already installed. Continuing..."
+    else
+        pushd /tmp
+        wget http://apache.lauf-forum.at/incubator/netbeans/incubating-netbeans/incubating-10.0/incubating-netbeans-10.0-bin.zip
+        unzip incubating-netbeans-10.0-bin.zip
+        mv netbeans /opt
+        pushd /usr/bin
+        sudo  ln -s /opt/netbeans/bin/netbeans .
+        popd; popd
+        echo "Installed netbeans"
+    fi
 
-    export EMACS_VERSION=26.1
-    sudo apt install libxpm-dev autoconf libxaw7-dev libjpeg-dev libpng-dev libgif-dev  libtiff-dev gnutls-dev \
-      libtinfo-dev libncurses-dev  mailutils
-    pushd /opt; mkdir emacs; cd emacs
-    wget https://ftp.gnu.org/gnu/emacs/emacs-"$EMACS_VERSION".tar.xz
-    tar -xf emacs-"$EMACS_VERSION".tar.xz
-    cd emacs-"$EMACS_VERSION"
-    ./autogen.sh
-    ./configure
-    make -j
-    sudo update-alternatives --install "/usr/bin/emacs" "emacs" "/opt/emacs/emacs-26.1/src/emacs" 1000
-    pushd /usr/bin
-    sudo ln -s /opt/emacs/emacs-"$EMACS_VERSION"/lib-src/emacsclient .
-    popd    popd
+    # Software which needs to be installed manually:
+    echo "Please install netbeans for c++, digikam from appimage and  yEd manually."
+    alias digikam='digikam-5.9.0-01-x86-64.appimage'
 
+
+    if [ -d /opt/emacs ]
+       then
+       echo "emacs is already installed -> continuing"
+    else
+       export EMACS_VERSION=26.1
+       sudo apt install libxpm-dev autoconf libxaw7-dev libjpeg-dev libpng-dev libgif-dev  libtiff-dev gnutls-dev \
+       libtinfo-dev libncurses-dev  mailutils
+       pushd /opt; mkdir emacs; cd emacs
+       wget https://ftp.gnu.org/gnu/emacs/emacs-"$EMACS_VERSION".tar.xz
+       tar -xf emacs-"$EMACS_VERSION".tar.xz
+       cd emacs-"$EMACS_VERSION"
+       ./autogen.sh
+       ./configure
+       make -j
+       sudo update-alternatives --install "/usr/bin/emacs" "emacs" "/opt/emacs/emacs-26.1/src/emacs" 1000
+       pushd /usr/bin
+       sudo ln -s /opt/emacs/emacs-"$EMACS_VERSION"/lib-src/emacsclient .
+       popd; popd
+    fi
     # Install rmtoo
     pushd /opt
     sudo apt install gnuplot
@@ -607,6 +644,11 @@ buzd ()
 }
 
 alias rsync="rsync -rva --progress --partial --stats"
+alias rsync-copy="rsync -avz --progress -h"
+alias rsync-move="rsync -avz --progress -h --remove-source-files"
+alias rsync-update="rsync -avzu --progress -h"
+alias rsync-synchronize="rsync -avzu --delete --progress -h"
+
 alias my_stat="export LC_CTYPE=en_US.UTF-8; svn status -u | grep -v "\?""
 
 function my_commit {
@@ -1083,9 +1125,10 @@ function my_ros_env (){
     #export PYTHONPATH=$PYTHONPATH:/opt/deptool
 
     if [ ${0} = 'bash' ]; then
-        if [ -f /usr/share/gazebo-7/setup.sh ] ; then
-            source /usr/share/gazebo-7/setup.sh
-        fi
+        echo 'Running on bash...'
+        # if [ -f /usr/share/gazebo-7/setup.sh ] ; then
+        #     source /usr/share/gazebo-7/setup.sh
+        # fi
         if [ -f  /opt/ros/kinetic/setup.sh ] ; then
             source /opt/ros/kinetic/setup.bash
         fi
@@ -1095,9 +1138,10 @@ function my_ros_env (){
         echo "ROS_HOSTNAME = " $ROS_HOSTNAME
         echo "ROS_MASTER_URI = " $ROS_MASTER_URI
     else
-        if [ -f /usr/share/gazebo-7/setup.sh ] ; then
-            source /usr/share/gazebo-7/setup.sh
-        fi
+        echo 'Running on zsh...'
+        # if [ -f /usr/share/gazebo-7/setup.sh ] ; then
+        #     source /usr/share/gazebo-7/setup.sh
+        # fi
         if [ -f  /opt/ros/kinetic/setup.zsh ] ; then
             source /opt/ros/kinetic/setup.zsh
         fi

@@ -63,13 +63,8 @@ HIST_STAMPS="yyyy/mm/dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-  git
-  common-aliases # e.g. la or lt
-  copyfile # Copies content of a file into clipboard
-  git-extras
-  emacs
-)
+plugins=( git common-aliases git-extras emacs colorize cp battery)
+RPROMPT='$(battery_pct_prompt)'
 
 source $ZSH/oh-my-zsh.sh
 
@@ -101,5 +96,5 @@ unalias history
 export DISABLE_UNTRACKED_FILES_DIRTY=false
 export DISABLE_AUTO_UPDATE=false
 export DISABLE_UPDATE_PROMPT=false
-# For my_start_terminalserver in zsh:
+# For common in zsh:
 source ~/.profile_common
