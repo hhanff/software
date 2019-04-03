@@ -86,7 +86,8 @@ function my_update(){
   sudo apt-get autoremove && \
   sudo apt-get clean && \
   sudo apt-get autoclean \
-  sudo snap refresh
+  sudo snap refresh \
+  sudo flatpak update
 }
 
 function my_initial_install_tools {\
@@ -143,10 +144,15 @@ function my_initial_install_tools {\
          encfs \
          screen
          zsh \
-         jekyll
+         jekyll \
+         selinux-basics \
+         unattended-upgrades \
+         apt-listchanges \
+         bsd-mailx \
+         clamav \
+         fail2ban
 
     sudo apt-file update
-    sudo apt-get purge --remove inkscape freemind okular
 
     sudo apt-get purge --remove inkscape freemind okular gimp
 
@@ -166,6 +172,15 @@ function my_initial_install_tools {\
     sudo apt install flatpak
     sudo apt install gnome-software-plugin-flatpak
     flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    flatpak install \
+            evince \
+            libreoffice \
+            gimp \
+            calibre \
+            paperwork \
+            freecad \
+            netbeans
+
     firefox https://flathub.org/apps/category/All
 
     sudo addgroup hhanff dialout
@@ -282,7 +297,14 @@ function my_initial_install_tools {\
     popd
 
 }
-
+alias evince='flatpak run org.gnome.Evince'
+alias libreoffice='flatpak run org.libreoffice.LibreOffice '
+alias gimp='flatpak run org.gimp.GIMP  '
+alias calibre='flatpak run com.calibre_ebook.calibre'
+alias paperwork='flatpak run work.openpaper.Paperwork'
+alias freecad='flatpak run org.freecadweb.FreeCAD'
+alias netbeans='flatpak run org.apache.netbeans'
+#alias skrooge='flatpak run org.kde.skrooge'
 
 function my_can_up()
 {
