@@ -1088,8 +1088,8 @@ function my_room_temperature (){
 }
 
 function my_network_monitor (){
-    # Default: enps30
-    speedometer -l  -r  ${1:-enp3s0} -t  ${1:-enp3s0} -m $(( 1024 * 1024 * 3 / 2  ))
+    IF=$(route | grep -m1 ^default | awk '{print $NF}');
+    speedometer -l  -r  ${1:-$IF} -t  ${1:-$IF} -m $(( 1024 * 1024 * 3 / 2  ))
 }
 
 function my_hibernate (){
