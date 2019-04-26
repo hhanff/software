@@ -124,7 +124,6 @@ function my_initial_install_tools {\
          apt-file \
          texlive-lang-german \
          texlive-fonts-extra \
-         cifs-utils \
          terminator \
          ccache \
          nmap \
@@ -334,6 +333,22 @@ function my_initial_install_tools {\
 
     popd
 
+    # Install cp and mv commands with progress bar
+    cd /opt
+    wget http://ftp.gnu.org/gnu/coreutils/coreutils-8.21.tar.xz
+    tar xvJf coreutils-8.21.tar.xz
+    cd coreutils-8.21/
+    wget https://raw.githubusercontent.com/atdt/advcpmv/master/advcpmv-0.5-8.21.patch
+    patch -p1 -i advcpmv-0.5-8.21.patch
+    ./configure
+    make
+    export FORCE_UNSAFE_CONFIGURE=1
+    sudo cp src/cp /usr/local/bin/
+    sudo cp src/mv /usr/local/bin/
+    alias cp='/usr/local/bin/cp -gR'
+    alias mv='/usr/local/bin/mv -g'
+    popd
+
 }
 alias evince='flatpak run org.gnome.Evince'
 alias libreoffice='flatpak run org.libreoffice.LibreOffice '
@@ -530,6 +545,16 @@ MY_IP=$(/sbin/ifconfig eth1 | awk '/inet Adresse/ { print $2 } ' | sed -e s/Adre
 MY_ISP=$(/sbin/ifconfig eth1 | awk '/P-t-P/ { print $3 } ' | sed -e s/P-t-P://)
 }
 
+# Define some colors first:
+export red='\e[0;31m'
+export RED='\e[1;31m'
+export green='\e[0;32m'
+export GREEN='\e[1;32m'
+export blue='\e[0;34m'
+export BLUE='\e[1;34m'
+export cyan='\e[0;36m'
+export CYAN='\e[1;36m'
+export NC='\e[0m'              # No Color
 function my_info()   # get current host related info
 {
   echo -e "\nYou are logged on ${RED}$HOST"
