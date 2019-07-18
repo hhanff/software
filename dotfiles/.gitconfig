@@ -1,6 +1,7 @@
 [user]
-	name = hhanff
+	name = Hendrik Hanff
 	email = hendrik.hanff@dfki.de
+        signingkey = 5078C42536CBF46B
 [core]
 	excludesfile = /home/hhanff/.gitexcludes
 	filemode = true
@@ -31,3 +32,7 @@
 	graph = log --graph --oneline --decorate --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 [credential]
 	helper = cache
+[push]
+	default = simple
+[commit]
+  gpgsign = true
