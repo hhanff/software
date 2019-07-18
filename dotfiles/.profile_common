@@ -208,6 +208,15 @@ function my_initial_install_tools {\
     git config --global user.name "Hendrik Hanff"
     git config --global user.email "hendrik.hanff@dfki.de"
     git config --global credential.helper cache
+    # Prepare git for signing commits with gpg.
+    gpg --list-secret-keys --keyid-format LONG
+    git config --global commit.gpgsign true
+    # Do
+    #   gpg --list-secret-keys --keyid-format LONG
+    # to see your gpg keys and. Do
+    #   gpg --armor --export GPG_ID_FROM_PREVIOUS_COMMAND
+    to see the gpg key and copy it to githubm gitlab, ...
+
 
     # Instal repo
     if [ -d /opt/repo ]
@@ -1183,3 +1192,5 @@ function my_ros_env (){
 
 }
 my_ros_env
+
+unset GREP_OPTIONS
