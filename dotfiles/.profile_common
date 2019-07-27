@@ -116,7 +116,7 @@ function my_initial_install_tools {\
          clang-tidy \
          pdftk \
          encfs \
-         snap \
+         snapd \
          owncloud-client \
          acpi \
          gpodder \
@@ -180,6 +180,7 @@ function my_initial_install_tools {\
 	 freemind \
          gimp \
          audacity
+         # evince
 
     sudo add-apt-repository ppa:alexlarsson/flatpak
     sudo apt update
@@ -187,14 +188,13 @@ function my_initial_install_tools {\
     # For flatpak support in app-store
     sudo apt install gnome-software-plugin-flatpak
     flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-    flatpak install \
-            evince \
-            libreoffice \
-            gimp \
-            calibre \
-            paperwork \
-            freecad \
-            netbeans
+    sudo flatpak install flathub org.libreoffice.LibreOffice
+    # sudo flatpak install flathub org.gnome.Evince
+    # sudo flatpak install flathub org.gimp.GIMP
+    sudo flatpak install flathub com.calibre_ebook.calibre
+    sudo flatpak install flathub work.openpaper.Paperwork
+    sudo flatpak install flathub org.freecadweb.FreeCAD
+    sudo flatpak install flathub org.apache.netbeans
 
     firefox https://flathub.org/apps/category/All
 
@@ -209,7 +209,7 @@ function my_initial_install_tools {\
     git config --global commit.gpgsign true
     # Do
     #   gpg --list-secret-keys --keyid-format LONG
-    # to see your gpg keys and. Do
+    # to see your gpg keys and do
     #   gpg --armor --export GPG_ID_FROM_PREVIOUS_COMMAND
     to see the gpg key and copy it to githubm gitlab, ...
 
@@ -359,9 +359,9 @@ function my_initial_install_tools {\
     popd
 
 }
-alias evince='flatpak run org.gnome.Evince'
+#alias evince='flatpak run org.gnome.Evince'
 alias libreoffice='flatpak run org.libreoffice.LibreOffice '
-alias gimp='flatpak run org.gimp.GIMP  '
+# alias gimp='flatpak run org.gimp.GIMP  '
 alias calibre='flatpak run com.calibre_ebook.calibre'
 alias paperwork='flatpak run work.openpaper.Paperwork'
 alias freecad='flatpak run org.freecadweb.FreeCAD'
