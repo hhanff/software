@@ -1190,6 +1190,8 @@ function my_ros_env (){
     fi
 
 }
-my_ros_env
+#my_ros_env
+
+alias my_shrink_pdf='/home/hhanff/Projekte/software/bash/shrinkpdf.sh'
 
 unset GREP_OPTIONS
