@@ -41,7 +41,7 @@ set -o nounset
 #Enable suport of bash history across multiple bash sessions
 #shopt -s histappend
 export HISTFILESIZE=10000
-export HISTSIZE=10000
+export HISTSIZE=$HISTFILESIZE
 export HISTTIMEFORMAT="%F %T "
 export HISTIGNORE="&:bg:fg:ll:h:history"
 
@@ -710,9 +710,12 @@ alias rmsvn="find . -type d -name '*.svn*' -print0 | xargs -0 rm -rdf && la -R |
 alias m="rm -rf /tmp/playlist.tmp &&  find ~/Musik -name *.mp3 -not -name 'Hörbücher' > /tmp/playlist.tmp && mplayer -playlist /tmp/playlist.tmp -shuffle -loop 0 | grep Playing"
 
 alias my_backup="~/Dropbox/src/scripts/my_backup.sh"
+alias my_backup=rsync --recursive --update --delete --perms --owner --group --times --links --safe-links --super --one-file-system --devices /home/hhanff/ /media/hhanff/0da60605-a2f8-4d0e-8a58-946240ebdcf5/backup/hhanff
 
 alias top='htop'
-alias my_vpn='sudo openvpn ~/Dokumente/Privat/Certificates/pc.ovpn '
+#alias my_vpn='sudo openvpn ~/Dokumente/Privat/Certificates/hhanff_rpi.ovpn '
+alias my_vpn_up='wg-quick up hhanff-m'
+alias my_vpn_down='wg-quick down hhanff-m'
 alias my_vpn_work='sudo openconnect --authgroup=Anyconnect-MyDFKI --servercert sha1:f25296a06a928e74494a3eb3adb644add910748d vpn.hb.dfki.de --compression=all -d -v'
 # alias my_vpn_work='sudo openconnect -u heha01 --authgroup=Anyconnect-MyDFKI --no-cert-check vpn.hb.dfki.de --compression=all -d -v '
 # alias my_vpn_work='sudo openconnect -u heha01 --authgroup=Anyconnect-MyDFKI vpn.hb.dfki.de --compression=all -d     --servercert pin-sha256:WClzvvEcDHhWtLPigdAQHZhMGdtTcwQU1dMEjZ8b6l4= -vvv '
@@ -1195,3 +1198,4 @@ function my_ros_env (){
 alias my_shrink_pdf='/home/hhanff/Projekte/software/bash/shrinkpdf.sh'
 
 unset GREP_OPTIONS
+GIT_STATUS_IGNORE_SUBMODULES=0
