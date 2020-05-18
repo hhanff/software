@@ -201,7 +201,7 @@ function my_initial_install_tools {\
 
     firefox https://flathub.org/apps/category/All
 
-    sudo addgroup hhanff dialout
+    sudo addgroup $USER dialout
 
     # Make git config settings
     git config --global user.name "Hendrik Hanff"
@@ -222,7 +222,7 @@ function my_initial_install_tools {\
     then
 	echo "repo tool is already installed -> continuing"
     else
-        pushd /opt; sudo chown -R hhanff:hhanff .
+        pushd /opt; sudo chown -R $USER:$USER .
         git clone https://android.googlesource.com/tools/repo
         cd /usr/bin/
         sudo ln -s /opt/repo/repo .
@@ -249,7 +249,7 @@ function my_initial_install_tools {\
         echo "software for using Xilinx Platform Cable USB II already installed -> continuing"
     else
         mkdir -p /opt/Xilinx
-        sudo chown hhanff:hhanff /opt/Xilinx
+        sudo chown $USER:$USER /opt/Xilinx
         pushd /opt/Xilinx
         git clone git://git.zerfleddert.de/usb-driver
         cd usb-driver
@@ -387,7 +387,7 @@ function my_can_down()
 function my_sshfs()
 {
   echo "Eine Dateisystem via ssh einbinden::"
-  echo "sshfs -o ssh_command='"'ssh -i ~/.ssh/id_dsa.pub'"' spielmeyerhanff.dyndns.org:/home/hhanff/sda1/backup/home/hhanff/ /mnt/sshfs"
+  echo "sshfs -o ssh_command='"'ssh -i ~/.ssh/id_dsa.pub'"' spielmeyerhanff.dyndns.org:~/sda1/backup/home/hhanff/ /mnt/sshfs"
   echo ""
   echo "Aushängen erfolgt mit umount"
 }
@@ -710,7 +710,7 @@ alias rmsvn="find . -type d -name '*.svn*' -print0 | xargs -0 rm -rdf && la -R |
 alias m="rm -rf /tmp/playlist.tmp &&  find ~/Musik -name *.mp3 -not -name 'Hörbücher' > /tmp/playlist.tmp && mplayer -playlist /tmp/playlist.tmp -shuffle -loop 0 | grep Playing"
 
 alias my_backup="~/Dropbox/src/scripts/my_backup.sh"
-alias my_backup_home_external-hdd='rsync --recursive --update --delete --perms --owner --group --times --links --safe-links --super --one-file-system --devices /home/hhanff/ /media/hhanff/0da60605-a2f8-4d0e-8a58-946240ebdcf5/backup/hhanff'
+alias my_backup_home_external-hdd='rsync --recursive --update --delete --perms --owner --group --times --links --safe-links --super --one-file-system --devices $HOME /media/$USER/0da60605-a2f8-4d0e-8a58-946240ebdcf5/backup/hhanff'
 alias my_backup_kindermusik_julius='rsync --recursive --update --delete --perms --owner --group --times --links --safe-links --super Kindermusik julius@192.168.0.135:/home/julius//Musik'
 
 
@@ -1197,7 +1197,7 @@ function my_ros_env (){
 }
 #my_ros_env
 
-alias my_shrink_pdf='/home/hhanff/Projekte/software/bash/shrinkpdf.sh'
+alias my_shrink_pdf='~/Projekte/software/bash/shrinkpdf.sh'
 
 unset GREP_OPTIONS
 GIT_STATUS_IGNORE_SUBMODULES=0
