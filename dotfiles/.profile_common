@@ -710,7 +710,9 @@ alias rmsvn="find . -type d -name '*.svn*' -print0 | xargs -0 rm -rdf && la -R |
 alias m="rm -rf /tmp/playlist.tmp &&  find ~/Musik -name *.mp3 -not -name 'Hörbücher' > /tmp/playlist.tmp && mplayer -playlist /tmp/playlist.tmp -shuffle -loop 0 | grep Playing"
 
 alias my_backup="~/Dropbox/src/scripts/my_backup.sh"
-alias my_backup=rsync --recursive --update --delete --perms --owner --group --times --links --safe-links --super --one-file-system --devices /home/hhanff/ /media/hhanff/0da60605-a2f8-4d0e-8a58-946240ebdcf5/backup/hhanff
+alias my_backup_home_external-hdd='rsync --recursive --update --delete --perms --owner --group --times --links --safe-links --super --one-file-system --devices /home/hhanff/ /media/hhanff/0da60605-a2f8-4d0e-8a58-946240ebdcf5/backup/hhanff'
+alias my_backup_kindermusik_julius='rsync --recursive --update --delete --perms --owner --group --times --links --safe-links --super Kindermusik julius@192.168.0.135:/home/julius//Musik'
+
 
 alias top='htop'
 #alias my_vpn='sudo openvpn ~/Dokumente/Privat/Certificates/hhanff_rpi.ovpn '
