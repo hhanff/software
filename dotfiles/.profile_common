@@ -595,7 +595,7 @@ function my_network_restart()
 
 function my_wlan_restart()
 {
-    INTERFACE=$(ifconfig | grep wl | awk '{print $1}')
+    INTERFACE=$(ifconfig | grep wl | awk '{print $1}' | sed 's/[:]//g')
 
     sudo iwconfig $INTERFACE txpower off
     sudo iwconfig $INTERFACE txpower on
@@ -708,6 +708,7 @@ alias m="rm -rf /tmp/playlist.tmp &&  find ~/Musik -name *.mp3 -not -name 'Hörb
 
 alias my_backup="~/Dropbox/src/scripts/my_backup.sh"
 alias my_backup_home_external-hdd='rsync --recursive --update --delete --perms --owner --group --times --links --safe-links --super --one-file-system --devices $HOME /media/$USER/0da60605-a2f8-4d0e-8a58-946240ebdcf5/backup/hhanff'
+alias my_backup_home_external-hdd='rsync --recursive --update --delete --perms --owner --group --times --links --safe-links --super --one-file-system --devices $HOME/ /run/user/1000/gvfs/smb-share:server=fritz.nas,share=fritz.nas/Intenso-ExternalUSB3-0-00/backup/hhanff'
 alias my_backup_kindermusik_julius='rsync --recursive --update --delete --perms --owner --group --times --links --safe-links --super Kindermusik julius@192.168.0.135:/home/julius//Musik'
 
 
