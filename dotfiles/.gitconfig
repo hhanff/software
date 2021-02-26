@@ -1,13 +1,13 @@
 [user]
 	name = Hendrik Hanff
-	email = hendrik.hanff@dfki.de
-        signingkey = 5078C42536CBF46B
+	email = hendrik.hanff@googlemail.com
+	signingkey = C9E85C33BDB74D784C1B2281ABE88C3F515E9A08
 [core]
 	excludesfile = /home/hhanff/.gitexcludes
 	filemode = true
 	editor = nano
 [merge]
-	tool = diffuse
+	tool = meld
         prompt = false
 [diff]
 	tool = /usr/bin/diffuse
@@ -35,4 +35,6 @@
 [push]
 	default = simple
 [commit]
-  gpgsign = true
+	gpgsign = true
+[gpg]
+	program = gpg
