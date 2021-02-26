@@ -50,7 +50,7 @@ export HISTIGNORE="&:bg:fg:ll:h:history"
 unset MAILCHECK       # I don't want my shell to warn me of incoming mail
 
 export TIMEFORMAT=$'\nreal %3R\tuser %3U\tsys %3S\tpcpu %P\n'
-export HOSTFILE=$HOME/.hosts	# Put a list of remote hosts in ~/.hosts
+export HOSTFILE=$HOME/.hosts    # Put a list of remote hosts in ~/.hosts
 
 
 #===============================================================
@@ -68,13 +68,15 @@ function my_umount_cifs (){
 function my_cls (){
     # when leaving the console clear the screen to increase privacy
     if [ "$SHLVL" = 1 ]; then
-	[ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q
+    [ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q
     fi
 }
 
+set completion-ignore-case on
+
 function my_find_hosts_on_network (){
-    #IP=(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}');
-    IP=$(ip add show $1 | grep 'inet ' | cut -d: -f2 | awk '{ print $2}');
+    IP=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')
+    IP="${IP}/24"
     nmap  -sn $IP;
 }
 
@@ -132,10 +134,10 @@ function my_initial_install_tools {\
          icecc-monitor \
          xsel \
          speedometer \
-	 zsh \
+     zsh \
          jekyll \
          autoconf \
-	 openvpn \
+     openvpn \
          openconnect \
          speedometer \
          cifs-utils \
@@ -176,7 +178,7 @@ function my_initial_install_tools {\
     sudo snap install \
          okular \
          inkscape \
-	 freemind \
+     freemind \
          gimp \
          audacity \
          syncthing \
@@ -195,6 +197,7 @@ function my_initial_install_tools {\
     sudo flatpak install flathub work.openpaper.Paperwork
     sudo flatpak install flathub org.freecadweb.FreeCAD
     sudo flatpak install flathub org.apache.netbeans
+    sudo flatpak install flathub org.gnucash.GnuCash
 
     firefox https://flathub.org/apps/category/All
 
@@ -217,7 +220,7 @@ function my_initial_install_tools {\
     # Instal repo
     if [ -d /opt/repo ]
     then
-	echo "repo tool is already installed -> continuing"
+    echo "repo tool is already installed -> continuing"
     else
         pushd /opt; sudo chown -R $USER:$USER .
         git clone https://android.googlesource.com/tools/repo
@@ -367,6 +370,9 @@ alias paperwork='flatpak run work.openpaper.Paperwork'
 alias freecad='flatpak run org.freecadweb.FreeCAD'
 alias netbeans='flatpak run org.apache.netbeans'
 #alias skrooge='flatpak run org.kde.skrooge'
+alias gnucash='flatpak run org.gnucash.GnuCash'
+
+
 
 function my_can_up()
 {
@@ -390,21 +396,8 @@ function my_sshfs()
 }
 
 
-function cg()
-{
-    rsync -rv $1 $2 --progress
-    echo Done
-}
-
-
 function my_svn_diff () { svn diff  -x -wp $@ | cdiff |less -R; }
 
-
-#Open a file in the current running emacs
-function ec
-{
-  emacsclient --no-wait "$@"
-}
 
 function my_emacs_config_generate()
 {
@@ -426,8 +419,7 @@ my_emacs_config_generate
 
 
 alias e="/usr/bin/emacs -l /tmp/.emacs -nw --quick $@"
-set completion-ignore-case on
-
+alias ec="e"
 #-------------------------------------------------------------
 
 # This function updated my TAGS file inside the proj folder
@@ -439,7 +431,7 @@ function my_update_tags()
 # -print0 | xargs -0 ctags -Re --language=none  --regex='/[ \t]*\(architecture\|configuration\) +[^ ]* +OF/'   --regex='/[ \t]*\(attribute\|entity\|function\|signal\|constant\|package\( body\)?\|procedure\|process\|type\)[ \t]+\([^\t(]+\)/\3/' --output=TAGS;
 #     # Update tags for c/cpp and header files
 #     find ~/proj \( -path \*/  \) -prune -o \( -name "*.c" -o -name
-#	    "*.cpp"  -o -name "*.h" \) -print0  | xargs -0 ctags -Re --append  --output=TAGS;
+#        "*.cpp"  -o -name "*.h" \) -print0  | xargs -0 ctags -Re --append  --output=TAGS;
 
 #     cd -;
     find . | grep ".*\.\(hh\|hxx\|cc\|cpp\|h\|hpp\|c\)" | xargs etags --declarations  -f TAGS
@@ -481,65 +473,65 @@ fstr_install;
 function extract() # Handy Extract Program.
 {
     if [ -f "$1" ] ; then
-	case $1 in
-	    *.tar.bz2) tar xvjf $1 ;;
-	    *.tar.gz) tar xvzf $1 ;;
-	    *.bz2) bunzip2 $1 ;;
-	    *.rar) unrar x $1 ;;
-	    *.gz) gunzip $1 ;;
-	    *.tar) tar xvf $1 ;;
-	    *.tbz2) tar xvjf $1 ;;
-	    *.tgz) tar xvzf $1 ;;
-	    *.zip) unzip $1 ;;
-	    *.Z) uncompress $1 ;;
-	    *.7z) 7z x $1 ;;
-	    *.tar.xz)  tar -xJf $1 ;;
-	    *.xz)  xz -d $1 ;;
-	    *) echo "'$1' cannot be extracted via >extract<" ;;
-	esac
+    case $1 in
+        *.tar.bz2) tar xvjf $1 ;;
+        *.tar.gz) tar xvzf $1 ;;
+        *.bz2) bunzip2 $1 ;;
+        *.rar) unrar x $1 ;;
+        *.gz) gunzip $1 ;;
+        *.tar) tar xvf $1 ;;
+        *.tbz2) tar xvjf $1 ;;
+        *.tgz) tar xvzf $1 ;;
+        *.zip) unzip $1 ;;
+        *.Z) uncompress $1 ;;
+        *.7z) 7z x $1 ;;
+        *.tar.xz)  tar -xJf $1 ;;
+        *.xz)  xz -d $1 ;;
+        *) echo "'$1' cannot be extracted via >extract<" ;;
+    esac
     else
-	echo "'$1' is not a valid file"
+        echo "'$1' is not a valid file"
     fi
 }
 
 function extract_undo() # Delete files extracted from acrchive
 {
     if [ -f $1 ] ; then
-	case $1 in
-	    *.tar.bz2) tar tf $1  | xargs -I{} rm -rfv {};;
-	    *.tar.gz) tar tf $1  | xargs -I{} rm -rfv {};;
-	    #*.bz2) bunzip2 $1  | xargs -I{} rm -rfv {};;
-	    #*.rar) unrar x $1  | xargs -I{} rm -rfv {};;
-	    #*.gz) gunzip $1  | xargs -I{} rm -rfv {};;
-	    *.tar) tar tf $1  | xargs -I{} rm -rfv {};;
-	    *.tbz2) tar tf $1  | xargs -I{} rm -rfv {};;
-	    *.tgz) tar tf $1  | xargs -I{} rm -rfv {};;
-	    *.zip) unzip -Z -1 $1 | xargs -I{} rm -rfv {};;
-	    #*.Z) uncompress $1  | xargs -I{} rm -rfv {};;
-	    #*.7z) 7z x $1  | xargs -I{} rm -rfv {};;
-	    *.tar.xz)  tar -tf $1  | xargs -I{} rm -rfv {};;
-	    #*.xz)  xz -d $1  | xargs -I{} rm -rfv {};;
-	    *) echo "'$1' cannot be processed via >extract_undo<" ;;
-	esac
+    case $1 in
+        *.tar.bz2) tar tf $1  | xargs -I{} rm -rfv {};;
+        *.tar.gz) tar tf $1  | xargs -I{} rm -rfv {};;
+        #*.bz2) bunzip2 $1  | xargs -I{} rm -rfv {};;
+        #*.rar) unrar x $1  | xargs -I{} rm -rfv {};;
+        #*.gz) gunzip $1  | xargs -I{} rm -rfv {};;
+        *.tar) tar tf $1  | xargs -I{} rm -rfv {};;
+        *.tbz2) tar tf $1  | xargs -I{} rm -rfv {};;
+        *.tgz) tar tf $1  | xargs -I{} rm -rfv {};;
+        *.zip) unzip -Z -1 $1 | xargs -I{} rm -rfv {};;
+        #*.Z) uncompress $1  | xargs -I{} rm -rfv {};;
+        #*.7z) 7z x $1  | xargs -I{} rm -rfv {};;
+        *.tar.xz)  tar -tf $1  | xargs -I{} rm -rfv {};;
+        #*.xz)  xz -d $1  | xargs -I{} rm -rfv {};;
+        *) echo "'$1' cannot be processed via >extract_undo<" ;;
+    esac
     else
-	echo "'$1' is not a valid file"
+    echo "'$1' is not a valid file"
     fi
 }
 
 # ARCHIVE COMPRESS {{{
 my_compress() {
     if [[ -n "$1" ]]; then
-	FILE=$1
-	case $FILE in
-	    *.tar ) shift && tar cf $FILE $* ;;
-	    *.tar.bz2 ) shift && tar cjf $FILE $* ;;
-	    *.tar.gz ) shift && tar czf $FILE $* ;;
-	    *.tgz ) shift && tar czf $FILE $* ;;
-	    *.zip ) shift && zip -r $FILE $* ;;
-	    *.rar ) shift && rar $FILE $* ;;
-	esac
+    FILE=$1
+    case $FILE in
+        *.tar ) shift && tar cf $FILE $* ;;
+        *.tar.bz2 ) shift && tar cjf $FILE $* ;;
+        *.tar.gz ) shift && tar czf $FILE $* ;;
+        *.tgz ) shift && tar czf $FILE $* ;;
+        *.zip ) shift && zip -r $FILE $* ;;
+        *.rar ) shift && rar $FILE $* ;;
+    esac
     else
-	echo "usage: compress <foo.tar.gz> ./foo ./bar"
+    echo "usage: compress <foo.tar.gz> ./foo ./bar"
     fi
 }
 alias my_pack=my_compress
@@ -549,8 +541,8 @@ alias my_pack=my_compress
 #-----------------------------------
 function my_ip() # Get IP adresses.
 {
-MY_IP=$(/sbin/ifconfig eth1 | awk '/inet Adresse/ { print $2 } ' | sed -e s/Adresse://)
-MY_ISP=$(/sbin/ifconfig eth1 | awk '/P-t-P/ { print $3 } ' | sed -e s/P-t-P://)
+    INTERFACE=$(ifconfig | grep wl | awk '{print $1}' | sed 's/[:]//g')
+    /sbin/ifconfig $INTERFACE | grep "inet "
 }
 
 # Define some colors first:
@@ -572,7 +564,8 @@ function my_info()   # get current host related info
   echo -e "\n${RED}Machine stats :$NC " ; uptime
   echo -e "\n${RED}Memory stats :$NC " ; free -h
   echo -e "\n${RED}Local IP Address :$NC" ; ifconfig 2>&-
-  echo -e "\n${RED}Linux Version :$NC" ; cat /etc/*release /etc/*_ver*
+  echo -e "\n${RED}Linux Version :$NC" ; cat /etc/*release/* /etc/*_ver*
+  #echo -e "\n${RED}Linux Version :$NC" ; /etc/upstream-release/lsb-release
   echo -e "\n${RED}Battery Level : $NC" ; acpi -b
   echo -e "\n${RED}Debian Version : $NC"; cat /etc/debian_version ;
   echo -e "\n${RED}CPU : $NC"; lscpu ;
@@ -619,10 +612,10 @@ function my_eth_restart()
 
 # To get both functions working please read doc/init/Linux-Unix/ssmtp/ssmtp_howto.txt
 function my_mail_work() {
-	echo "$*" | mail -s "$*" hendrik.hanff@dfki.de;
+    echo "$*" | mail -s "$*" hendrik.hanff@dfki.de;
 }
 function my_mail_home() {
-	echo "$*" | mail -s "$*" hendrik.hanff@googlemail.com;
+    echo "$*" | mail -s "$*" hendrik.hanff@googlemail.com;
 }
 
 
@@ -677,13 +670,9 @@ buzd ()
     mv /tmp/$TARGET*.tar.gz .
 }
 
-alias rsync="rsync -rva --progress --partial --stats"
-alias rsync-copy="rsync -avz --progress -h"
-alias rsync-move="rsync -avz --progress -h --remove-source-files"
-alias rsync-update="rsync -avzu --progress -h"
-alias rsync-synchronize="rsync -avzu --delete --progress -h"
+alias my_rsync-musik_vw_hdd="rsync -avzbc --delete --progress --no-perms --no-owner --no-group   Musik/ /media/hhanff/MUSIK"
 
-alias my_stat="export LC_CTYPE=en_US.UTF-8; svn status -u | grep -v "\?""
+alias my_svn_stat="export LC_CTYPE=en_US.UTF-8; svn status -u | grep -v "\?""
 
 function my_commit {
     DIR='\pwd'
@@ -726,33 +715,33 @@ alias my_vpn_work='sudo openconnect --authgroup=Anyconnect-MyDFKI --servercert s
 # hhanff
 function del () {
     if [[ -z "$*" ]] ; then
-	echo "Usage: del FILE_NAME "
+    echo "Usage: del FILE_NAME "
     else
-	# Test if /tmp/trash exists and proceed with deleting files if it
-	# exists. If it does not exist, e.g. after a restart, create the
-	# directory and proceed.
-	if [ -d /tmp/trash ]
-	then
-	    echo "/tmp/trash exists. Proceeding." > /dev/null
-	else
-	    mkdir /tmp/trash
-	fi
+    # Test if /tmp/trash exists and proceed with deleting files if it
+    # exists. If it does not exist, e.g. after a restart, create the
+    # directory and proceed.
+    if [ -d /tmp/trash ]
+    then
+        echo "/tmp/trash exists. Proceeding." > /dev/null
+    else
+        mkdir /tmp/trash
+    fi
 
-	# TBD: Do not move every file separately, but
-	# mv all files at once... don't know how...
-	while [ $# -ne 0 ]
-	do
-	    # Files will be prescedet with a timestamp.
-	    # basetime=$(date "+%FT%T")
-	    # basetime=$(date +%s%N)
-	    basetime=$(date "+%Y%m%dT%H%M%S")
-	    # Make whitespaces underscores
-	    TRIMMED_1=`echo "$1" | sed 's/ /_/g'`
-	    TRIMMED_2=$(basename $TRIMMED_1)
-	    # Move files to /tmp/trash
-	    mv "$1" /tmp/trash/"$basetime"-"$TRIMMED_2";
-	    shift
-	done
+    # TBD: Do not move every file separately, but
+    # mv all files at once... don't know how...
+    while [ $# -ne 0 ]
+    do
+        # Files will be prescedet with a timestamp.
+        # basetime=$(date "+%FT%T")
+        # basetime=$(date +%s%N)
+        basetime=$(date "+%Y%m%dT%H%M%S")
+        # Make whitespaces underscores
+        TRIMMED_1=`echo "$1" | sed 's/ /_/g'`
+        TRIMMED_2=$(basename $TRIMMED_1)
+        # Move files to /tmp/trash
+        mv "$1" /tmp/trash/"$basetime"-"$TRIMMED_2";
+        shift
+    done
     fi
 }
 
@@ -865,33 +854,33 @@ function my_vivado { \
 
 function my_unset_variables {
     if [ -n $XILINXD_LICENSE_FILE]; then
-	unset XILINXD_LICENSE_FILE;
-	echo "unset XILINXD_LICENSE_FILE"
+    unset XILINXD_LICENSE_FILE;
+    echo "unset XILINXD_LICENSE_FILE"
     fi
 
     if [ -n $XILINX_DSP ]; then
-	unset XILINX_DSP;
-	echo "unset XILINX_DSP"
+    unset XILINX_DSP;
+    echo "unset XILINX_DSP"
     fi
     if [ -n $LD_LIBRARY_PATH ]; then
-	unset LD_LIBRARY_PATH;
-	echo "unset LD_LIBRARY_PATH"
+    unset LD_LIBRARY_PATH;
+    echo "unset LD_LIBRARY_PATH"
     fi
     if [ -n $XILINX_EDK ]; then
-	unset XILINX_EDK;
-	echo "unset XILINX_EDK"
+    unset XILINX_EDK;
+    echo "unset XILINX_EDK"
     fi
     if [ -n $LMC_HOME ]; then
-	unset LMC_HOME;
-	echo "unset LMC_HOME"
+    unset LMC_HOME;
+    echo "unset LMC_HOME"
     fi
     if [ -n $XILINX_PLANAHEAD ]; then
-	unset XILINX_PLANAHEAD;
-	echo "unset XILINX_PLANAHEAD"
+    unset XILINX_PLANAHEAD;
+    echo "unset XILINX_PLANAHEAD"
     fi
     if [ -n $XILINX ]; then
-	unset XILINX
-	echo "unset XILINX"
+    unset XILINX
+    echo "unset XILINX"
     fi
 }
 
@@ -934,21 +923,22 @@ alias multi='sudo multitail /var/log/syslog -R 2 -c -l "dmesg -T" /var/log/kern.
 alias dmesg='dmesg -T'
 
 # The 'ls' family (this assumes you use the GNU ls)
-alias la='ls -Al --time-style=long-iso'               # show hidden files
-alias ls='ls -hF --color'	# add colors for filetype recognition
-alias lx='ls -lXB'              # sort by extension
-alias lk='ls -lSr'              # sort by size
-alias lc='ls -lcr'		# sort by change time
-alias lu='ls -lur'		# sort by access time
-alias lr='ls -lR'               # recursive ls
-alias lt='ls -ltr'              # sort by date
+alias la='\ls --time-style=long-iso'               # show hidden files
+alias la='natls'              # show hidden files
+alias ls='\ls -hF --color'    # add colors for filetype recognition
+alias lx='\ls -lXB'           # sort by extension
+alias lk='\ls -lSr'           # sort by size
+alias lc='\ls -lcr'           # sort by change time
+alias lu='\ls -lur'           # sort by access time
+alias lr='\ls -lR'            # recursive ls
+alias lt='\ls -ltr'           # sort by date
 alias l='la'
 function ll()
-{ ls -l "$@"| egrep "^d" ; ls -lXB "$@" 2>&-| egrep -v "^d|total "; }
-alias lm='ls -al |more'         # pipe through 'more'
+{ \ls -l "$@"| egrep "^d" ; ls -lXB "$@" 2>&-| egrep -v "^d|total "; }
+alias lm='\ls -al |more'         # pipe through 'more'
 
 if which tree >/dev/null; then
-   alias tree='tree -CsuhD'		# nice alternative to 'ls'
+   alias tree='tree -CsuhD'        # nice alternative to 'ls'
 else
    alias tree='pwd;find . -path ./node_modules -prune -o -print | sort | sed '\''1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/| /g'\'''
 fi
@@ -983,8 +973,8 @@ PLATFORM=lin
 
 export FIGNORE=.svn
 export EDITOR='e'
-export SVN_EDITOR='emacsclient -nw -c -a "ecns" $1'
-export GIT_EDITOR='emacsclient -nw -c -a "ecns" $1'
+export SVN_EDITOR='e'
+export GIT_EDITOR='nano $1'
 
 # icecc and ccache related variables
 # sudo apt-get install icecc
@@ -1199,3 +1189,6 @@ alias my_shrink_pdf='~/Projekte/software/bash/shrinkpdf.sh'
 
 unset GREP_OPTIONS
 GIT_STATUS_IGNORE_SUBMODULES=0
+
+export PATH=$PATH:$HOME/.cargo/bin
+alias ls='natls'
