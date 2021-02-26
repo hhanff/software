@@ -82,19 +82,19 @@ function my_find_hosts_on_network (){
 
 
 function my_update(){
-  sudo apt-get update && \
-  sudo apt-get upgrade && \
-  sudo apt-get dist-upgrade && \
-  sudo apt-get autoremove && \
-  sudo apt-get clean && \
-  sudo apt-get autoclean \
+  sudo apt update && \
+  sudo apt upgrade && \
+  sudo apt dist-upgrade && \
+  sudo apt autoremove && \
+  sudo apt clean && \
+  sudo apt autoclean \
   sudo snap refresh \
   sudo flatpak update
 }
 
 function my_initial_install_tools {\
     my_update
-    sudo apt-get install \
+    sudo apt install \
          emacs \
          htop \
          git \
@@ -169,7 +169,7 @@ function my_initial_install_tools {\
 
     sudo apt-file update
 
-    sudo apt-get purge --remove inkscape freemind okular gimp
+    sudo apt purge --remove inkscape freemind okular gimp
 
     sudo pip install --user \
          cpplint
@@ -238,7 +238,7 @@ function my_initial_install_tools {\
         pushd /opt
         git clone https://github.com/petervojtek/usb-thermometer.git
         cd usb-thermometer
-        sudo apt-get install libusb-dev
+        sudo apt install libusb-dev
         make
         popd
     fi
@@ -453,7 +453,7 @@ alias ff=ff
 # > chmod 666 /dev/null
 
 function fstr_install {\
-    # sudo apt-get install silversearcher-ag
+    # sudo apt install silversearcher-ag
     # If the error "/dev/null: cannot overwrite existing file" occurs:
     # > sudo su
     # > rm /dev/null
@@ -541,8 +541,18 @@ alias my_pack=my_compress
 #-----------------------------------
 function my_ip() # Get IP adresses.
 {
+    FILE=//usr/bin/sipcalc
+    if test -f "$FILE"; then
+        # echo "software already already installed -> continuing"
+    else
+        echo "please provide sudo password for installing sipcalc"
+        sudo apt install sipcalc
+    fi
+
     INTERFACE=$(ifconfig | grep wl | awk '{print $1}' | sed 's/[:]//g')
-    /sbin/ifconfig $INTERFACE | grep "inet "
+    sipcalc $INTERFACE
+    # the old command to readout the IP address
+    # /sbin/ifconfig $INTERFACE | grep "inet "
 }
 
 # Define some colors first:
@@ -762,7 +772,7 @@ function my_actel { \
    # ln -s ../init.d/flexlm K98flexlm
 
    # https://help.ubuntu.com/community/LiberoSOC
-   # sudo apt-get install libmotif3 libmotif-dev libmotif4:i386 nspluginwrapper lib32z1 libc6-i386 rpcbind xfonts-100dpi xfonts-75dpi kqsh lsb
+   # sudo apt install libmotif3 libmotif-dev libmotif4:i386 nspluginwrapper lib32z1 libc6-i386 rpcbind xfonts-100dpi xfonts-75dpi kqsh lsb
 
 
    # Obtain a flelmx gold license from Microsemi
@@ -977,7 +987,7 @@ export SVN_EDITOR='e'
 export GIT_EDITOR='nano $1'
 
 # icecc and ccache related variables
-# sudo apt-get install icecc
+# sudo apt install icecc
 # sudo nano /etc/icecc/icecc.conf # ICECC_MAX_JOBS="4"
 # sudo service iceccd restart
 # icemon # Interessehalber den icecc Monitor starten
